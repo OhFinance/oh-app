@@ -6,11 +6,9 @@ import {
   TwitterButton,
   useVersion,
 } from "@ohfinance/oh-ui";
-import OhLogo from "assets/img/oh-brand.png";
+import OhBrand from "assets/img/oh-brand.png";
 import { Box, Typography } from "@material-ui/core";
 import { AppDrawerList } from "./components/AppDrawerList";
-
-export const DRAWER_WIDTH = 240;
 
 export const AppDrawer = () => {
   const version = useVersion();
@@ -21,8 +19,8 @@ export const AppDrawer = () => {
         <Box m={4} mb={4}>
           <Flex center>
             <img
-              src={OhLogo}
-              alt="oh-finance-logo"
+              src={OhBrand}
+              alt="oh-finance-brand"
               width="auto"
               height="96px"
             />

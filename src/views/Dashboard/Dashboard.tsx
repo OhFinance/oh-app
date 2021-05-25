@@ -1,3 +1,24 @@
+import { Box, Grid } from "@material-ui/core";
+import { ViewHeader } from "components/ViewHeader";
+import { ViewWrapper } from "components/ViewWrapper";
+import { DashboardGraph } from "./components/DashboardGraph";
+import { DashboardMetrics } from "./components/DashboardMetrics";
+
 export const Dashboard = () => {
-  return <div></div>;
+  return (
+    <ViewWrapper>
+      <ViewHeader
+        title="Dashboard"
+        subtitle="Track your portfolio and view real-time metrics"
+      />
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={8}>
+          <DashboardGraph />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <DashboardMetrics />
+        </Grid>
+      </Grid>
+    </ViewWrapper>
+  );
 };
