@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { TEN } from "./bigNumberHelper";
+import { TEN } from "./bigNumber";
 
 export const getDecimalAmount = (amount: BigNumber, decimals = 18) => {
   return new BigNumber(amount).times(TEN.pow(decimals));

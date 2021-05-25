@@ -5,8 +5,7 @@ import { Dashboard } from "views/Dashboard";
 import { NoMatch } from "views/NoMatch";
 import { Stake } from "views/Stake";
 import { Vote } from "views/Vote";
-import { SideDrawer } from "components/SideDrawer";
-import { TopBar } from "components/TopBar";
+import { AppNavigation } from "components/AppNavigation";
 
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
@@ -16,8 +15,7 @@ BigNumber.config({
 const App = () => {
   return (
     <BrowserRouter>
-      {/* <SideDrawer /> */}
-      <TopBar />
+      <AppNavigation />
 
       <Switch>
         <Route path="/" exact component={Dashboard} />

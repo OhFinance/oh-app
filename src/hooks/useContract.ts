@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import useWeb3 from "./useWeb3";
-import { getErc20Contract } from "utils/contractHelper";
+import { getErc20Contract } from "utils/contracts";
 
 export const useERC20 = (address: string) => {
   const web3 = useWeb3();
