@@ -1,34 +1,49 @@
 import { Surface } from "components/Surface";
 import OhLogo from "assets/img/oh-logo.png";
 import { Flex } from "@ohfinance/oh-ui";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Avatar, Box, Button, Grid, Typography } from "@material-ui/core";
+import { FC } from "react";
+import { Bank } from "config/constants/banks";
+import { EarnCompositionGroup } from "./EarnCompositionGroup";
 
-export const EarnCard = () => {
+export interface EarnCardProps {
+  bank: Bank;
+}
+
+export const EarnCard: FC<EarnCardProps> = ({ bank, ...props }) => {
   return (
-    <Surface>
+    <Surface {...props}>
       <Flex center mb={2}>
-        <img src={OhLogo} alt="oh-earn-logo" height={40} width="auto" />
+        <Avatar src={bank.image} />
       </Flex>
       <Typography variant="h6" align="center">
-        Oh! USDC
+        {bank.symbol}
       </Typography>
       <Typography variant="subtitle2" align="center" gutterBottom>
-        Risk-Optimized
+        {bank.description}
       </Typography>
       <Typography variant="body1" align="center" paragraph>
         <b>18% APY</b>
       </Typography>
       <Flex align="center" justify="space-between" mb={2}>
-        <Box>
-          <Typography align="center" variant="body2">
-            Underlying
-          </Typography>
-        </Box>
-        <Box>
-          <Typography align="center" variant="body2">
-            Composition
-          </Typography>
-        </Box>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Flex center column>
+              <Avatar src={bank.underlying} />
+              <Typography align="center" variant="body2">
+                Underlying
+              </Typography>
+            </Flex>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Flex center column>
+              <EarnCompositionGroup composition={bank.composition} />
+              <Typography align="center" variant="body2">
+                Composition
+              </Typography>
+            </Flex>
+          </Grid>
+        </Grid>
       </Flex>
       <Button variant="contained" color="primary" fullWidth>
         Deposit / Withdraw

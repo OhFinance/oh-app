@@ -7,25 +7,29 @@ import {
   TableRow,
 } from "@material-ui/core";
 import { TableSurface } from "components/TableSurface";
+import banks, { Bank } from "config/constants/banks";
 import { EarnTableRow } from "./EarnTableRow";
 
 export const EarnTable = () => {
   return (
-    <TableSurface>
+    <TableSurface title="Oh! Banks">
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>#</TableCell>
+            <TableCell style={{ paddingLeft: 30 }}>#</TableCell>
             <TableCell>Symbol</TableCell>
-            <TableCell>Composition</TableCell>
+            <TableCell>Description</TableCell>
+            <TableCell align="center">Underlying</TableCell>
+            <TableCell align="center">Composition</TableCell>
             <TableCell>APY</TableCell>
-            <TableCell>More</TableCell>
+            <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <EarnTableRow key={0} isLast />
+          {banks.map((bank: Bank, i: number) => (
+            <EarnTableRow key={i} bank={bank} isLast={i === banks.length - 1} />
+          ))}
         </TableBody>
-        <TableFooter />
       </Table>
     </TableSurface>
   );
