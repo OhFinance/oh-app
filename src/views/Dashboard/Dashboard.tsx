@@ -3,6 +3,7 @@ import { ViewHeader } from "components/ViewHeader";
 import { ViewWrapper } from "components/ViewWrapper";
 import { DashboardGraph } from "./components/DashboardGraph";
 import { DashboardMetrics } from "./components/DashboardMetrics";
+import { DashboardTabs } from "./components/DashboardTabs";
 
 export const Dashboard = () => {
   return (
@@ -19,6 +20,9 @@ export const Dashboard = () => {
           <DashboardMetrics />
         </Grid>
       </Grid>
+      <Box my={4}>
+        <DashboardTabs />
+      </Box>
     </ViewWrapper>
   );
 };
