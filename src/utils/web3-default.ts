@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import { HttpProviderOptions } from "web3-core-helpers";
-import getRpcUrl from "./rpcHelper";
+import getRpcUrl from "./getNodeUrl";
 
 const RPC_URL = getRpcUrl();
 const httpProvider = new Web3.providers.HttpProvider(RPC_URL, {

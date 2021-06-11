@@ -2,7 +2,7 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { ConnectorNames } from "config/constants/types";
 import Web3 from "web3";
-import getNodeUrl from "./rpcHelper";
+import getNodeUrl from "./getNodeUrl";
 
 const POLLING_INTERVAL = 12000;
 const rpcUrl = getNodeUrl();

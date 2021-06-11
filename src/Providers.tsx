@@ -5,7 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { OhLightTheme } from "@ohfinance/oh-ui";
 import { VersionProvider } from "@ohfinance/oh-ui";
 import { version } from "../package.json";
-import { getLibrary } from "helpers/connectorHelper";
+import { getLibrary } from "utils/web3-connectors";
 
 const Providers: React.FC = ({ children }) => {
   return (

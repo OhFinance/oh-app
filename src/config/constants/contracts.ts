@@ -1,7 +1,7 @@
 import { Address } from "./types";
 
 const contracts: { [key: string]: Address } = {
-  contract: {
+  usdcBank: {
     1: "address",
   },
 };

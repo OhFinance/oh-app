@@ -19,3 +19,8 @@ export interface Connector {
   icon: string;
   connectorId: ConnectorNames;
 }
+
+export interface Path {
+  name: string;
+  path: string;
+}

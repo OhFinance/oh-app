@@ -1,7 +1,4 @@
-export interface Path {
-  name: string;
-  path: string;
-}
+import { Path } from "./types";
 
 const paths: Path[] = [
   { name: "Dashboard", path: "/" },
