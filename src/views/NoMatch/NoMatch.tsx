@@ -1,3 +1,5 @@
-export const NoMatch = () => {
+const NoMatch = () => {
   return <div></div>;
 };
+
+export default NoMatch;

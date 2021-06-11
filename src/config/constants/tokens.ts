@@ -1,6 +1,6 @@
 import { Token } from "./types";
 
-const tokens: { [key: string]: Token } = {
+const tokens: { [token: string]: Token } = {
   dai: {
     symbol: "DAI",
     decimals: 6,
@@ -9,7 +9,7 @@ const tokens: { [key: string]: Token } = {
       4: "",
     },
   },
-  oh: {
+  ohToken: {
     symbol: "OH",
     decimals: 18,
     address: {

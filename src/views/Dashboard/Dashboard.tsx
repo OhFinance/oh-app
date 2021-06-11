@@ -5,7 +5,7 @@ import { DashboardGraph } from "./components/DashboardGraph";
 import { DashboardMetrics } from "./components/DashboardMetrics";
 import { DashboardTabs } from "./components/DashboardTabs";
 
-export const Dashboard = () => {
+const Dashboard = () => {
   return (
     <ViewWrapper>
       <ViewHeader
@@ -26,3 +26,5 @@ export const Dashboard = () => {
     </ViewWrapper>
   );
 };
+
+export default Dashboard;

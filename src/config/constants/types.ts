@@ -1,12 +1,22 @@
 export interface Address {
-  1: string;
-  4?: string;
+  readonly 1: string; // mainnet
+  readonly 4?: string; // rinkeby
+  readonly 42?: string; // kovan
 }
 
 export interface Token {
-  symbol: string;
-  address?: Address;
-  decimals?: number;
+  readonly symbol: string;
+  readonly address?: Address;
+  readonly decimals?: number;
+}
+
+export interface Bank {
+  readonly image: string;
+  readonly symbol: string;
+  readonly description: string;
+  readonly alt: string;
+  readonly underlying: string;
+  readonly composition: string[];
 }
 
 export enum ConnectorNames {
@@ -15,12 +25,12 @@ export enum ConnectorNames {
 }
 
 export interface Connector {
-  title: string;
-  icon: string;
-  connectorId: ConnectorNames;
+  readonly title: string;
+  readonly icon: string;
+  readonly connectorId: ConnectorNames;
 }
 
 export interface Path {
-  name: string;
-  path: string;
+  readonly name: string;
+  readonly path: string;
 }

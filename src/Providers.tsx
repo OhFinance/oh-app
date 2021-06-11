@@ -1,5 +1,5 @@
 import React from "react";
-import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core";
 import { Web3ReactProvider } from "@web3-react/core";
 import { HelmetProvider } from "react-helmet-async";
 import { OhLightTheme } from "@ohfinance/oh-ui";
@@ -13,7 +13,6 @@ const Providers: React.FC = ({ children }) => {
       <Web3ReactProvider getLibrary={getLibrary}>
         <HelmetProvider>
           <ThemeProvider theme={OhLightTheme}>
-            <CssBaseline />
             {children}
           </ThemeProvider>
         </HelmetProvider>

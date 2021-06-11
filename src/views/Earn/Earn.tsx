@@ -5,7 +5,7 @@ import { EarnCardGrid } from "./components/EarnCardGrid";
 import { EarnSettings } from "./components/EarnSettings";
 import { EarnTable } from "./components/EarnTable";
 
-export const Earn = () => {
+const Earn = () => {
   return (
     <ViewWrapper>
       <ViewHeader
@@ -18,3 +18,5 @@ export const Earn = () => {
     </ViewWrapper>
   );
 };
+
+export default Earn;

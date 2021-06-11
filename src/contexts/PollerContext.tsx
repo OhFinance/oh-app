@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-const FAST_INTERVAL = 10000;
-const SLOW_INTERVAL = 60000;
+const FAST_INTERVAL = 10000; // poll every 10s
+const SLOW_INTERVAL = 60000; // poll every 60s
 
-const PollerContext = React.createContext({ slow: 0, fast: 0 });
+export const PollerContext = React.createContext({ slow: 0, fast: 0 });
 
 // This context maintain 2 counters that can be used as a dependencies on other hooks to poll the blockchain at a specified interval
-const PollerContextProvider = ({ children }) => {
+export const PollerContextProvider = ({ children }) => {
   const [slow, setSlow] = useState(0);
   const [fast, setFast] = useState(0);
 
@@ -30,5 +30,3 @@ const PollerContextProvider = ({ children }) => {
     </PollerContext.Provider>
   );
 };
-
-export { PollerContext, PollerContextProvider };

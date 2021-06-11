@@ -1,30 +1,33 @@
-import BigNumber from "bignumber.js";
+import { lazy } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Earn } from "views/Earn";
-import { Dashboard } from "views/Dashboard";
-import { NoMatch } from "views/NoMatch";
-import { Stake } from "views/Stake";
-import { Vote } from "views/Vote";
 import { AppNavigation } from "components/AppNavigation";
+import { CssBaseline } from "@material-ui/core";
+import { ErrorHandledSuspense } from "components/ErrorHandledSuspense";
+import { Loading } from "components/Loading";
 
-BigNumber.config({
-  EXPONENTIAL_AT: 1000,
-  DECIMAL_PLACES: 80,
-});
+// code-splitting to reduce bundle size
+const Dashboard = lazy(() => import('views/Dashboard'))
+const Earn = lazy(() => import('views/Earn'))
+const NoMatch = lazy(() => import('views/NoMatch'))
+const Stake = lazy(() => import('views/Stake'))
+const Vote = lazy(() => import('views/Vote'))
 
 const App = () => {
   return (
     <BrowserRouter>
+      <CssBaseline />
       <AppNavigation />
 
-      <Switch>
-        <Route path="/" exact component={Dashboard} />
-        {/* <Route path="/earn/:id" component={Banks} /> */}
-        <Route path="/earn" component={Earn} />
-        <Route path="/stake" component={Stake} />
-        <Route path="/vote" component={Vote} />
-        <Route component={NoMatch} />
-      </Switch>
+      <ErrorHandledSuspense fallback={<Loading />}>
+        <Switch>
+          <Route path="/" exact component={Dashboard} />
+          {/* <Route path="/earn/:id" component={Banks} /> */}
+          <Route path="/earn" component={Earn} />
+          <Route path="/stake" component={Stake} />
+          <Route path="/vote" component={Vote} />
+          <Route component={NoMatch} />
+        </Switch>
+      </ErrorHandledSuspense>
     </BrowserRouter>
   );
 };

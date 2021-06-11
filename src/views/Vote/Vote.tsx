@@ -4,7 +4,7 @@ import { ViewWrapper } from "components/ViewWrapper";
 import { VoteMetrics } from "./components/VoteMetrics";
 import { VoteTabs } from "./components/VoteTabs";
 
-export const Vote = () => {
+const Vote = () => {
   return (
     <ViewWrapper>
       <ViewHeader
@@ -18,3 +18,5 @@ export const Vote = () => {
     </ViewWrapper>
   );
 };
+
+export default Vote;
