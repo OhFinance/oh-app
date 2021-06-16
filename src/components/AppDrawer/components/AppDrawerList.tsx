@@ -7,7 +7,8 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import paths, { Path } from "config/constants/paths";
+import paths from "config/constants/paths";
+import { Path } from 'config/constants/types'
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { FaHome } from "react-icons/fa";

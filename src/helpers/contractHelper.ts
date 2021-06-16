@@ -10,7 +10,6 @@ import OhManagerAbi from "@ohfinance/oh-web3-types/abi/OhManager.json";
 import OhTimelockAbi from "@ohfinance/oh-web3-types/abi/OhTimelock.json";
 import OhTokenAbi from "@ohfinance/oh-web3-types/abi/OhToken.json";
 import { 
-  BaseContract,
   ERC20, 
   OhBank,
   OhForum,
@@ -19,7 +18,10 @@ import {
   OhManager,
   OhTimelock,
   OhToken,
-} from "@ohfinance/oh-contracts/types";
+} from "@ohfinance/oh-web3-types";
+import {
+  BaseContract
+} from '@ohfinance/oh-web3-types/types/types'
 import { 
   getForumAddress, 
   getGovernorAddress, 

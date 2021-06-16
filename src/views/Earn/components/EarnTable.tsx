@@ -7,7 +7,8 @@ import {
   TableRow,
 } from "@material-ui/core";
 import { TableSurface } from "components/TableSurface";
-import banks, { Bank } from "config/constants/banks";
+import banks from "config/constants/banks";
+import {Bank } from 'config/constants/types'
 import { EarnTableRow } from "./EarnTableRow";
 
 export const EarnTable = () => {

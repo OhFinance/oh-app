@@ -1,5 +1,5 @@
 import { Contract } from "web3-eth-contract";
-import { ERC20, ERC20Permit, OhBank, OhForum, OhToken } from "@ohfinance/oh-web3-types";
+import { ERC20, IERC20Permit, OhBank, OhForum, OhToken } from "@ohfinance/oh-web3-types";
 import { MAX_UINT256 } from "utils/bigNumber";
 import BigNumber from "bignumber.js";
 
@@ -29,10 +29,11 @@ export const balanceOf = async (tokenContract: ERC20, account: string) => {
 
 export const delegate = async (
   tokenContract: OhToken,
+  delegatee: string,
   account: string
 ) => {
   return tokenContract.methods
-    .delegate()
+    .delegate(delegatee)
     .send({ from: account });
 }
 

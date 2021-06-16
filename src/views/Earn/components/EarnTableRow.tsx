@@ -6,7 +6,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import { Flex } from "@ohfinance/oh-ui";
-import { Bank } from "config/constants/banks";
+import { Bank } from "config/constants/types";
 import { FC } from "react";
 import { AvatarGroup } from "@material-ui/lab";
 import { EarnCompositionGroup } from "./EarnCompositionGroup";

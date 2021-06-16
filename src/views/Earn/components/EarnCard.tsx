@@ -3,7 +3,7 @@ import OhLogo from "assets/img/oh-logo.png";
 import { Flex } from "@ohfinance/oh-ui";
 import { Avatar, Box, Button, Grid, Typography } from "@material-ui/core";
 import { FC } from "react";
-import { Bank } from "config/constants/banks";
+import { Bank } from "config/constants/types";
 import { EarnCompositionGroup } from "./EarnCompositionGroup";
 
 export interface EarnCardProps {

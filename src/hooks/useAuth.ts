@@ -3,7 +3,7 @@ import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import { ConnectorNames } from "config/constants/types";
 import { connectorLibrary } from "utils/web3-connectors";
 
-export const useAuth = () => {
+const useAuth = () => {
   // const dispatch = useAppDispatch();
   const { activate, deactivate } = useWeb3React();
   // const { toastError } = useToast();
@@ -54,3 +54,5 @@ export const useAuth = () => {
 
   return { login, logout };
 };
+
+export default useAuth;
