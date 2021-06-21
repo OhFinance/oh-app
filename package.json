@@ -1,7 +1,11 @@
 {
   "name": "@ohfinance/oh-app",
+  "description": "Oh! Finance App",
   "version": "0.1.0",
   "license": "MIT",
+  "author": "Oh! Finance <hello@oh.finance>",
+  "main": "./src/index.tsx",
+  "types": "./types/index.ts",
   "private": true,
   "dependencies": {
     "@fontsource/open-sans": "^4.3.0",

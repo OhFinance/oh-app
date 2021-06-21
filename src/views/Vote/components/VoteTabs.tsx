@@ -16,11 +16,13 @@ export const VoteTabs = () => {
         <Tab label="Propose" />
       </Tabs>
       <Divider />
-      {index === 0 && <VoteView />}
-      {index === 1 && <VoteDelegate />}
-      {index === 2 && <VotePropose />}
+      
 
-      <Box m={2} />
+      <Box m={2}>
+        {index === 0 && <VoteView />}
+        {index === 1 && <VoteDelegate />}
+        {index === 2 && <VotePropose />}
+      </Box>
     </Surface>
   );
 };
