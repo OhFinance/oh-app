@@ -11,10 +11,8 @@ BigNumber.config({
 });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Providers>
-      <App />
-    </Providers>
-  </React.StrictMode>,
+  <Providers>
+    <App />
+  </Providers>,
   document.getElementById("root")
 );

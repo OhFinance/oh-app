@@ -1,12 +1,20 @@
-import { Button } from "@material-ui/core";
-import { useModal } from "@ohfinance/oh-ui";
+import { useModal, Button } from "@ohfinance/oh-ui";
+import { useWeb3React } from "@web3-react/core";
+import { LoginModal } from "components/LoginModal";
+import { getDisplayAddress } from "utils/formatAddress";
 
 export const LoginButton = ({ ...props }) => {
-  // const [onPresent] = useModal()
+  const { account } = useWeb3React();
+  const [onPresentLogin] = useModal(<LoginModal />);
 
   return (
-    <Button variant="contained" color="primary" {...props}>
-      Login
+    <Button
+      onClick={!!account ? console.log : onPresentLogin}
+      variant="contained"
+      color="primary"
+      {...props}
+    >
+      {!!account ? getDisplayAddress(account) : "Login"}
     </Button>
   );
 };

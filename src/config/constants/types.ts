@@ -34,3 +34,17 @@ export interface Path {
   readonly name: string;
   readonly path: string;
 }
+
+export interface Network {
+  chainId: string; // append 0x, parse chainId as hexidecimal string
+  chainName: string;
+  nativeCurrency: NativeCurrency;
+  rpcUrls: string[];
+  blockExplorerUrls: string[];
+}
+
+export interface NativeCurrency {
+  name: string;
+  symbol: string;
+  decimals: number;
+}
