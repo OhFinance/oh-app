@@ -1,26 +1,27 @@
 import { Network } from "./types";
 
+// Avalanche Info: https://docs.avax.network/build/tutorials/platform/launch-your-ethereum-dapp 
 export const Networks: Network[] = [
   {
     chainId: "0xa869",
-    chainName: "Avalanche Fuji Testnet",
+    chainName: "Avalanche FUJI C-Chain",
     nativeCurrency: {
-      name: "AVAX",
-      symbol: "avax",
+      name: "Avalanche",
+      symbol: "AVAX",
       decimals: 18,
     },
-    rpcUrls: [],
-    blockExplorerUrls: [],
+    rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+    blockExplorerUrls: ['https://cchain.explorer.avax-test.network'],
   },
   {
     chainId: "0xa86a",
-    chainName: "Avalanche Mainnet",
+    chainName: "Avalanche Mainnet C-Chain",
     nativeCurrency: {
-      name: "AVAX",
-      symbol: "avax",
+      name: "Avalanche",
+      symbol: "AVAX",
       decimals: 18,
     },
-    rpcUrls: [],
-    blockExplorerUrls: [],
+    rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+    blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
   },
 ];
