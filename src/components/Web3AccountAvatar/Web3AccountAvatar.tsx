@@ -2,12 +2,15 @@ import { FC } from "react";
 import md5 from "md5";
 import Gravatar from "react-gravatar";
 
-export interface AccountAvatarProps {
+export interface Web3AccountAvatarProps {
   account?: string;
   size?: number;
 }
 
-export const AccountAvatar: FC<AccountAvatarProps> = ({ account, size }) => {
+export const Web3AccountAvatar: FC<Web3AccountAvatarProps> = ({
+  account,
+  size,
+}) => {
   return (
     <Gravatar
       email={md5(account || "")}

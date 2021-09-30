@@ -1,8 +1,7 @@
 import { Avatar, Box, Grid, makeStyles, Typography } from "@material-ui/core";
 import { Button, Flex } from "@ohfinance/oh-ui";
-import { FC, useCallback } from "react";
+import { FC } from "react";
 import { FaCircle } from "react-icons/fa";
-import { setupNetwork } from "utils/wallet";
 
 interface Web3NetworkModalButtonProps {
   networkIcon: string;
@@ -14,11 +13,19 @@ interface Web3NetworkModalButtonProps {
 const useStyles = makeStyles((theme) => ({
   button: {
     justifyContent: "flex-start",
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+  },
+  grid: {
+    paddingLeft: theme.spacing(1),
+    // paddingRight: theme.spacing(1),
   },
   avatar: {
-    height: "22px",
-    width: "22px",
+    height: "32px",
+    width: "32px",
     backgroundColor: "#efc45c",
     color: "#efc45c",
   },
@@ -43,7 +50,12 @@ export const Web3NetworkModalButton: FC<Web3NetworkModalButtonProps> = ({
       variant={!!active ? "outlined" : "text"}
       onClick={onClick}
     >
-      <Grid container alignItems="center" justify="space-between">
+      <Grid
+        container
+        alignItems="center"
+        justify="space-between"
+        className={classes.grid}
+      >
         <Grid item>
           <Box ml={1} mr={8}>
             <Typography variant="body1" align="left">

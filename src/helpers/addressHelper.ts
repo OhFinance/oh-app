@@ -1,6 +1,6 @@
 import { Address } from "config/constants/types";
 import contracts from "config/constants/contracts";
-import tokens from "config/constants/tokens";
+import { Tokens } from "config/constants/tokens";
 
 export const getAddress = (address: Address, chainId?: number): string => {
   // console.log(address[chainId]);
@@ -32,13 +32,13 @@ export const getVestingAddress = (): string => {
 // token addresses
 
 export const getOhUsdcAddress = (): string => {
-  return getAddress(tokens.ohUsdc.address);
+  return getAddress(Tokens.ohUsdc.address);
 };
 
 export const getTokenAddress = (chainId?: number): string => {
-  return getAddress(tokens.ohToken.address, chainId || undefined);
+  return getAddress(Tokens.ohToken.address, chainId || undefined);
 };
 
 export const getUsdcAddress = (): string => {
-  return getAddress(tokens.usdc.address);
+  return getAddress(Tokens.usdc.address);
 };

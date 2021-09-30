@@ -6,12 +6,13 @@ import {
   TableCell,
   TableRow,
 } from "@material-ui/core";
-import { Flex } from "@ohfinance/oh-ui";
+import { Flex, useModal } from "@ohfinance/oh-ui";
 import { Bank } from "config/constants/types";
 import { FC } from "react";
 import { AvatarGroup } from "@material-ui/lab";
 import { EarnCompositionGroup } from "./EarnCompositionGroup";
 import { FaEllipsisV, FaMinus, FaPlus, FaPlusCircle } from "react-icons/fa";
+import { EarnDetailsModal } from "./EarnDetailsModal";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -30,28 +31,40 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
   ...props
 }) => {
   const classes = useStyles();
+  const [onPresentEarnDetailsModal] = useModal(
+    <EarnDetailsModal bank={bank} />
+  );
 
   return (
     <TableRow {...props}>
-      <TableCell className={isLast && classes.cell}>
-        <Avatar src={bank.image} />
-      </TableCell>
-      <TableCell className={isLast && classes.cell}>{bank.symbol}</TableCell>
-      <TableCell className={isLast && classes.cell}>
-        {bank.description}
-      </TableCell>
+      <TableCell className={isLast && classes.cell}>{bank.name}</TableCell>
+
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <Avatar src={bank.underlying} />
+          <Avatar src={bank.image} />
+        </Flex>
+      </TableCell>
+      {/* <TableCell className={isLast && classes.cell}>
+        {bank.description}
+      </TableCell> */}
+      <TableCell className={isLast && classes.cell}>
+        <Flex center>
+          <Avatar src={bank.underlyingImage} />
         </Flex>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <EarnCompositionGroup composition={bank.composition} />
+          <EarnCompositionGroup composition={bank.compositionImages} />
         </Flex>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <b>18%</b>
+      </TableCell>
+      <TableCell className={isLast && classes.cell}>
+        <b>0.000</b>
+      </TableCell>
+      <TableCell className={isLast && classes.cell}>
+        <b>$0.000</b>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
@@ -69,7 +82,12 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <IconButton color="inherit" size="small" style={{ padding: "8px" }}>
+          <IconButton
+            onClick={onPresentEarnDetailsModal}
+            color="inherit"
+            size="small"
+            style={{ padding: "8px" }}
+          >
             <FaEllipsisV />
           </IconButton>
         </Flex>

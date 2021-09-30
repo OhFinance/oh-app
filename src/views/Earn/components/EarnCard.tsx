@@ -29,7 +29,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank, ...props }) => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Flex center column>
-              <Avatar src={bank.underlying} />
+              <Avatar src={bank.underlyingImage} />
               <Typography align="center" variant="body2">
                 Underlying
               </Typography>
@@ -37,7 +37,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank, ...props }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Flex center column>
-              <EarnCompositionGroup composition={bank.composition} />
+              <EarnCompositionGroup composition={bank.compositionImages} />
               <Typography align="center" variant="body2">
                 Composition
               </Typography>

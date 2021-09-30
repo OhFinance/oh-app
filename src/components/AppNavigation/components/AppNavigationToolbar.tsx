@@ -1,7 +1,6 @@
 import { Box, Grid } from "@material-ui/core";
 import { Flex, useMobile } from "@ohfinance/oh-ui";
 import { useWeb3React } from "@web3-react/core";
-import { AccountAvatar } from "components/AccountAvatar";
 import { BalanceButton } from "components/BalanceButton";
 import { Web3LoginButton } from "components/Web3LoginButton";
 import { Web3NetworkButton } from "components/Web3NetworkButton";
@@ -27,7 +26,6 @@ export const AppNavigationToolbar = () => {
       <Grid item>
         <Web3LoginButton />
       </Grid>
-      {/* <AccountAvatar size={36} account={account || ""} /> */}
     </Grid>
   );
 };

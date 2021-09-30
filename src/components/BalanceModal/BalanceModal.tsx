@@ -7,12 +7,22 @@ import { getFullDisplayBalance } from "utils/formatBalances";
 import { useWeb3React } from "@web3-react/core";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { getTokenAddress } from "helpers/addressHelper";
-import { FaExchangeAlt, FaExternalLinkAlt } from "react-icons/fa";
+import { FaExchangeAlt, FaExternalLinkAlt, FaLink } from "react-icons/fa";
+import { Networks } from "config/constants/networks";
+import { Tokens } from "config/constants/tokens";
+import BigNumber from "bignumber.js";
 
-export const BalanceModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
-  const { account, chainId } = useWeb3React();
-  const { balance } = useTokenBalance(getTokenAddress(chainId));
+interface BalanceModalProps extends ModalProps {
+  tokenBalance: BigNumber;
+  chainId: number;
+}
 
+export const BalanceModal: FC<BalanceModalProps> = ({
+  isOpen,
+  onDismiss,
+  tokenBalance,
+  chainId,
+}) => {
   return (
     <Modal title="Oh! Token" isOpen={!!isOpen} onDismiss={onDismiss}>
       <Flex p={2} center>
@@ -20,7 +30,7 @@ export const BalanceModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
       </Flex>
       <Typography align="center" variant="body1">
         <b>
-          <Balance value={+getFullDisplayBalance(balance)} suffix=" OH" />
+          <Balance value={+getFullDisplayBalance(tokenBalance)} suffix=" OH" />
         </b>
       </Typography>
       <Typography
@@ -34,10 +44,11 @@ export const BalanceModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
 
       <Flex center my={2}>
         <Button
-          endIcon={<FaExternalLinkAlt />}
+          endIcon={<FaLink />}
           color="primary"
-          size="small"
-          style={{ alignItems: "center", justifyContent: "center" }}
+          // size="small"
+          // style={{ alignItems: "center", justifyContent: "center" }}
+          href={`${Networks[chainId].blockExplorerUrls[0]}/address/${Tokens.ohToken.address}`}
         >
           Contract Address
         </Button>
@@ -49,7 +60,7 @@ export const BalanceModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
         color="secondary"
         startIcon={<FaExchangeAlt />}
       >
-        Buy Oh! Tokens
+        Swap Oh! Tokens
       </Button>
     </Modal>
   );

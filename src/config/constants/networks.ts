@@ -32,7 +32,7 @@ export const Networks: { [chainId: number]: Network } = {
       decimals: 18,
     },
     rpcUrls: ["https://rinkeby.infura.io"],
-    blockExplorerUrls: ["https://rinkeby.etherscan.io/"],
+    blockExplorerUrls: ["https://rinkeby.etherscan.io"],
   },
   42: {
     chainId: "0x2a",
@@ -43,7 +43,7 @@ export const Networks: { [chainId: number]: Network } = {
       decimals: 18,
     },
     rpcUrls: ["https://kovan.infura.io"],
-    blockExplorerUrls: ["https://kovan.etherscan.io/"],
+    blockExplorerUrls: ["https://kovan.etherscan.io"],
   },
   56: {
     chainId: "0x38",
@@ -98,7 +98,7 @@ export const Networks: { [chainId: number]: Network } = {
       decimals: 18,
     },
     rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
-    blockExplorerUrls: ["https://cchain.explorer.avax.network/"],
+    blockExplorerUrls: ["https://cchain.explorer.avax.network"],
   },
 };
 

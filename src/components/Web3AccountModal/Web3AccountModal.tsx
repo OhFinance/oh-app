@@ -8,14 +8,18 @@ import {
 } from "@material-ui/core";
 import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
 import { useWeb3React } from "@web3-react/core";
-import { AccountAvatar } from "components/AccountAvatar";
+import { LinkButton } from "components/LinkButton";
+import { Web3AccountAvatar } from "components/Web3AccountAvatar";
 import useAuth from "hooks/useAuth";
+import { useNetwork } from "hooks/useNetwork";
+import { useToken } from "hooks/useToken";
 import { FC } from "react";
 import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
 
-export const AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
+export const Web3AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
   const { logout } = useAuth();
   const { account } = useWeb3React();
+  const { blockExplorerUrl } = useNetwork();
 
   return (
     <Modal
@@ -26,7 +30,7 @@ export const AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
     >
       <Flex column>
         <Flex center>
-          <AccountAvatar account={account} />
+          <Web3AccountAvatar account={account} size={128} />
         </Flex>
         <Typography>Your Account</Typography>
         {/* <FormControl> */}
@@ -43,14 +47,18 @@ export const AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
         {/* </FormControl> */}
 
         <Box textAlign="center" mt={1}>
-          <Button variant="text" endIcon={<FaExternalLinkAlt />} href="">
+          <LinkButton
+            onClick={() =>
+              window.open(`${blockExplorerUrl}/address/${account}`, "_blank")
+            }
+          >
             View on Block Explorer
-          </Button>
+          </LinkButton>
         </Box>
 
         <Box textAlign="center" mt={2}>
           <Button
-            variant="text"
+            variant="contained"
             color="secondary"
             onClick={() => {
               logout();

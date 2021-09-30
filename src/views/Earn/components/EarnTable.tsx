@@ -13,16 +13,18 @@ import { EarnTableRow } from "./EarnTableRow";
 
 export const EarnTable = () => {
   return (
-    <TableSurface title="Oh! Banks">
+    <TableSurface title="Oh! Yield Indexes">
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell style={{ paddingLeft: 30 }}>#</TableCell>
-            <TableCell>Symbol</TableCell>
-            <TableCell>Description</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell align="center">Icon</TableCell>
+            {/* <TableCell>Description</TableCell> */}
             <TableCell align="center">Underlying</TableCell>
             <TableCell align="center">Composition</TableCell>
             <TableCell>APY</TableCell>
+            <TableCell>Balance</TableCell>
+            <TableCell>Value</TableCell>
             <TableCell align="center">Deposit</TableCell>
             <TableCell align="center">Withdraw</TableCell>
             <TableCell align="center">Details</TableCell>

@@ -1,7 +1,6 @@
 import { Button } from "@material-ui/core";
 import { useModal } from "@ohfinance/oh-ui";
 import { useWeb3React } from "@web3-react/core";
-import BigNumber from "bignumber.js";
 import { BalanceModal } from "components/BalanceModal";
 import { getTokenAddress } from "helpers/addressHelper";
 import { useTokenBalance } from "hooks/useTokenBalance";
@@ -13,7 +12,9 @@ import { Balance } from "../Balance";
 export const BalanceButton = ({ ...props }) => {
   const { account, chainId } = useWeb3React();
   const { balance } = useTokenBalance(getTokenAddress(chainId));
-  const [onPresentBalanceModal] = useModal(<BalanceModal />);
+  const [onPresentBalanceModal] = useModal(
+    <BalanceModal tokenBalance={balance} chainId={chainId} />
+  );
 
   if (!account) {
     return null;

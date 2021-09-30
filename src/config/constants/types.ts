@@ -12,11 +12,14 @@ export interface Token {
 
 export interface Bank {
   readonly image: string;
+  readonly name: string;
   readonly symbol: string;
   readonly description: string;
   readonly alt: string;
-  readonly underlying: string;
+  readonly underlying: Token;
+  readonly underlyingImage: string;
   readonly composition: string[];
+  readonly compositionImages: string[];
 }
 
 export enum ConnectorNames {
