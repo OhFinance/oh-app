@@ -1,9 +1,10 @@
-import { Box } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import { Flex, useMobile } from "@ohfinance/oh-ui";
 import { useWeb3React } from "@web3-react/core";
 import { AccountAvatar } from "components/AccountAvatar";
 import { BalanceButton } from "components/BalanceButton";
-import { LoginButton } from "components/LoginButton";
+import { Web3LoginButton } from "components/Web3LoginButton";
+import { Web3NetworkButton } from "components/Web3NetworkButton";
 import { Fragment } from "react";
 
 export const AppNavigationToolbar = () => {
@@ -11,11 +12,22 @@ export const AppNavigationToolbar = () => {
   const { account } = useWeb3React();
 
   return (
-    <Flex p={1}>
-      {!mobile && <BalanceButton style={{ marginRight: 8 }} />}
+    <Grid container spacing={1} alignItems="center" justify="flex-end">
+      {!mobile && (
+        <Grid item>
+          <Web3NetworkButton />
+        </Grid>
+      )}
+      {!mobile && (
+        <Grid item>
+          <BalanceButton />
+        </Grid>
+      )}
 
-      <LoginButton style={{ marginRight: 8 }} />
-      <AccountAvatar size={36} account={account || ""} />
-    </Flex>
+      <Grid item>
+        <Web3LoginButton />
+      </Grid>
+      {/* <AccountAvatar size={36} account={account || ""} /> */}
+    </Grid>
   );
 };

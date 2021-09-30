@@ -1,12 +1,13 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Container, Grid, Typography } from "@material-ui/core";
 import { Flex, Modal, ModalProps, Button } from "@ohfinance/oh-ui";
 import { FC } from "react";
-import { LoginModalButton } from "./components/LoginModalButton";
+import { Web3LoginModalButton } from "./components/Web3LoginModalButton";
 import connectors from "config/constants/connectors";
 import useAuth from "hooks/useAuth";
 import { CONNECTOR_STORAGE_KEY } from "config/constants/values";
+import { Web3NetworkButton } from "components/Web3NetworkButton";
 
-export const LoginModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
+export const Web3LoginModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
   const { login } = useAuth();
 
   return (
@@ -19,7 +20,7 @@ export const LoginModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
       <Grid container spacing={2}>
         {connectors.map((connector, i) => (
           <Grid item key={i} xs={12} md={6}>
-            <LoginModalButton
+            <Web3LoginModalButton
               connector={connector}
               onLogin={() => {
                 login(connector.connectorId);

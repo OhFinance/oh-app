@@ -10,7 +10,7 @@ interface LoginModalButtonProps {
   onLogin: () => void;
 }
 
-export const LoginModalButton: FC<LoginModalButtonProps> = ({
+export const Web3LoginModalButton: FC<LoginModalButtonProps> = ({
   connector,
   onLogin,
 }) => {
