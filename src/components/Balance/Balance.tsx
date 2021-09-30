@@ -1,5 +1,5 @@
-import { FC, useEffect, useRef } from "react"
-import CountUp from "react-countup"
+import { FC, useEffect, useRef } from "react";
+import CountUp from "react-countup";
 
 export interface BalanceProps {
   value: number;
@@ -14,20 +14,20 @@ export const Balance: FC<BalanceProps> = ({
   delay = 1,
   suffix,
 }) => {
-  const previousValue = useRef(0)
+  const previousValue = useRef(0);
 
   useEffect(() => {
-    previousValue.current = value
-  }, [value])
+    previousValue.current = value;
+  }, [value]);
 
   return (
     <CountUp
       start={previousValue.current}
       end={value}
       decimals={decimals}
-      delay={delay} 
+      delay={delay}
       suffix={suffix}
-      separator=","  
+      separator=","
     />
-  )
-}
+  );
+};

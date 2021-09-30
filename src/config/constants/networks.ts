@@ -1,9 +1,14 @@
 import { Network } from "./types";
 
 import Ethereum from "assets/img/eth.svg";
+import Kovan from "assets/img/kovan.svg";
+import Rinkeby from "assets/img/rinkeby.svg";
 import Avalanche from "assets/img/avax.svg";
+import Fuji from "assets/img/fuji.svg";
 
 export const SupportedNetworks = [1, 43114];
+
+export const SupportedTestNetworks = [4, 42, 43113];
 
 // Avalanche Info: https://docs.avax.network/build/tutorials/platform/launch-your-ethereum-dapp
 export const Networks: { [chainId: number]: Network } = {
@@ -17,6 +22,28 @@ export const Networks: { [chainId: number]: Network } = {
     },
     rpcUrls: ["https://mainnet.infura.io/v3"],
     blockExplorerUrls: ["https://etherscan.com"],
+  },
+  4: {
+    chainId: "0x4",
+    chainName: "Rinkeby",
+    nativeCurrency: {
+      name: "Ethereum",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: ["https://rinkeby.infura.io"],
+    blockExplorerUrls: ["https://rinkeby.etherscan.io/"],
+  },
+  42: {
+    chainId: "0x2a",
+    chainName: "Kovan",
+    nativeCurrency: {
+      name: "Ethereum",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: ["https://kovan.infura.io"],
+    blockExplorerUrls: ["https://kovan.etherscan.io/"],
   },
   56: {
     chainId: "0x38",
@@ -42,7 +69,7 @@ export const Networks: { [chainId: number]: Network } = {
   },
   250: {
     chainId: "0xfa",
-    chainName: "Fantom",
+    chainName: "Fantom Opera",
     nativeCurrency: {
       name: "Fantom",
       symbol: "FTM",
@@ -50,6 +77,17 @@ export const Networks: { [chainId: number]: Network } = {
     },
     rpcUrls: ["https://rpcapi.fantom.network"],
     blockExplorerUrls: ["https://ftmscan.com"],
+  },
+  43113: {
+    chainId: "0xa869",
+    chainName: "Fuji",
+    nativeCurrency: {
+      name: "Avalanche",
+      symbol: "AVAX",
+      decimals: 18,
+    },
+    rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+    blockExplorerUrls: ["https://cchain.explorer.avax-test.network"],
   },
   43114: {
     chainId: "0xa86a",
@@ -64,43 +102,10 @@ export const Networks: { [chainId: number]: Network } = {
   },
 };
 
-export const TestNetworks: { [chainId: number]: Network } = {
-  4: {
-    chainId: "",
-    chainName: "Rinkeby Testnet",
-    nativeCurrency: {
-      name: "Ethereum",
-      symbol: "ETH",
-      decimals: 18,
-    },
-    rpcUrls: [""],
-    blockExplorerUrls: [""],
-  },
-  42: {
-    chainId: "",
-    chainName: "Kovan Testnet",
-    nativeCurrency: {
-      name: "Ethereum",
-      symbol: "ETH",
-      decimals: 18,
-    },
-    rpcUrls: [""],
-    blockExplorerUrls: [""],
-  },
-  43113: {
-    chainId: "0xa869",
-    chainName: "Avalanche FUJI C-Chain",
-    nativeCurrency: {
-      name: "Avalanche",
-      symbol: "AVAX",
-      decimals: 18,
-    },
-    rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
-    blockExplorerUrls: ["https://cchain.explorer.avax-test.network"],
-  },
-};
-
 export const NetworkIcons: { [chainId: number]: string } = {
   1: Ethereum,
+  4: Rinkeby,
+  42: Kovan,
+  43113: Fuji,
   43114: Avalanche,
 };

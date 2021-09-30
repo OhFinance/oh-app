@@ -15,6 +15,7 @@ const tokens: { [token: string]: Token } = {
     address: {
       1: "",
       4: "",
+      42: "0x6b461A994d76d8248a6B439D4a19cDfd821409eE",
     },
   },
   ohUsdc: {

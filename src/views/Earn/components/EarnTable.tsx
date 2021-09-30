@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { TableSurface } from "components/TableSurface";
 import banks from "config/constants/banks";
-import {Bank } from 'config/constants/types'
+import { Bank } from "config/constants/types";
 import { EarnTableRow } from "./EarnTableRow";
 
 export const EarnTable = () => {
@@ -23,7 +23,9 @@ export const EarnTable = () => {
             <TableCell align="center">Underlying</TableCell>
             <TableCell align="center">Composition</TableCell>
             <TableCell>APY</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell align="center">Deposit</TableCell>
+            <TableCell align="center">Withdraw</TableCell>
+            <TableCell align="center">Details</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

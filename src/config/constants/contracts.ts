@@ -2,20 +2,20 @@ import { Address } from "./types";
 
 const contracts: { [contract: string]: Address } = {
   governor: {
-    1: ''
+    1: "",
   },
   forum: {
-    1: ''
+    1: "",
   },
   liquidator: {
-    1: ''
+    1: "",
   },
   manager: {
-    1: ''
+    1: "",
   },
   vesting: {
-    1: ''
-  }
+    1: "",
+  },
 };
 
 export default contracts;

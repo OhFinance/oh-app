@@ -1,6 +1,7 @@
 import {
   Avatar,
   Button,
+  IconButton,
   makeStyles,
   TableCell,
   TableRow,
@@ -10,6 +11,7 @@ import { Bank } from "config/constants/types";
 import { FC } from "react";
 import { AvatarGroup } from "@material-ui/lab";
 import { EarnCompositionGroup } from "./EarnCompositionGroup";
+import { FaEllipsisV, FaMinus, FaPlus, FaPlusCircle } from "react-icons/fa";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -53,9 +55,23 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <Button color="primary" variant="contained">
-            Deposit / Withdraw
-          </Button>
+          <IconButton color="inherit" size="small" style={{ padding: "8px" }}>
+            <FaPlus />
+          </IconButton>
+        </Flex>
+      </TableCell>
+      <TableCell className={isLast && classes.cell}>
+        <Flex center>
+          <IconButton color="inherit" size="small" style={{ padding: "8px" }}>
+            <FaMinus />
+          </IconButton>
+        </Flex>
+      </TableCell>
+      <TableCell className={isLast && classes.cell}>
+        <Flex center>
+          <IconButton color="inherit" size="small" style={{ padding: "8px" }}>
+            <FaEllipsisV />
+          </IconButton>
         </Flex>
       </TableCell>
     </TableRow>

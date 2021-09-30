@@ -16,6 +16,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-start",
     padding: theme.spacing(2),
   },
+  avatar: {
+    height: "22px",
+    width: "22px",
+    backgroundColor: "#efc45c",
+    color: "#efc45c",
+  },
   activeIcon: {
     color: theme.palette.success.main,
   },
@@ -33,7 +39,7 @@ export const Web3NetworkModalButton: FC<Web3NetworkModalButtonProps> = ({
     <Button
       fullWidth
       className={classes.button}
-      startIcon={<Avatar src={networkIcon} />}
+      startIcon={<Avatar src={networkIcon} className={classes.avatar} />}
       variant={!!active ? "outlined" : "text"}
       onClick={onClick}
     >
