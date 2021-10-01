@@ -5,6 +5,8 @@ import {
   InputLabel,
   Typography,
   Box,
+  makeStyles,
+  IconButton,
 } from "@material-ui/core";
 import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
 import { useWeb3React } from "@web3-react/core";
@@ -16,10 +18,17 @@ import { useToken } from "hooks/useToken";
 import { FC } from "react";
 import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
 
+const useStyles = makeStyles((theme) => ({
+  input: {
+    cursor: "copy",
+  },
+}));
+
 export const Web3AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
   const { logout } = useAuth();
   const { account } = useWeb3React();
   const { blockExplorerUrl } = useNetwork();
+  const classes = useStyles();
 
   return (
     <Modal
@@ -37,21 +46,22 @@ export const Web3AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
         {/* <InputLabel htmlFor="account-address">Your Address</InputLabel> */}
         <OutlinedInput
           id="account-address"
+          className={classes.input}
           value={account}
           endAdornment={
             <InputAdornment position="end">
-              <FaCopy />
+              <IconButton
+                onClick={() => navigator.clipboard.writeText(account)}
+              >
+                <FaCopy />
+              </IconButton>
             </InputAdornment>
           }
         />
         {/* </FormControl> */}
 
         <Box textAlign="center" mt={1}>
-          <LinkButton
-            onClick={() =>
-              window.open(`${blockExplorerUrl}/address/${account}`, "_blank")
-            }
-          >
+          <LinkButton link={`${blockExplorerUrl}/address/${account}`}>
             View on Block Explorer
           </LinkButton>
         </Box>

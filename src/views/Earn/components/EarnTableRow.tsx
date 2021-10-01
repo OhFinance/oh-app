@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Button,
   IconButton,
   makeStyles,
   TableCell,
@@ -9,10 +8,10 @@ import {
 import { Flex, useModal } from "@ohfinance/oh-ui";
 import { Bank } from "config/constants/types";
 import { FC } from "react";
-import { AvatarGroup } from "@material-ui/lab";
 import { EarnCompositionGroup } from "./EarnCompositionGroup";
-import { FaEllipsisV, FaMinus, FaPlus, FaPlusCircle } from "react-icons/fa";
+import { FaEllipsisV, FaMinus, FaPlus } from "react-icons/fa";
 import { EarnDetailsModal } from "./EarnDetailsModal";
+import { EarnActionModal } from "./EarnActionModal";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -31,8 +30,12 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
   ...props
 }) => {
   const classes = useStyles();
-  const [onPresentEarnDetailsModal] = useModal(
-    <EarnDetailsModal bank={bank} />
+  const [onPresentDetailsModal] = useModal(<EarnDetailsModal bank={bank} />);
+  const [onPresentDepositModal] = useModal(
+    <EarnActionModal action="Deposit" bank={bank} />
+  );
+  const [onPresentWithdrawModal] = useModal(
+    <EarnActionModal action="Withdraw" bank={bank} />
   );
 
   return (
@@ -68,14 +71,24 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <IconButton color="inherit" size="small" style={{ padding: "8px" }}>
+          <IconButton
+            onClick={onPresentDepositModal}
+            color="inherit"
+            size="small"
+            style={{ padding: "8px" }}
+          >
             <FaPlus />
           </IconButton>
         </Flex>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <IconButton color="inherit" size="small" style={{ padding: "8px" }}>
+          <IconButton
+            onClick={onPresentWithdrawModal}
+            color="inherit"
+            size="small"
+            style={{ padding: "8px" }}
+          >
             <FaMinus />
           </IconButton>
         </Flex>
@@ -83,7 +96,7 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       <TableCell className={isLast && classes.cell}>
         <Flex center>
           <IconButton
-            onClick={onPresentEarnDetailsModal}
+            onClick={onPresentDetailsModal}
             color="inherit"
             size="small"
             style={{ padding: "8px" }}

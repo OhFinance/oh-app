@@ -11,6 +11,9 @@ import { FaExchangeAlt, FaExternalLinkAlt, FaLink } from "react-icons/fa";
 import { Networks } from "config/constants/networks";
 import { Tokens } from "config/constants/tokens";
 import BigNumber from "bignumber.js";
+import { useNetwork } from "hooks/useNetwork";
+import { useToken } from "hooks/useToken";
+import { LinkButton } from "components/LinkButton";
 
 interface BalanceModalProps extends ModalProps {
   tokenBalance: BigNumber;
@@ -21,8 +24,10 @@ export const BalanceModal: FC<BalanceModalProps> = ({
   isOpen,
   onDismiss,
   tokenBalance,
-  chainId,
 }) => {
+  const { blockExplorerUrl } = useNetwork();
+  const { address } = useToken("ohToken");
+
   return (
     <Modal title="Oh! Token" isOpen={!!isOpen} onDismiss={onDismiss}>
       <Flex p={2} center>
@@ -43,15 +48,9 @@ export const BalanceModal: FC<BalanceModalProps> = ({
       </Typography>
 
       <Flex center my={2}>
-        <Button
-          endIcon={<FaLink />}
-          color="primary"
-          // size="small"
-          // style={{ alignItems: "center", justifyContent: "center" }}
-          href={`${Networks[chainId].blockExplorerUrls[0]}/address/${Tokens.ohToken.address}`}
-        >
+        <LinkButton link={`${blockExplorerUrl}/address/${address}`}>
           Contract Address
-        </Button>
+        </LinkButton>
       </Flex>
 
       <Button

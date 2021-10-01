@@ -3,6 +3,10 @@ import { Button } from "@ohfinance/oh-ui";
 import { FC } from "react";
 import { FaLink } from "react-icons/fa";
 
+interface LinkButtonProps extends ButtonProps {
+  link: string;
+}
+
 const useStyles = makeStyles((theme) => ({
   icon: {
     height: 12,
@@ -14,7 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const LinkButton: FC<ButtonProps> = ({ children, ...props }) => {
+export const LinkButton: FC<LinkButtonProps> = ({
+  link,
+  children,
+  ...props
+}) => {
   const classes = useStyles();
   return (
     <Button
@@ -22,6 +30,7 @@ export const LinkButton: FC<ButtonProps> = ({ children, ...props }) => {
       size="small"
       endIcon={<FaLink className={classes.icon} />}
       className={classes.button}
+      onClick={() => window.open(link, "_blank")}
       {...props}
     >
       {children}

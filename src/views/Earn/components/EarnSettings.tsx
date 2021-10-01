@@ -22,29 +22,27 @@ const useStyles = makeStyles((theme) => ({
 export const EarnSettings = () => {
   const classes = useStyles();
   const mobile = useMobile();
-  const {displayMode, setCardDisplay, setTableDisplay} = useEarn();
+  const { displayMode, setCardDisplay, setTableDisplay } = useEarn();
 
   return (
     <Box mb={2}>
       <Flex justify="space-between" align="center">
         {!mobile && (
           <ButtonGroup color="default">
-            <Button 
-              className={classes.button} 
-              onClick={setTableDisplay}
-            >
-              <ViewListRoundedIcon color={displayMode === 'table' ? "primary" : "disabled"} />
+            <Button className={classes.button} onClick={setTableDisplay}>
+              <ViewListRoundedIcon
+                color={displayMode === "table" ? "primary" : "disabled"}
+              />
             </Button>
-            <Button 
-              className={classes.button} 
-              onClick={setCardDisplay}
-            >
-              <ViewModuleRoundedIcon color={displayMode === 'card' ? "primary" : "disabled"}  />
+            <Button className={classes.button} onClick={setCardDisplay}>
+              <ViewModuleRoundedIcon
+                color={displayMode === "card" ? "primary" : "disabled"}
+              />
             </Button>
           </ButtonGroup>
         )}
 
-        <EarnSearchBar />
+        {/* <EarnSearchBar /> */}
       </Flex>
     </Box>
   );
