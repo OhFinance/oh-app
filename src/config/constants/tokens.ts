@@ -30,8 +30,9 @@ export const Tokens: { [token: string]: Token } = {
     symbol: "USDC",
     decimals: 6,
     address: {
-      1: "",
-      4: "",
+      1: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      4: "0x4DBCdF9B62e891a7cec5A2568C3F4FAF9E8Abe2b",
+      42: "0xb7a4F3E9097C08dA09517b5aB877F7a917224ede", // compound usdc
     },
   },
   usdt: {

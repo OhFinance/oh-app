@@ -1,6 +1,6 @@
 import { Avatar, Box, Typography } from "@material-ui/core";
 import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import OhToken from "assets/img/oh-token.svg";
 import { Balance } from "components/Balance";
 import { getFullDisplayBalance } from "utils/formatBalances";
@@ -12,7 +12,6 @@ import { Networks } from "config/constants/networks";
 import { Tokens } from "config/constants/tokens";
 import BigNumber from "bignumber.js";
 import { useNetwork } from "hooks/useNetwork";
-import { useToken } from "hooks/useToken";
 import { LinkButton } from "components/LinkButton";
 
 interface BalanceModalProps extends ModalProps {
@@ -25,8 +24,9 @@ export const BalanceModal: FC<BalanceModalProps> = ({
   onDismiss,
   tokenBalance,
 }) => {
+  const { chainId } = useWeb3React();
   const { blockExplorerUrl } = useNetwork();
-  const { address } = useToken("ohToken");
+  const address = useMemo(() => getTokenAddress(chainId), [chainId]);
 
   return (
     <Modal title="Oh! Token" isOpen={!!isOpen} onDismiss={onDismiss}>
@@ -35,7 +35,7 @@ export const BalanceModal: FC<BalanceModalProps> = ({
       </Flex>
       <Typography align="center" variant="body1">
         <b>
-          <Balance value={+getFullDisplayBalance(tokenBalance)} suffix=" OH" />
+          <Balance value={getFullDisplayBalance(tokenBalance)} suffix=" OH" />
         </b>
       </Typography>
       <Typography

@@ -12,6 +12,8 @@ import { EarnCompositionGroup } from "./EarnCompositionGroup";
 import { FaEllipsisV, FaMinus, FaPlus } from "react-icons/fa";
 import { EarnDetailsModal } from "./EarnDetailsModal";
 import { EarnActionModal } from "./EarnActionModal";
+import { EarnDepositModal } from "./EarnDepositModal";
+import { EarnWithdrawModal } from "./EarnWithdrawModal";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -31,12 +33,8 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
 }) => {
   const classes = useStyles();
   const [onPresentDetailsModal] = useModal(<EarnDetailsModal bank={bank} />);
-  const [onPresentDepositModal] = useModal(
-    <EarnActionModal action="Deposit" bank={bank} />
-  );
-  const [onPresentWithdrawModal] = useModal(
-    <EarnActionModal action="Withdraw" bank={bank} />
-  );
+  const [onPresentDepositModal] = useModal(<EarnDepositModal bank={bank} />);
+  const [onPresentWithdrawModal] = useModal(<EarnWithdrawModal bank={bank} />);
 
   return (
     <TableRow {...props}>

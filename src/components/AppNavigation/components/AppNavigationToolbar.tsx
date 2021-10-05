@@ -23,9 +23,11 @@ export const AppNavigationToolbar = () => {
         </Grid>
       )}
 
-      <Grid item>
-        <Web3LoginButton />
-      </Grid>
+      {!!account && (
+        <Grid item>
+          <Web3LoginButton />
+        </Grid>
+      )}
     </Grid>
   );
 };

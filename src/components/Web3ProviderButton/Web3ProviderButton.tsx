@@ -1,16 +1,14 @@
 import { Typography } from "@material-ui/core";
 import { Button, Flex, useMobile } from "@ohfinance/oh-ui";
 import { Connector } from "config/constants/types";
-import { CONNECTOR_STORAGE_KEY } from "config/constants/values";
-import useAuth from "hooks/useAuth";
-import { FC, useCallback } from "react";
+import { FC } from "react";
 
-interface LoginModalButtonProps {
+interface Web3ProviderButtonProps {
   connector: Connector;
   onLogin: () => void;
 }
 
-export const Web3LoginModalButton: FC<LoginModalButtonProps> = ({
+export const Web3ProviderButton: FC<Web3ProviderButtonProps> = ({
   connector,
   onLogin,
 }) => {

@@ -41,7 +41,7 @@ export const AppNavigation = () => {
         elevation={0}
         className={classes.appBar}
       >
-        <Toolbar disableGutters>
+        <Toolbar>
           <Flex grow align="center" justify="flex-start">
             {mobile && (
               <Fragment>

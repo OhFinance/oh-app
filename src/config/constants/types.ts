@@ -10,10 +10,9 @@ export interface Token {
   readonly decimals?: number;
 }
 
-export interface Bank {
+export interface Bank extends Token {
   readonly image: string;
   readonly name: string;
-  readonly symbol: string;
   readonly description: string;
   readonly alt: string;
   readonly underlying: Token;

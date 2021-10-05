@@ -2,7 +2,7 @@ import { FC, useEffect, useRef } from "react";
 import CountUp from "react-countup";
 
 export interface BalanceProps {
-  value: number;
+  value: number | string;
   decimals?: number;
   delay?: number;
   suffix?: string;
@@ -17,13 +17,13 @@ export const Balance: FC<BalanceProps> = ({
   const previousValue = useRef(0);
 
   useEffect(() => {
-    previousValue.current = value;
+    previousValue.current = +value;
   }, [value]);
 
   return (
     <CountUp
       start={previousValue.current}
-      end={value}
+      end={+value}
       decimals={decimals}
       delay={delay}
       suffix={suffix}

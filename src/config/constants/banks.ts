@@ -11,6 +11,12 @@ const banks: Bank[] = [
     image: ohUsdc,
     name: "Oh! USDC",
     symbol: "OH-USDC",
+    decimals: 6,
+    address: {
+      1: "",
+      4: "",
+      42: "0xCEe95f9Aa3248eC712c001483439A10B180faC9e",
+    },
     description: "Risk-Optimized Lending and Yield Farming",
     alt: "oh-usdc",
     underlying: Tokens.usdc,

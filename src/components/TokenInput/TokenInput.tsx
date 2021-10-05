@@ -1,5 +1,6 @@
 import {
   BaseTextFieldProps,
+  makeStyles,
   OutlinedTextFieldProps,
   StandardTextFieldProps,
   TextField,
@@ -11,6 +12,22 @@ interface TokenInputProps extends StandardTextFieldProps {
   onMax: () => void;
 }
 
+const useStyles = makeStyles((theme) => ({
+  input: {
+    "&[type=number]": {
+      "-moz-appearance": "textfield",
+    },
+    "&::-webkit-outer-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
+    "&::-webkit-inner-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
+  },
+}));
+
 export const TokenInput: FC<TokenInputProps> = ({
   placeholder,
   value,
@@ -18,13 +35,16 @@ export const TokenInput: FC<TokenInputProps> = ({
   onMax,
   ...props
 }) => {
+  const classes = useStyles();
   const handleMax = useCallback(() => {}, []);
 
   return (
     <TextField
       fullWidth
       variant="outlined"
-      type="number"
+      autoComplete="off"
+      type="text"
+      className={classes.input}
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e)}

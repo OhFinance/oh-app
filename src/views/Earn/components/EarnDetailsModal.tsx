@@ -23,7 +23,7 @@ export const EarnDetailsModal: FC<EarnDetailsModalProps> = ({
 }) => {
   return (
     <Modal
-      title={`${bank.symbol} Details`}
+      title={`${bank.name} Details`}
       isOpen={!!isOpen}
       onDismiss={onDismiss}
       p={0}

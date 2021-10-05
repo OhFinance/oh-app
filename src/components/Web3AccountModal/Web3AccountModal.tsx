@@ -14,7 +14,6 @@ import { LinkButton } from "components/LinkButton";
 import { Web3AccountAvatar } from "components/Web3AccountAvatar";
 import useAuth from "hooks/useAuth";
 import { useNetwork } from "hooks/useNetwork";
-import { useToken } from "hooks/useToken";
 import { FC } from "react";
 import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
 

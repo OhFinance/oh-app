@@ -1,24 +1,37 @@
 import { Contract } from "web3-eth-contract";
-import { ERC20, IERC20Permit, OhBank, OhForum, OhToken } from "@ohfinance/oh-web3-types";
+import {
+  ERC20,
+  IERC20Permit,
+  OhBank,
+  OhForum,
+  OhToken,
+} from "@ohfinance/oh-web3-types";
 import { MAX_UINT256 } from "utils/bigNumber";
 import BigNumber from "bignumber.js";
 
 // ERC20
 
-export const approve = async (
+export const allowance = async (
   tokenContract: ERC20,
-  spenderContract: Contract,
+  spender: string,
   account: string
 ) => {
+  return tokenContract.methods.allowance(account, spender).call();
+};
+
+export const approve = async (
+  tokenContract: ERC20,
+  spender: string,
+  account: string,
+  amount: BigNumber
+) => {
   return tokenContract.methods
-    .approve(spenderContract.options.address, MAX_UINT256.toString())
+    .approve(spender, amount.toString())
     .send({ from: account });
 };
 
 export const balanceOf = async (tokenContract: ERC20, account: string) => {
-  return tokenContract.methods
-    .balanceOf(account)
-    .call();
+  return tokenContract.methods.balanceOf(account).call();
 };
 
 // ERC20 Permit
@@ -32,10 +45,8 @@ export const delegate = async (
   delegatee: string,
   account: string
 ) => {
-  return tokenContract.methods
-    .delegate(delegatee)
-    .send({ from: account });
-}
+  return tokenContract.methods.delegate(delegatee).send({ from: account });
+};
 
 // Bank
 
@@ -44,9 +55,11 @@ export const deposit = async (
   amount: BigNumber,
   account: string
 ) => {
-  return bankContract.methods
+  const tx = await bankContract.methods
     .deposit(amount.toString())
     .send({ from: account });
+
+  return tx.status;
 };
 
 export const withdraw = async (
@@ -54,9 +67,11 @@ export const withdraw = async (
   amount: BigNumber,
   account: string
 ) => {
-  return bankContract.methods
+  const tx = await bankContract.methods
     .withdraw(amount.toString())
     .send({ from: account });
+
+  return tx.status;
 };
 
 // Forum
@@ -69,8 +84,8 @@ export const castVote = async (
 ) => {
   return forumContract.methods
     .castVote(proposalId, support)
-    .send({ from: account })
-}
+    .send({ from: account });
+};
 
 export const propose = async (
   forumContract: OhForum,
@@ -82,12 +97,6 @@ export const propose = async (
   account: string
 ) => {
   return forumContract.methods
-    .propose(
-      targets, 
-      values,
-      signatures,
-      calldatas,
-      description
-    )
-    .send({ from: account })
-}
+    .propose(targets, values, signatures, calldatas, description)
+    .send({ from: account });
+};
