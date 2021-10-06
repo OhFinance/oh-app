@@ -1,8 +1,7 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import BigNumber from "bignumber.js";
-import Providers from "./Providers";
 import App from "./App";
+import Providers from "Providers";
 
 // set big number precision
 BigNumber.config({

@@ -22,10 +22,6 @@ export const Web3NoAccount = () => {
               connector={connector}
               onLogin={() => {
                 login(connector.connectorId);
-                window.localStorage.setItem(
-                  CONNECTOR_STORAGE_KEY,
-                  connector.connectorId
-                );
                 // onDismiss();
               }}
             />

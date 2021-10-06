@@ -1,5 +1,4 @@
-// export { useStateContext, StateProvider } from './state'
-// export type { StateContext, Store } from './state'
+export * from "./state";
+export * from "./types";
 
-export type { Action } from './reducer'
-export { ActionType, reducer } from './reducer'
+export { default } from "./state";

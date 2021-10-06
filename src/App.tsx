@@ -3,13 +3,14 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { AppNavigation } from "components/AppNavigation";
 import { ErrorHandledSuspense } from "components/ErrorHandledSuspense";
 import { Loading } from "components/Loading";
+import { ToastListener } from "contexts/ToastContext";
 
 // code-splitting to reduce bundle size
-const Dashboard = lazy(() => import("views/Dashboard"));
+// const Dashboard = lazy(() => import("views/Dashboard"));
 const Earn = lazy(() => import("views/Earn"));
 const NoMatch = lazy(() => import("views/NoMatch"));
-const Stake = lazy(() => import("views/Stake"));
-const Vote = lazy(() => import("views/Vote"));
+// const Stake = lazy(() => import("views/Stake"));
+// const Vote = lazy(() => import("views/Vote"));
 const Claim = lazy(() => import("views/Claim"));
 const Management = lazy(() => import("views/Management"));
 
@@ -37,6 +38,8 @@ const App = () => {
           <Route component={NoMatch} />
         </Switch>
       </ErrorHandledSuspense>
+
+      <ToastListener />
     </BrowserRouter>
   );
 };

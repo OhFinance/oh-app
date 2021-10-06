@@ -1,19 +1,19 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import { ConnectorNames } from "config/constants/types";
 import { connectorLibrary } from "utils/web3-connectors";
+import useToast from "./useToast";
 
 const useAuth = () => {
-  // const dispatch = useAppDispatch();
-  const { activate, deactivate } = useWeb3React();
-  // const { toastError } = useToast();
+  const { account, activate, deactivate } = useWeb3React();
+  const { toastError } = useToast();
 
   const login = useCallback(
     (connectorID: ConnectorNames) => {
       const connector = connectorLibrary[connectorID];
       if (connector) {
         activate(connector, async (error: Error) => {
-          console.log("ERROR", error.message);
+          console.error(error);
           if (error instanceof UnsupportedChainIdError) {
             // const hasSetup = await setupNetwork();
             // if (hasSetup) {
@@ -42,13 +42,16 @@ const useAuth = () => {
             //     toastError(error.name, error.message);
             //   }
           }
+
+          toastError(error.name, error.message);
         });
+
         console.log("LOGGED IN!");
       } else {
-        // toastError("Can't find connector", "The connector config is wrong");
+        toastError("Can't find connector", "The connector config is wrong");
       }
     },
-    [activate]
+    [activate, toastError]
   );
 
   const logout = useCallback(() => {

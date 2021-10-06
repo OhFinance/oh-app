@@ -1,7 +1,28 @@
 import React, { useState, useEffect } from "react";
 
+// https://github.com/pancakeswap/pancake-frontend/blob/develop/src/contexts/RefreshContext.tsx
+
 const FAST_INTERVAL = 10000; // poll every 10s
 const SLOW_INTERVAL = 60000; // poll every 60s
+
+// Check if the tab is active in the user browser
+// const useIsBrowserTabActive = () => {
+//   const isBrowserTabActiveRef = useRef(true)
+
+//   useEffect(() => {
+//     const onVisibilityChange = () => {
+//       isBrowserTabActiveRef.current = !document.hidden
+//     }
+
+//     window.addEventListener('visibilitychange', onVisibilityChange)
+
+//     return () => {
+//       window.removeEventListener('visibilitychange', onVisibilityChange)
+//     }
+//   }, [])
+
+//   return isBrowserTabActiveRef
+// }
 
 export const PollerContext = React.createContext({ slow: 0, fast: 0 });
 
