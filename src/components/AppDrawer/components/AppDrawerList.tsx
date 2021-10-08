@@ -1,23 +1,14 @@
 import {
-  Box,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   makeStyles,
-  Typography,
 } from "@material-ui/core";
 import paths from "config/constants/paths";
-import { Path } from 'config/constants/types'
-import React, { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router";
-import { FaHome } from "react-icons/fa";
-import HomeIcon from "@material-ui/icons/Home";
+import { Path } from "config/constants/types";
+import { useHistory } from "react-router";
 import { AppDrawerListIcon } from "./AppDrawerListIcon";
-
-interface SideDrawerLinkProps {
-  path: Path;
-}
 
 const useStyles = makeStyles((theme) => ({
   hover: {
@@ -47,13 +38,13 @@ const useStyles = makeStyles((theme) => ({
 export const AppDrawerList = () => {
   const classes = useStyles();
   const history = useHistory();
-  const location = useLocation();
+  // const location = useLocation();
 
-  const [active, setActive] = useState("/");
+  // const [active, setActive] = useState("/");
 
-  useEffect(() => {
-    setActive(location.pathname);
-  }, [location.pathname, setActive]);
+  // useEffect(() => {
+  //   setActive(location.pathname);
+  // }, [location.pathname, setActive]);
 
   return (
     <List>

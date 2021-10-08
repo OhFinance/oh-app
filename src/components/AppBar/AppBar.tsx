@@ -6,8 +6,7 @@ import {
 } from "@material-ui/core";
 import { useMobile, MobileMenu } from "@ohfinance/oh-ui";
 import { DRAWER_WIDTH } from "config/constants/values";
-import { AppBarMenu } from "./components/AppBarMenu";
-// import { MobileMenu } from "./components/MobileMenu";
+import { AppBarMenu } from "./AppBarMenu";
 import OhLogo from "assets/img/oh-logo.png";
 
 const useStyles = makeStyles((theme) => ({

@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper: {
     [theme.breakpoints.up("md")]: {
-      marginLeft: DRAWER_WIDTH - 30,
+      marginLeft: DRAWER_WIDTH,
     },
   },
 }));

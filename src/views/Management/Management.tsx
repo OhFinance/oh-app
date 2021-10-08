@@ -1,10 +1,10 @@
-import { ViewHeader } from "components/ViewHeader";
+import { PageHeading } from "components/PageHeading";
 import { Web3View } from "components/Web3View";
 
 const Management = () => {
   return (
     <Web3View>
-      <ViewHeader title="Manage" subtitle="Oh! Finance Control Room" />
+      <PageHeading title="Manage" subtitle="Oh! Finance Control Room" />
     </Web3View>
   );
 };

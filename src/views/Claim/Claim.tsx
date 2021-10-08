@@ -1,10 +1,10 @@
-import { ViewHeader } from "components/ViewHeader";
+import { PageHeading } from "components/PageHeading";
 import { Web3View } from "components/Web3View";
 
 const Claim = () => {
   return (
     <Web3View>
-      <ViewHeader
+      <PageHeading
         title="Claim"
         subtitle="View and receive any vesting Oh! Tokens"
       />

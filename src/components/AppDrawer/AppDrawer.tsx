@@ -7,6 +7,10 @@ import { AppDrawerContent } from "./components/AppDrawerContent";
 const useStyles = makeStyles((theme) => ({
   drawer: {
     width: DRAWER_WIDTH,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: DRAWER_WIDTH,
   },
 }));
 
@@ -20,6 +24,9 @@ export const AppDrawer = () => {
       <SwipeableDrawer
         anchor="left"
         className={classes.drawer}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
         open={open}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
@@ -30,7 +37,15 @@ export const AppDrawer = () => {
   }
 
   return (
-    <Drawer anchor="left" variant="permanent" className={classes.drawer} open>
+    <Drawer
+      anchor="left"
+      variant="permanent"
+      className={classes.drawer}
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+      open
+    >
       <AppDrawerContent />
     </Drawer>
   );

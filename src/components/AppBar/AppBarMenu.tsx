@@ -1,9 +1,8 @@
 import { Grid } from "@material-ui/core";
 import { useMobile } from "@ohfinance/oh-ui";
-import { BalanceButton } from "components/BalanceButton";
+import { TokenBalanceButton } from "components/TokenBalanceButton";
 import { Web3AccountButton } from "components/Web3AccountButton";
 import { Web3NetworkButton } from "components/Web3NetworkButton";
-import { useWeb3 } from "hooks/useWeb3";
 
 export const AppBarMenu = () => {
   const mobile = useMobile();
@@ -17,7 +16,7 @@ export const AppBarMenu = () => {
       )}
       {!mobile && (
         <Grid item>
-          <BalanceButton />
+          <TokenBalanceButton />
         </Grid>
       )}
 

@@ -1,5 +1,5 @@
 import { Box, Grid } from "@material-ui/core";
-import { ViewHeader } from "components/ViewHeader";
+import { PageHeading } from "components/PageHeading";
 import { Web3View } from "components/Web3View";
 import { DashboardGraph } from "./components/DashboardGraph";
 import { DashboardMetrics } from "./components/DashboardMetrics";
@@ -8,7 +8,7 @@ import { DashboardTabs } from "./components/DashboardTabs";
 const Dashboard = () => {
   return (
     <Web3View>
-      <ViewHeader
+      <PageHeading
         title="Dashboard"
         subtitle="Track your portfolio and view real-time metrics"
       />

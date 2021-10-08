@@ -11,12 +11,12 @@ import { useNetwork } from "hooks/useNetwork";
 import { LinkButton } from "components/LinkButton";
 import { useWeb3 } from "hooks/useWeb3";
 
-interface BalanceModalProps extends ModalProps {
+export interface TokenBalanceModalProps extends ModalProps {
   tokenBalance: BigNumber;
   chainId: number;
 }
 
-export const BalanceModal: FC<BalanceModalProps> = ({
+export const TokenBalanceModal: FC<TokenBalanceModalProps> = ({
   isOpen,
   onDismiss,
   tokenBalance,

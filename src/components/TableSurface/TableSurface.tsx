@@ -8,21 +8,24 @@ const TableSurfaceComponent = ({ children }) => {
 
 export interface TableSurfaceProps {
   title?: string;
+  divider?: boolean;
 }
 
-export const TableSurface: FC<TableSurfaceProps> = ({ title, children }) => {
+export const TableSurface: FC<TableSurfaceProps> = ({
+  title,
+  divider = false,
+  children,
+}) => {
   return (
     <TableContainer component={TableSurfaceComponent}>
       {title && (
-        <Fragment>
-          <Box p={2}>
-            <Typography>
-              <b>{title}</b>
-            </Typography>
-          </Box>
-          <Divider />
-        </Fragment>
+        <Box p={2}>
+          <Typography>
+            <b>{title}</b>
+          </Typography>
+        </Box>
       )}
+      {divider && <Divider />}
 
       {children}
     </TableContainer>

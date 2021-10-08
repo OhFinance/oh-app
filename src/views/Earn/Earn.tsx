@@ -1,4 +1,4 @@
-import { ViewHeader } from "components/ViewHeader";
+import { PageHeading } from "components/PageHeading";
 import { Web3View } from "components/Web3View";
 import { EarnContextProvider } from "contexts/EarnContext";
 import { EarnData } from "./components/EarnData";
@@ -8,7 +8,7 @@ const Earn = () => {
   return (
     <EarnContextProvider>
       <Web3View>
-        <ViewHeader
+        <PageHeading
           title="Earn"
           subtitle="Diversified strategies to do more with your DeFi Dollar"
         />
