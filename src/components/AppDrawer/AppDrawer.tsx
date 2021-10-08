@@ -1,38 +1,37 @@
-import { Fragment } from "react";
-import {
-  Flex,
-  HomeButton,
-  TelegramButton,
-  TwitterButton,
-} from "@ohfinance/oh-ui";
-import OhBrand from "assets/img/oh-brand.png";
-import { Box, Typography } from "@material-ui/core";
-import { AppDrawerList } from "./components/AppDrawerList";
+import { Drawer, makeStyles, SwipeableDrawer } from "@material-ui/core";
+import { useMobile } from "@ohfinance/oh-ui";
+import { DRAWER_WIDTH } from "config/constants/values";
+import { useState } from "react";
+import { AppDrawerContent } from "./components/AppDrawerContent";
+
+const useStyles = makeStyles((theme) => ({
+  drawer: {
+    width: DRAWER_WIDTH,
+  },
+}));
 
 export const AppDrawer = () => {
+  const classes = useStyles();
+  const mobile = useMobile();
+  const [open, setOpen] = useState(false);
+
+  if (!!mobile) {
+    return (
+      <SwipeableDrawer
+        anchor="left"
+        className={classes.drawer}
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+      >
+        <AppDrawerContent />
+      </SwipeableDrawer>
+    );
+  }
+
   return (
-    <Fragment>
-      <Flex column grow>
-        <Box m={4} mb={4}>
-          <Flex center>
-            <img
-              src={OhBrand}
-              alt="oh-finance-brand"
-              width="auto"
-              height="96px"
-            />
-          </Flex>
-        </Box>
-        <AppDrawerList />
-      </Flex>
-      <Box>
-        <Flex center>
-          <TwitterButton />
-          <TelegramButton />
-          <HomeButton />
-        </Flex>
-        {/* <Typography align="center">Version: v{version}</Typography> */}
-      </Box>
-    </Fragment>
+    <Drawer anchor="left" variant="permanent" className={classes.drawer} open>
+      <AppDrawerContent />
+    </Drawer>
   );
 };

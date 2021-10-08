@@ -1,12 +1,12 @@
 import { Box } from "@material-ui/core";
 import { ViewHeader } from "components/ViewHeader";
-import { ViewWrapper } from "components/ViewWrapper";
 import { VoteMetrics } from "./components/VoteMetrics";
 import { VoteTabs } from "./components/VoteTabs";
+import { Web3View } from "components/Web3View";
 
 const Vote = () => {
   return (
-    <ViewWrapper>
+    <Web3View>
       <ViewHeader
         title="Vote"
         subtitle="Participate in Decentralized Governance and control the Protocol"
@@ -15,7 +15,7 @@ const Vote = () => {
         <VoteMetrics />
       </Box>
       <VoteTabs />
-    </ViewWrapper>
+    </Web3View>
   );
 };
 

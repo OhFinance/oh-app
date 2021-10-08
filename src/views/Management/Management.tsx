@@ -1,11 +1,11 @@
 import { ViewHeader } from "components/ViewHeader";
-import { ViewWrapper } from "components/ViewWrapper";
+import { Web3View } from "components/Web3View";
 
 const Management = () => {
   return (
-    <ViewWrapper>
+    <Web3View>
       <ViewHeader title="Manage" subtitle="Oh! Finance Control Room" />
-    </ViewWrapper>
+    </Web3View>
   );
 };
 

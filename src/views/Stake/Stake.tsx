@@ -1,11 +1,11 @@
 import { ViewHeader } from "components/ViewHeader";
-import { ViewWrapper } from "components/ViewWrapper";
+import { Web3View } from "components/Web3View";
 
 const Stake = () => {
   return (
-    <ViewWrapper>
+    <Web3View>
       <ViewHeader title="Stake" subtitle="Receive rewards for Protocol Usage" />
-    </ViewWrapper>
+    </Web3View>
   );
 };
 

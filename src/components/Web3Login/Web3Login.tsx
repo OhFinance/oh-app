@@ -1,19 +1,16 @@
-import { Box, Button, Grid, Typography } from "@material-ui/core";
-import { Flex } from "@ohfinance/oh-ui";
+import { Box, Grid } from "@material-ui/core";
+import { Button, Display, Flex, Heading, Subtitle } from "@ohfinance/oh-ui";
 import { Web3ProviderButton } from "components/Web3ProviderButton";
 import connectors from "config/constants/connectors";
-import { CONNECTOR_STORAGE_KEY } from "config/constants/values";
 import useAuth from "hooks/useAuth";
 
-export const Web3NoAccount = () => {
+export const Web3Login = () => {
   const { login } = useAuth();
 
   return (
-    <Flex center column>
-      <Box mb={4}>
-        <Typography variant="h5" align="center">
-          Login with your Wallet
-        </Typography>
+    <Display center pullTop>
+      <Box mb={2}>
+        <Heading align="center">Login with your Wallet</Heading>
       </Box>
       <Grid container spacing={2}>
         {connectors.map((connector, i) => (
@@ -22,20 +19,19 @@ export const Web3NoAccount = () => {
               connector={connector}
               onLogin={() => {
                 login(connector.connectorId);
-                // onDismiss();
               }}
             />
           </Grid>
         ))}
       </Grid>
       <Flex mt={4} column center>
-        <Typography variant="subtitle2" color="textSecondary" gutterBottom>
+        <Subtitle color="textSecondary" paragraph={false} gutterBottom>
           Don't have a crypto wallet yet?
-        </Typography>
+        </Subtitle>
         <Button color="primary" href="https://docs.oh.finance/">
-          Learn How To Login
+          Learn More
         </Button>
       </Flex>
-    </Flex>
+    </Display>
   );
 };
