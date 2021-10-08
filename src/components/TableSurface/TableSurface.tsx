@@ -1,5 +1,5 @@
 import { Box, Divider, TableContainer, Typography } from "@material-ui/core";
-import { Surface } from "components/Surface";
+import { Surface } from "@ohfinance/oh-ui";
 import { FC, Fragment } from "react";
 
 const TableSurfaceComponent = ({ children }) => {

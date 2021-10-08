@@ -1,5 +1,5 @@
 import { Box, Divider, Tab, Tabs } from "@material-ui/core";
-import { Surface } from "components/Surface";
+import { Surface } from "@ohfinance/oh-ui";
 import { useState } from "react";
 import { VoteDelegate } from "./VoteDelegate";
 import { VotePropose } from "./VotePropose";
@@ -16,7 +16,6 @@ export const VoteTabs = () => {
         <Tab label="Propose" />
       </Tabs>
       <Divider />
-      
 
       <Box m={2}>
         {index === 0 && <VoteView />}

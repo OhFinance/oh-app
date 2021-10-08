@@ -1,11 +1,9 @@
-import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js";
 import { balanceOf } from "helpers/callHelper";
-import { getErc20Contract } from "helpers/contractHelper";
 import { useEffect, useState } from "react";
 import { ZERO } from "utils/bigNumber";
 import { useERC20Contract } from "./useContract";
-import useWeb3 from "./useWeb3";
+import { useWeb3 } from "./useWeb3";
 
 type UseTokenBalanceState = {
   balance: BigNumber;
@@ -24,7 +22,7 @@ export const useTokenBalance = (tokenAddress: string) => {
     balance: ZERO,
     fetchStatus: NOT_FETCHED,
   });
-  const { account } = useWeb3React();
+  const { account } = useWeb3();
   const contract = useERC20Contract(tokenAddress);
 
   useEffect(() => {

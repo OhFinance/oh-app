@@ -8,21 +8,19 @@ import { getWeb3NoAccount } from "utils/web3-default";
  * with a fallback of an httpProver
  * Recreate web3 instance only if the provider change
  */
-const useWeb3 = () => {
-  const { library } = useWeb3React();
+export const useWeb3 = () => {
+  const { library, ...web3React } = useWeb3React();
   const refEth = useRef(library);
-  const [web3, setweb3] = useState(
+  const [web3, setWeb3] = useState(
     library ? new Web3(library) : getWeb3NoAccount()
   );
 
   useEffect(() => {
     if (library !== refEth.current) {
-      setweb3(library ? new Web3(library) : getWeb3NoAccount());
+      setWeb3(library ? new Web3(library) : getWeb3NoAccount());
       refEth.current = library;
     }
   }, [library]);
 
-  return web3;
+  return { library: web3, ...web3React };
 };
-
-export default useWeb3;

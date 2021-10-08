@@ -3,9 +3,8 @@ import { allowance as allowanceHelper } from "helpers/callHelper";
 import { useEffect, useState } from "react";
 import { ZERO } from "utils/bigNumber";
 import { useERC20Contract } from "./useContract";
-import useWeb3 from "./useWeb3";
 
-export const useTokenAllowance = (
+export const useAllowance = (
   tokenAddress?: string,
   owner?: string,
   spender?: string

@@ -1,21 +1,19 @@
 import {
-  FormControl,
   OutlinedInput,
   InputAdornment,
-  InputLabel,
   Typography,
   Box,
   makeStyles,
   IconButton,
 } from "@material-ui/core";
 import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
-import { useWeb3React } from "@web3-react/core";
 import { LinkButton } from "components/LinkButton";
 import { Web3AccountAvatar } from "components/Web3AccountAvatar";
 import useAuth from "hooks/useAuth";
 import { useNetwork } from "hooks/useNetwork";
+import { useWeb3 } from "hooks/useWeb3";
 import { FC } from "react";
-import { FaCopy, FaExternalLinkAlt } from "react-icons/fa";
+import { FaCopy } from "react-icons/fa";
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -25,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Web3AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
   const { logout } = useAuth();
-  const { account } = useWeb3React();
+  const { account } = useWeb3();
   const { blockExplorerUrl } = useNetwork();
   const classes = useStyles();
 

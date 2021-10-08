@@ -1,5 +1,5 @@
 import { Box, Divider, Tab, Tabs } from "@material-ui/core";
-import { Surface } from "components/Surface";
+import { Surface } from "@ohfinance/oh-ui";
 import { useState } from "react";
 import { DashboardBalances } from "./DashboardBalances";
 import { DashboardStaked } from "./DashboardStaked";

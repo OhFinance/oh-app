@@ -1,12 +1,12 @@
 import { useModal, Button } from "@ohfinance/oh-ui";
-import { useWeb3React } from "@web3-react/core";
 import { Web3AccountAvatar } from "components/Web3AccountAvatar";
 import { Web3AccountModal } from "components/Web3AccountModal";
 import { Web3LoginModal } from "components/Web3LoginModal";
+import { useWeb3 } from "hooks/useWeb3";
 import { getDisplayAddress } from "utils/formatAddress";
 
 export const Web3LoginButton = () => {
-  const { account } = useWeb3React();
+  const { account } = useWeb3();
   const [onPresentLogin] = useModal(<Web3LoginModal />);
   const [onPresentAccount] = useModal(<Web3AccountModal />);
 

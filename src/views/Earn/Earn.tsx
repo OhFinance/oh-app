@@ -1,5 +1,3 @@
-import { useMobile } from "@ohfinance/oh-ui";
-import { Surface } from "components/Surface";
 import { ViewHeader } from "components/ViewHeader";
 import { ViewWrapper } from "components/ViewWrapper";
 import { EarnContextProvider } from "contexts/EarnContext";

@@ -1,11 +1,11 @@
-import { Avatar, Select } from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 import { Button, useModal } from "@ohfinance/oh-ui";
-import { useWeb3React } from "@web3-react/core";
 import { Web3NetworkModal } from "components/Web3NetworkModal";
 import { NetworkIcons, Networks } from "config/constants/networks";
+import { useWeb3 } from "hooks/useWeb3";
 
 export const Web3NetworkButton = () => {
-  const { chainId } = useWeb3React();
+  const { chainId } = useWeb3();
 
   const [onPresentNetworkModal] = useModal(<Web3NetworkModal />);
 

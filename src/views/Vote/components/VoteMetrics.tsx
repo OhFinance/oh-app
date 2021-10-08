@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
+import { Surface } from "@ohfinance/oh-ui";
 import { DisplayValue } from "components/DisplayValue";
-import { Surface } from "components/Surface";
 
 export const VoteMetrics = () => {
   return (

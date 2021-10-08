@@ -1,18 +1,18 @@
-import { Avatar, Box, Grid, makeStyles, Typography } from "@material-ui/core";
-import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
-import { useWeb3React } from "@web3-react/core";
+import { Grid } from "@material-ui/core";
+import { Modal, ModalProps } from "@ohfinance/oh-ui";
 import {
   NetworkIcons,
   Networks,
   SupportedNetworks,
   SupportedTestNetworks,
 } from "config/constants/networks";
+import { useWeb3 } from "hooks/useWeb3";
 import { FC } from "react";
 import { setupNetwork } from "utils/wallet";
 import { Web3NetworkModalButton } from "./components/Web3NetworkModalButton";
 
 export const Web3NetworkModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
-  const { chainId } = useWeb3React();
+  const { chainId } = useWeb3();
 
   const isLocalhost = window.location.href.indexOf("localhost") > -1;
   const networks = isLocalhost

@@ -5,13 +5,13 @@ import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
 import { useTokenAddress } from "hooks/useTokenAddress";
-import { ApprovalState, useTokenApprove } from "hooks/useTokenApprove";
+import { ApprovalState, useApprove } from "hooks/useApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useState } from "react";
 import { getFullDisplayBalance } from "utils/formatBalances";
 import { useBankDeposit } from "../hooks/useBankDeposit";
 
-interface EarnDepositModalProps extends ModalProps {
+export interface EarnDepositModalProps extends ModalProps {
   bank: Bank;
 }
 
@@ -25,10 +25,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
   const tokenAddress = useTokenAddress(bank.underlying.address);
   const bankAddress = useTokenAddress(bank.address);
   const { balance } = useTokenBalance(tokenAddress);
-  const { approvalState, onApprove } = useTokenApprove(
-    tokenAddress,
-    bankAddress
-  );
+  const { approvalState, onApprove } = useApprove(tokenAddress, bankAddress);
   const { onDeposit } = useBankDeposit(bankAddress);
 
   return (

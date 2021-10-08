@@ -1,5 +1,5 @@
-import { Box, Grid, Typography } from "@material-ui/core";
-import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
+import { Grid, Typography } from "@material-ui/core";
+import { Button, Modal, ModalProps } from "@ohfinance/oh-ui";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
 import { FC, useState } from "react";

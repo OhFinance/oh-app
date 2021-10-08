@@ -1,7 +1,5 @@
-import { Surface } from "components/Surface";
-import OhLogo from "assets/img/oh-logo.png";
-import { Flex } from "@ohfinance/oh-ui";
-import { Avatar, Box, Button, Grid, Typography } from "@material-ui/core";
+import { Flex, Surface } from "@ohfinance/oh-ui";
+import { Avatar, Button, Grid, Typography } from "@material-ui/core";
 import { FC } from "react";
 import { Bank } from "config/constants/types";
 import { EarnCompositionGroup } from "./EarnCompositionGroup";

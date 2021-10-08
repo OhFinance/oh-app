@@ -1,18 +1,15 @@
-import { Avatar, Box, Typography } from "@material-ui/core";
+import { Avatar, Typography } from "@material-ui/core";
 import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
 import { FC, useMemo } from "react";
 import OhToken from "assets/img/oh-token.svg";
 import { Balance } from "components/Balance";
 import { getFullDisplayBalance } from "utils/formatBalances";
-import { useWeb3React } from "@web3-react/core";
-import { useTokenBalance } from "hooks/useTokenBalance";
 import { getTokenAddress } from "helpers/addressHelper";
-import { FaExchangeAlt, FaExternalLinkAlt, FaLink } from "react-icons/fa";
-import { Networks } from "config/constants/networks";
-import { Tokens } from "config/constants/tokens";
+import { FaExchangeAlt } from "react-icons/fa";
 import BigNumber from "bignumber.js";
 import { useNetwork } from "hooks/useNetwork";
 import { LinkButton } from "components/LinkButton";
+import { useWeb3 } from "hooks/useWeb3";
 
 interface BalanceModalProps extends ModalProps {
   tokenBalance: BigNumber;
@@ -24,7 +21,7 @@ export const BalanceModal: FC<BalanceModalProps> = ({
   onDismiss,
   tokenBalance,
 }) => {
-  const { chainId } = useWeb3React();
+  const { chainId } = useWeb3();
   const { blockExplorerUrl } = useNetwork();
   const address = useMemo(() => getTokenAddress(chainId), [chainId]);
 

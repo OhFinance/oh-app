@@ -1,10 +1,10 @@
-import { useWeb3React } from "@web3-react/core";
 import { useCallback, useMemo } from "react";
 import { MAX_UINT256 } from "utils/bigNumber";
 import { useERC20Contract } from "./useContract";
-import { useTokenAllowance } from "./useTokenAllowance";
+import { useAllowance } from "./useAllowance";
 import { approve as approveHelper } from "helpers/callHelper";
 import BigNumber from "bignumber.js";
+import { useWeb3 } from "./useWeb3";
 
 export enum ApprovalState {
   UNKNOWN,
@@ -13,18 +13,14 @@ export enum ApprovalState {
   APPROVED,
 }
 
-export const useTokenApprove = (
+export const useApprove = (
   tokenAddress?: string,
   spender?: string,
   amountToApprove?: BigNumber
 ) => {
-  const { account } = useWeb3React();
+  const { account } = useWeb3();
   const contract = useERC20Contract(tokenAddress);
-  const allowance = useTokenAllowance(
-    tokenAddress,
-    account ?? undefined,
-    spender
-  );
+  const allowance = useAllowance(tokenAddress, account ?? undefined, spender);
 
   const approvalState: ApprovalState = useMemo(() => {
     if (!tokenAddress || !spender || !allowance) return ApprovalState.UNKNOWN;

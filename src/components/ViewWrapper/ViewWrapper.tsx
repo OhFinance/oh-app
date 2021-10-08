@@ -1,7 +1,7 @@
 import { Box, makeStyles } from "@material-ui/core";
-import { useWeb3React } from "@web3-react/core";
 import { Web3NoAccount } from "components/Web3NoAccount";
 import { DRAWER_WIDTH } from "config/constants/values";
+import { useWeb3 } from "hooks/useWeb3";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const ViewWrapper = ({ children }) => {
   const classes = useStyles();
-  const { account } = useWeb3React();
+  const { account } = useWeb3();
 
   return (
     <Box className={classes.wrapper}>

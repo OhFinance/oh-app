@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField } from "@material-ui/core";
-import { Flex, Paragraph, Subheader } from "@ohfinance/oh-ui";
+import { Flex, Paragraph } from "@ohfinance/oh-ui";
 
 export const VoteDelegate = () => {
   return (
