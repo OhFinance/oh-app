@@ -1,7 +1,8 @@
+import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js";
-import { balanceOf } from "helpers/callHelper";
 import { useEffect, useState } from "react";
 import { ZERO } from "utils/bigNumber";
+import { getERC20Contract } from "utils/contractHelper";
 import { useERC20Contract } from "./useContract";
 import usePoller from "./usePoller";
 import { useWeb3 } from "./useWeb3";
@@ -24,15 +25,15 @@ export const useTokenBalance = (tokenAddress: string) => {
     fetchStatus: NOT_FETCHED,
   });
   const { account } = useWeb3();
-  const contract = useERC20Contract(tokenAddress);
   const { fastRefresh } = usePoller();
+  const contract = useERC20Contract(tokenAddress);
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        const result = await balanceOf(contract, account);
+        const result = await contract.balanceOf(account);
         setBalanceState({
-          balance: new BigNumber(result),
+          balance: new BigNumber(result.toString()),
           fetchStatus: SUCCESS,
         });
       } catch (e) {
@@ -44,10 +45,10 @@ export const useTokenBalance = (tokenAddress: string) => {
       }
     };
 
-    if (account && contract) {
+    if (account) {
       fetchBalance();
     }
-  }, [account, contract, fastRefresh, tokenAddress, SUCCESS, FAILED]);
+  }, [account, fastRefresh, contract, tokenAddress, SUCCESS, FAILED]);
 
   return balanceState;
 };

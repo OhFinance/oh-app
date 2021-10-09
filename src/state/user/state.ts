@@ -1,45 +1,50 @@
-import {
-  DEFAULT_COLOR_MODE,
-  DEFAULT_POLLING_INTERVAL,
-} from "config/constants/values";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserAccount, UserState } from "state/types";
+import { UpdateGasPrice, UpdateUserEarnViewMode } from "./actions";
+import { ViewMode } from "./types";
+
+export interface UserState {
+  account: string;
+  connector: string;
+  gasPrice: number;
+  isDarkMode: boolean;
+  userEarnViewMode: ViewMode;
+}
 
 const initialState: UserState = {
   account: null,
   connector: null,
-  colorMode: DEFAULT_COLOR_MODE,
-  pollingInterval: DEFAULT_POLLING_INTERVAL,
+  gasPrice: null,
+  isDarkMode: false,
+  userEarnViewMode: ViewMode.TABLE,
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    updateAccount: (state, action: PayloadAction<UserAccount>) => {
-      const { account, connector } = action.payload;
-
-      return {
-        ...state,
-        account,
-        connector,
-      };
+    clearUser: (state) => {
+      state = initialState;
     },
-    clearAccount: (state) => ({
-      ...state,
-      account: null,
-      connector: null,
-    }),
-    clearUser: () => ({
-      ...initialState,
-    }),
-    toggleColorMode: (state) => ({
-      colorMode: state.colorMode === "light" ? "dark" : "light",
-    }),
+    toggleDarkMode: (state) => {
+      state.isDarkMode = !state.isDarkMode;
+    },
+    updateGasPrice: (state, action: PayloadAction<UpdateGasPrice>) => {
+      state.gasPrice = action.payload.gasPrice;
+    },
+    updateUserEarnViewMode: (
+      state,
+      action: PayloadAction<UpdateUserEarnViewMode>
+    ) => {
+      state.userEarnViewMode = action.payload.userEarnViewMode;
+    },
   },
 });
 
-export const { updateAccount, clearAccount, clearUser, toggleColorMode } =
-  userSlice.actions;
+export const {
+  clearUser,
+  toggleDarkMode,
+  updateGasPrice,
+  updateUserEarnViewMode,
+} = userSlice.actions;
 
 export default userSlice.reducer;

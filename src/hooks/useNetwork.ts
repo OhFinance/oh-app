@@ -1,4 +1,4 @@
-import { getBlockExplorerUrl } from "helpers/networkHelper";
+import { getBlockExplorerUrl } from "utils/networkHelper";
 import { useWeb3 } from "./useWeb3";
 
 export const useNetwork = () => {

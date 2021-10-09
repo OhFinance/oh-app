@@ -5,6 +5,7 @@ import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
 import { useTokenAddress } from "hooks/useTokenAddress";
+import { useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useState } from "react";
 import { getFullDisplayBalance } from "utils/formatBalances";
@@ -24,10 +25,10 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
   const tokenAddress = useTokenAddress(bank.address);
   const bankAddress = useTokenAddress(bank.address);
   const { balance } = useTokenBalance(tokenAddress);
-  // const { approvalState, onApprove } = useTokenApprove(
-  //   tokenAddress,
-  //   bankAddress
-  // );
+  const { approvalState, onApprove } = useTokenApprove(
+    tokenAddress,
+    bankAddress
+  );
   const { onWithdraw } = useBankWithdraw(bankAddress);
 
   return (

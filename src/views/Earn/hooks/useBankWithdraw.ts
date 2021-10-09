@@ -1,19 +1,17 @@
 import BigNumber from "bignumber.js";
-import { withdraw } from "helpers/callHelper";
+import { withdrawBank } from "utils/calls";
 import { useBankContract } from "hooks/useContract";
-import { useWeb3 } from "hooks/useWeb3";
 import { useCallback } from "react";
 
 export const useBankWithdraw = (bankAddress: string) => {
-  const { account } = useWeb3();
   const contract = useBankContract(bankAddress);
 
   const handleWithdraw = useCallback(
     async (amount: BigNumber) => {
-      const txHash = await withdraw(contract, amount, account);
+      const txHash = await withdrawBank(contract, amount);
       console.info(txHash);
     },
-    [account, contract]
+    [contract]
   );
 
   return {

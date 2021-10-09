@@ -4,7 +4,7 @@ import { FC, useMemo } from "react";
 import OhToken from "assets/img/oh-token.svg";
 import { Balance } from "components/Balance";
 import { getFullDisplayBalance } from "utils/formatBalances";
-import { getTokenAddress } from "helpers/addressHelper";
+import { getTokenAddress } from "utils/addressHelper";
 import { FaExchangeAlt } from "react-icons/fa";
 import BigNumber from "bignumber.js";
 import { useNetwork } from "hooks/useNetwork";

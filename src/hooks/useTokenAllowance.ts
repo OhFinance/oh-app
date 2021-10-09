@@ -1,8 +1,8 @@
-import BigNumber from "bignumber.js";
-import { allowance as allowanceHelper } from "helpers/callHelper";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { ZERO } from "utils/bigNumber";
 import { useERC20Contract } from "./useContract";
+import { useSingleCallResult } from "state/multicall/hooks";
+import BigNumber from "bignumber.js";
 
 export const useTokenAllowance = (
   tokenAddress?: string,
@@ -10,23 +10,12 @@ export const useTokenAllowance = (
   spender?: string
 ) => {
   const contract = useERC20Contract(tokenAddress);
-  const [allowance, setAllowance] = useState<BigNumber>(ZERO);
+  const inputs = useMemo(() => [owner, spender], [owner, spender]);
+  const allowance = useSingleCallResult(contract, "allowance", inputs).result;
 
-  useEffect(() => {
-    const fetchAllowance = async () => {
-      try {
-        const result = await allowanceHelper(contract, spender, owner);
-        console.log(result);
-        setAllowance(new BigNumber(result));
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    if (contract && spender && owner) {
-      fetchAllowance();
-    }
-  }, [contract, spender, owner]);
-
-  return allowance;
+  return useMemo(
+    () =>
+      tokenAddress && allowance ? new BigNumber(allowance.toString()) : ZERO,
+    [tokenAddress, allowance]
+  );
 };

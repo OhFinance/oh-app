@@ -2,8 +2,7 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { ConnectorNames } from "config/constants/types";
 import { DEFAULT_POLLING_INTERVAL } from "config/constants/values";
-import Web3 from "web3";
-import getNodeUrl from "./getNodeUrl";
+import { ethers } from "ethers";
 
 // const rpcUrl = getNodeUrl();
 const supportedChainIds = [
@@ -30,6 +29,8 @@ export const connectorLibrary: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.WalletConnect]: walletconnect,
 };
 
-export const getLibrary = (provider: any): Web3 => {
-  return provider;
+export const getLibrary = (provider: any): ethers.providers.Web3Provider => {
+  const library = new ethers.providers.Web3Provider(provider);
+  library.pollingInterval = DEFAULT_POLLING_INTERVAL;
+  return library;
 };

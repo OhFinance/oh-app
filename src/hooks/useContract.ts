@@ -1,13 +1,31 @@
 import { useMemo } from "react";
-import { getBankContract, getErc20Contract } from "helpers/contractHelper";
+import {
+  getBankContract,
+  getERC20Contract,
+  getERC20PermitContract,
+} from "utils/contractHelper";
 import { useWeb3 } from "./useWeb3";
 
 export const useERC20Contract = (address: string) => {
   const { library } = useWeb3();
-  return useMemo(() => getErc20Contract(address, library), [address, library]);
+  return useMemo(
+    () => getERC20Contract(address, library ? library.getSigner() : undefined),
+    [address, library]
+  );
+};
+
+export const useERC20PermitContract = (address: string) => {
+  const { library } = useWeb3();
+  return useMemo(
+    () => getERC20PermitContract(address, library.getSigner()),
+    [address, library]
+  );
 };
 
 export const useBankContract = (address: string) => {
   const { library } = useWeb3();
-  return useMemo(() => getBankContract(address, library), [address, library]);
+  return useMemo(
+    () => getBankContract(address, library.getSigner()),
+    [address, library]
+  );
 };

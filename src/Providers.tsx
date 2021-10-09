@@ -4,7 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { ModalProvider, ThemeProvider } from "@ohfinance/oh-ui";
 import { ToastProvider } from "contexts/ToastContext";
 import { PollerProvider } from "contexts/PollerContext";
-import { getLibrary } from "utils/web3-connectors";
+import { getLibrary } from "utils/web3Connectors";
 import store from "state";
 import { FC } from "react";
 

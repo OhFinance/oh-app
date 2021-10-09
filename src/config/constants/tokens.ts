@@ -5,7 +5,7 @@ export const Tokens: { [token: string]: Token } = {
     symbol: "DAI",
     decimals: 6,
     address: {
-      1: "",
+      1: "0x0000000000000000000000000000000000000000",
       4: "",
     },
   },
@@ -13,7 +13,7 @@ export const Tokens: { [token: string]: Token } = {
     symbol: "OH",
     decimals: 18,
     address: {
-      1: "",
+      1: "0x0000000000000000000000000000000000000000",
       4: "0x6b461A994d76d8248a6B439D4a19cDfd821409eE",
       42: "0x6b461A994d76d8248a6B439D4a19cDfd821409eE",
     },
@@ -31,7 +31,7 @@ export const Tokens: { [token: string]: Token } = {
     symbol: "USDT",
     decimals: 6,
     address: {
-      1: "",
+      1: "0x0000000000000000000000000000000000000000",
       4: "",
     },
   },

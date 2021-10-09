@@ -18,7 +18,6 @@ import { useWeb3 } from "hooks/useWeb3";
 import { useTokenAddress } from "hooks/useTokenAddress";
 import { getFullDisplayBalance } from "utils/formatBalances";
 import { Balance } from "components/Balance";
-
 const useStyles = makeStyles((theme) => ({
   cell: {
     borderBottom: "none",

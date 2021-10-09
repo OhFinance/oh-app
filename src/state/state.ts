@@ -1,20 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { load, save } from "redux-localstorage-simple";
-import { isLocalhost } from "utils/devUtils";
+import { isLocalhost } from "utils/misc";
 
-import earn from "./earn/state";
-import gas from "./gas/state";
-import user from "./user/state";
+import block from "./block/state";
+import multicall from "./multicall/state";
 import transactions from "./transactions/state";
+import user from "./user/state";
 
 const PERSISTED_KEYS: string[] = ["user", "transactions"];
 
 const store = configureStore({
   devTools: isLocalhost(),
   reducer: {
-    earn,
-    gas,
+    block,
+    multicall,
     user,
     transactions,
   },

@@ -1,15 +1,20 @@
 import { useCallback, useMemo } from "react";
 import { MAX_UINT256 } from "utils/bigNumber";
+import { TransactionResponse } from "@ethersproject/providers";
 import { useERC20Contract } from "./useContract";
 import { useTokenAllowance } from "./useTokenAllowance";
-import { approve as approveHelper } from "helpers/callHelper";
 import BigNumber from "bignumber.js";
 import { useWeb3 } from "./useWeb3";
+import { useCallWithGasPrice } from "./useCallWithGasPrice";
+import {
+  useHasPendingApproval,
+  useTransactionAdder,
+} from "state/transactions/hooks";
 
 export enum ApprovalState {
   UNKNOWN,
   NOT_APPROVED,
-  // PENDING,
+  PENDING,
   APPROVED,
 }
 
@@ -21,63 +26,65 @@ export const useTokenApprove = (
   const { account } = useWeb3();
   const contract = useERC20Contract(tokenAddress);
   const allowance = useTokenAllowance(tokenAddress, account, spender);
+  const callWithGasPrice = useCallWithGasPrice();
+  const addTransaction = useTransactionAdder();
+  const pendingApproval = useHasPendingApproval(tokenAddress, spender);
 
   const approvalState: ApprovalState = useMemo(() => {
-    if (!tokenAddress || !spender || !allowance) return ApprovalState.UNKNOWN;
+    if (!tokenAddress || !spender || !allowance) {
+      return ApprovalState.UNKNOWN;
+    }
 
     // amountToApprove will be defined if currentAllowance is
-    return allowance.lt(amountToApprove ?? MAX_UINT256)
-      ? // pendingApproval
-        // ? ApprovalState.PENDING
-        // :
-        ApprovalState.NOT_APPROVED
+    return allowance.lt(amountToApprove)
+      ? pendingApproval
+        ? ApprovalState.PENDING
+        : ApprovalState.NOT_APPROVED
       : ApprovalState.APPROVED;
-  }, [
-    amountToApprove,
-    allowance,
-    //pendingApproval,
-    spender,
-    tokenAddress,
-  ]);
+  }, [amountToApprove, allowance, pendingApproval, spender, tokenAddress]);
 
   const handleApprove = useCallback(async (): Promise<void> => {
-    try {
-      if (approvalState !== ApprovalState.NOT_APPROVED) {
-        console.error("approve was called unnecessarily");
-        return;
-      }
-
-      if (!tokenAddress) {
-        console.error("no token");
-        return;
-      }
-
-      if (!contract) {
-        console.error("tokenContract is null");
-        return;
-      }
-
-      if (!spender) {
-        console.error("no spender");
-        return;
-      }
-
-      await approveHelper(
-        contract,
-        spender,
-        account,
-        amountToApprove ?? MAX_UINT256
-      );
-
-      // add transaction to pending queue
-    } catch (e) {
-      console.error(e);
-      throw e;
+    // try {
+    if (approvalState !== ApprovalState.NOT_APPROVED) {
+      console.error("approve was called unnecessarily");
+      return;
     }
+
+    if (!tokenAddress) {
+      console.error("no token");
+      return;
+    }
+
+    if (!contract) {
+      console.error("tokenContract is null");
+      return;
+    }
+
+    if (!spender) {
+      console.error("no spender");
+      return;
+    }
+
+    return callWithGasPrice(contract, "approve", [
+      spender,
+      amountToApprove ?? MAX_UINT256,
+    ])
+      .then((response: TransactionResponse) => {
+        addTransaction(response, {
+          summary: `Approve Token`,
+          approval: { tokenAddress, spender },
+        });
+        console.log();
+      })
+      .catch((error: Error) => {
+        console.error("Failed to approve token", error);
+        throw error;
+      });
   }, [
-    account,
+    addTransaction,
     amountToApprove,
     approvalState,
+    callWithGasPrice,
     contract,
     spender,
     tokenAddress,

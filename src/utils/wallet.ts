@@ -51,9 +51,9 @@ export const registerToken = async (
     params: {
       type: "ERC20",
       options: {
-        // address: tokenAddress,
-        // symbol: tokenSymbol,
-        // decimals: tokenDecimals,
+        address: tokenAddress,
+        symbol: tokenSymbol,
+        decimals: tokenDecimals,
         // image: `${BASE_URL}/images/tokens/${tokenAddress}.png`,
       },
     },
