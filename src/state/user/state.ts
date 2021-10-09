@@ -7,6 +7,7 @@ export interface UserState {
   connector: string;
   gasPrice: number;
   isDarkMode: boolean;
+  isDrawerOpen: boolean;
   userEarnViewMode: ViewMode;
 }
 
@@ -15,6 +16,7 @@ const initialState: UserState = {
   connector: null,
   gasPrice: null,
   isDarkMode: false,
+  isDrawerOpen: false,
   userEarnViewMode: ViewMode.TABLE,
 };
 
@@ -27,6 +29,9 @@ export const userSlice = createSlice({
     },
     toggleDarkMode: (state) => {
       state.isDarkMode = !state.isDarkMode;
+    },
+    toggleDrawerMode: (state) => {
+      state.isDrawerOpen = !state.isDrawerOpen;
     },
     updateGasPrice: (state, action: PayloadAction<UpdateGasPrice>) => {
       state.gasPrice = action.payload.gasPrice;
@@ -43,6 +48,7 @@ export const userSlice = createSlice({
 export const {
   clearUser,
   toggleDarkMode,
+  toggleDrawerMode,
   updateGasPrice,
   updateUserEarnViewMode,
 } = userSlice.actions;

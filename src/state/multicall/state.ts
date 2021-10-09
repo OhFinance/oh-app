@@ -38,7 +38,7 @@ export const multicallSlice = createSlice({
       action: PayloadAction<AddMulticallListeners>
     ) => {
       const { calls, chainId, options } = action.payload;
-      const blocksPerFetch = options.blocksPerFetch ?? 1;
+      const blocksPerFetch = options ? options.blocksPerFetch : 1;
 
       const listeners: MulticallState["callListeners"] = state.callListeners
         ? state.callListeners
@@ -58,7 +58,7 @@ export const multicallSlice = createSlice({
       action: PayloadAction<RemoveMulticallListeners>
     ) => {
       const { calls, chainId, options } = action.payload;
-      const blocksPerFetch = options.blocksPerFetch ?? 1;
+      const blocksPerFetch = options ? options.blocksPerFetch : 1;
 
       const listeners: MulticallState["callListeners"] = state.callListeners
         ? state.callListeners

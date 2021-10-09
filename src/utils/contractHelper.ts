@@ -53,38 +53,40 @@ export const getBankContract = (
   return getContract(OhBankAbi, address, signer);
 };
 
-export const getGovernorContract = (
-  signer?: ethers.Signer | ethers.providers.Provider
-) => {
-  return getContract(OhGovernorAbi, getGovernorAddress(), signer);
-};
-
-export const getForumContract = (
-  signer?: ethers.Signer | ethers.providers.Provider
-) => {
-  return getContract(OhForumAbi, getForumAddress(), signer);
-};
-
-export const getLiquidatorContract = (
-  signer?: ethers.Signer | ethers.providers.Provider
-) => {
-  return getContract(OhLiquidatorAbi, getLiquidatorAddress(), signer);
-};
-
 export const getManagerContract = (
+  address: string,
   signer?: ethers.Signer | ethers.providers.Provider
 ) => {
-  return getContract(OhManagerAbi, getManagerAddress(), signer);
+  return getContract(OhManagerAbi, address, signer);
 };
 
 export const getTokenContract = (
+  address: string,
   signer?: ethers.Signer | ethers.providers.Provider
 ) => {
-  return getContract(OhTokenAbi, getTokenAddress(), signer);
+  return getContract(OhTokenAbi, address, signer);
 };
 
-export const getVestingContract = (
-  signer?: ethers.Signer | ethers.providers.Provider
-) => {
-  return getContract(OhTimelockAbi, getVestingAddress(), signer);
-};
+// export const getGovernorContract = (
+//   signer?: ethers.Signer | ethers.providers.Provider
+// ) => {
+//   return getContract(OhGovernorAbi, getGovernorAddress(), signer);
+// };
+
+// export const getForumContract = (
+//   signer?: ethers.Signer | ethers.providers.Provider
+// ) => {
+//   return getContract(OhForumAbi, getForumAddress(), signer);
+// };
+
+// export const getLiquidatorContract = (
+//   signer?: ethers.Signer | ethers.providers.Provider
+// ) => {
+//   return getContract(OhLiquidatorAbi, getLiquidatorAddress(), signer);
+// };
+
+// export const getVestingContract = (
+//   signer?: ethers.Signer | ethers.providers.Provider
+// ) => {
+//   return getContract(OhTimelockAbi, getVestingAddress(), signer);
+// };

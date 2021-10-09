@@ -4,10 +4,12 @@ import {
   makeStyles,
   Toolbar,
 } from "@material-ui/core";
-import { useMobile, MobileMenu } from "@ohfinance/oh-ui";
+import { useMobile, IconButton, Flex } from "@ohfinance/oh-ui";
 import { DRAWER_WIDTH } from "config/constants/values";
 import { AppBarMenu } from "./AppBarMenu";
 import OhLogo from "assets/img/oh-logo.png";
+import MenuIcon from "@material-ui/icons/Menu";
+import { useDrawerManager } from "state/user/hooks";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -22,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export const AppBar = () => {
   const classes = useStyles();
   const mobile = useMobile();
+  const [, toggleDrawer] = useDrawerManager();
 
   return (
     <MuiAppBar
@@ -31,14 +34,15 @@ export const AppBar = () => {
       className={classes.appBar}
     >
       <Toolbar disableGutters>
-        <Grid container justify="space-between" alignItems="center">
-          <Grid item>
-            {mobile && <MobileMenu onClick={() => {}} image={OhLogo} />}
-          </Grid>
-          <Grid item>
-            <AppBarMenu />
-          </Grid>
-        </Grid>
+        <IconButton edge="start" onClick={toggleDrawer}>
+          {mobile && <MenuIcon />}
+        </IconButton>
+        <Flex grow ml={1}>
+          {mobile && (
+            <img src={OhLogo} alt="oh-finance" height="24px" width="auto" />
+          )}
+        </Flex>
+        <AppBarMenu />
       </Toolbar>
     </MuiAppBar>
   );

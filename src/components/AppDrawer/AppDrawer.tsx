@@ -2,6 +2,7 @@ import { Drawer, makeStyles, SwipeableDrawer } from "@material-ui/core";
 import { useMobile } from "@ohfinance/oh-ui";
 import { DRAWER_WIDTH } from "config/constants/values";
 import { useState } from "react";
+import { useDrawerManager } from "state/user/hooks";
 import { AppDrawerContent } from "./components/AppDrawerContent";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 export const AppDrawer = () => {
   const classes = useStyles();
   const mobile = useMobile();
-  const [open, setOpen] = useState(false);
+  const [open, toggleOpen] = useDrawerManager();
 
   if (!!mobile) {
     return (
@@ -28,8 +29,8 @@ export const AppDrawer = () => {
           paper: classes.drawerPaper,
         }}
         open={open}
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
+        onClose={toggleOpen}
+        onOpen={toggleOpen}
       >
         <AppDrawerContent />
       </SwipeableDrawer>

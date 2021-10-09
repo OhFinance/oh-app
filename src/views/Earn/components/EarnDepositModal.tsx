@@ -1,10 +1,9 @@
 import { Grid, Typography } from "@material-ui/core";
 import { Button, Modal, ModalProps } from "@ohfinance/oh-ui";
-import BigNumber from "bignumber.js";
 import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
-import { useTokenAddress } from "hooks/useTokenAddress";
+import { useAddress } from "hooks/useAddress";
 import { ApprovalState, useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useState } from "react";
@@ -22,11 +21,13 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
 }) => {
   const [input, setInput] = useState("");
   const [pendingTx, setPendingTx] = useState(false);
-  const tokenAddress = useTokenAddress(bank.underlying.address);
-  const bankAddress = useTokenAddress(bank.address);
-  const { balance } = useTokenBalance(tokenAddress);
+
+  const underlyingAddress = useAddress(bank.underlying.address);
+  const bankAddress = useAddress(bank.address);
+
+  const { balance } = useTokenBalance(bankAddress);
   const { approvalState, onApprove } = useTokenApprove(
-    tokenAddress,
+    underlyingAddress,
     bankAddress,
     getDecimalAmount(input, bank.decimals)
   );

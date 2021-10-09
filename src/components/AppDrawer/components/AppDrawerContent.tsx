@@ -1,13 +1,15 @@
 import { Fragment } from "react";
 import {
+  BASE_URL,
   Flex,
-  HomeButton,
-  TelegramButton,
-  TwitterButton,
+  IconButton,
+  MEDIUM_URL,
+  TWITTER_URL,
 } from "@ohfinance/oh-ui";
 import OhBrand from "assets/img/oh-brand.png";
 import { Box } from "@material-ui/core";
 import { AppDrawerList } from "./AppDrawerList";
+import { FaHome, FaMediumM, FaTwitter } from "react-icons/fa";
 
 export const AppDrawerContent = () => {
   return (
@@ -25,11 +27,17 @@ export const AppDrawerContent = () => {
         </Box>
         <AppDrawerList />
       </Flex>
-      <Box>
+      <Box mb={2}>
         <Flex center>
-          <TwitterButton />
-          <TelegramButton />
-          <HomeButton />
+          <IconButton size="medium" href={TWITTER_URL}>
+            <FaTwitter size="32px" />
+          </IconButton>
+          <IconButton size="medium" href={MEDIUM_URL}>
+            <FaMediumM size="32px" />
+          </IconButton>
+          <IconButton size="medium" href={BASE_URL}>
+            <FaHome size="32px" />
+          </IconButton>
         </Flex>
         {/* <Typography align="center">Version: v{version}</Typography> */}
       </Box>

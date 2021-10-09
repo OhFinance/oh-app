@@ -1,19 +1,19 @@
 import { Button } from "@material-ui/core";
 import { useModal } from "@ohfinance/oh-ui";
 import { TokenBalanceModal } from "components/TokenBalanceModal";
-import { Tokens } from "config/constants/tokens";
-import { useTokenAddress } from "hooks/useTokenAddress";
+import { useAddress } from "hooks/useAddress";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { useWeb3 } from "hooks/useWeb3";
+import { getTokenAddress } from "utils/addressHelper";
 import { getFullDisplayBalance } from "utils/formatBalances";
 import { Balance } from "../Balance";
 
 export const TokenBalanceButton = ({ ...props }) => {
-  const { account, chainId } = useWeb3();
-  const address = useTokenAddress(Tokens.ohToken.address);
+  const { account } = useWeb3();
+  const address = useAddress(getTokenAddress());
   const { balance } = useTokenBalance(address);
   const [onPresentBalanceModal] = useModal(
-    <TokenBalanceModal tokenBalance={balance} chainId={chainId} />
+    <TokenBalanceModal address={address} balance={balance} />
   );
 
   if (!account) {

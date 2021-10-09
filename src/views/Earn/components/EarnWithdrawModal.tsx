@@ -4,14 +4,14 @@ import BigNumber from "bignumber.js";
 import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
-import { useTokenAddress } from "hooks/useTokenAddress";
+import { useAddress } from "hooks/useAddress";
 import { useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useState } from "react";
-import { getFullDisplayBalance } from "utils/formatBalances";
+import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
 import { useBankWithdraw } from "../hooks/useBankWithdraw";
 
-interface EarnWithdrawModalProps extends ModalProps {
+export interface EarnWithdrawModalProps extends ModalProps {
   bank: Bank;
 }
 
@@ -22,13 +22,9 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
 }) => {
   const [input, setInput] = useState("");
   const [pendingTx, setPendingTx] = useState(false);
-  const tokenAddress = useTokenAddress(bank.address);
-  const bankAddress = useTokenAddress(bank.address);
+  const tokenAddress = useAddress(bank.address);
+  const bankAddress = useAddress(bank.address);
   const { balance } = useTokenBalance(tokenAddress);
-  const { approvalState, onApprove } = useTokenApprove(
-    tokenAddress,
-    bankAddress
-  );
   const { onWithdraw } = useBankWithdraw(bankAddress);
 
   return (
@@ -70,9 +66,6 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
           />
         </Grid>
         <Grid item>
-          {/* <Button fullWidth variant="contained" color="primary">
-            Approve
-          </Button> */}
           <Button
             fullWidth
             variant="contained"
@@ -80,7 +73,7 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
             onClick={async () => {
               setPendingTx(true);
               try {
-                await onWithdraw(new BigNumber(input));
+                await onWithdraw(getDecimalAmount(input, bank.decimals));
                 onDismiss();
               } catch (e) {
                 console.error(e);

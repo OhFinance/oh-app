@@ -9,7 +9,7 @@ import { useWeb3 } from "./useWeb3";
 export const useERC20Contract = (address: string) => {
   const { library } = useWeb3();
   return useMemo(
-    () => getERC20Contract(address, library ? library.getSigner() : undefined),
+    () => getERC20Contract(address, library.getSigner()),
     [address, library]
   );
 };

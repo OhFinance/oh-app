@@ -1,23 +1,24 @@
 import {
   Avatar,
+  Button,
   IconButton,
   makeStyles,
   TableCell,
   TableRow,
 } from "@material-ui/core";
-import { Flex, useModal } from "@ohfinance/oh-ui";
+import { Flex, Text, useModal } from "@ohfinance/oh-ui";
 import { Bank } from "config/constants/types";
 import { FC } from "react";
-import { EarnCompositionGroup } from "./EarnCompositionGroup";
+import { EarnCompositionGroup } from "../EarnCompositionGroup";
 import { FaEllipsisV, FaMinus, FaPlus } from "react-icons/fa";
-import { EarnDetailsModal } from "./EarnDetailsModal";
-import { EarnDepositModal } from "./EarnDepositModal";
-import { EarnWithdrawModal } from "./EarnWithdrawModal";
+import { EarnDetailModal } from "../EarnDetailModal";
+import { EarnDepositModal } from "../EarnDepositModal";
+import { EarnWithdrawModal } from "../EarnWithdrawModal";
 import { useTokenBalance } from "hooks/useTokenBalance";
-import { useWeb3 } from "hooks/useWeb3";
-import { useTokenAddress } from "hooks/useTokenAddress";
 import { getFullDisplayBalance } from "utils/formatBalances";
 import { Balance } from "components/Balance";
+import { useAddress } from "hooks/useAddress";
+
 const useStyles = makeStyles((theme) => ({
   cell: {
     borderBottom: "none",
@@ -35,17 +36,18 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
   ...props
 }) => {
   const classes = useStyles();
-  const [onPresentDetailsModal] = useModal(<EarnDetailsModal bank={bank} />);
+  const [onPresentDetailModal] = useModal(<EarnDetailModal bank={bank} />);
   const [onPresentDepositModal] = useModal(<EarnDepositModal bank={bank} />);
   const [onPresentWithdrawModal] = useModal(<EarnWithdrawModal bank={bank} />);
 
-  const { account, chainId } = useWeb3();
-  const address = useTokenAddress(bank.address);
+  const address = useAddress(bank.address);
   const { balance } = useTokenBalance(address);
 
   return (
     <TableRow {...props}>
-      <TableCell className={isLast && classes.cell}>{bank.name}</TableCell>
+      <TableCell className={isLast && classes.cell}>
+        <Text>{bank.name}</Text>
+      </TableCell>
 
       <TableCell className={isLast && classes.cell}>
         <Flex center>
@@ -65,49 +67,36 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
           <EarnCompositionGroup composition={bank.compositionImages} />
         </Flex>
       </TableCell>
-      <TableCell className={isLast && classes.cell}>
+      {/* <TableCell className={isLast && classes.cell}>
         <b>18%</b>
-      </TableCell>
+      </TableCell> */}
       <TableCell className={isLast && classes.cell}>
-        <b>
+        <Text align="center">
           <Balance value={getFullDisplayBalance(balance, bank.decimals)} />
-        </b>
+        </Text>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
-        <b>$0.000</b>
+        <Text align="center">$0.000</Text>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <IconButton
-            onClick={onPresentDepositModal}
-            color="inherit"
-            size="small"
-            style={{ padding: "8px" }}
-          >
+          {/* <Button color="primary">Deposit</Button> */}
+          <IconButton onClick={onPresentDepositModal} size="medium">
             <FaPlus />
           </IconButton>
         </Flex>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <IconButton
-            onClick={onPresentWithdrawModal}
-            color="inherit"
-            size="small"
-            style={{ padding: "8px" }}
-          >
+          {/* <Button color="primary">Withdraw</Button> */}
+          <IconButton onClick={onPresentWithdrawModal} size="medium">
             <FaMinus />
           </IconButton>
         </Flex>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <IconButton
-            onClick={onPresentDetailsModal}
-            color="inherit"
-            size="small"
-            style={{ padding: "8px" }}
-          >
+          <IconButton onClick={onPresentDetailModal} size="medium">
             <FaEllipsisV />
           </IconButton>
         </Flex>

@@ -11,7 +11,7 @@ import banks from "config/constants/banks";
 import { Bank } from "config/constants/types";
 import { EarnTableRow } from "./EarnTableRow";
 
-export const EarnTable = () => {
+export const EarnTableView = () => {
   return (
     <TableSurface title="Oh! Yield Indexes">
       <Table>
@@ -22,9 +22,9 @@ export const EarnTable = () => {
             {/* <TableCell>Description</TableCell> */}
             <TableCell align="center">Underlying</TableCell>
             <TableCell align="center">Composition</TableCell>
-            <TableCell>APY</TableCell>
-            <TableCell>Balance</TableCell>
-            <TableCell>Value</TableCell>
+            {/* <TableCell>APY</TableCell> */}
+            <TableCell align="center">Balance</TableCell>
+            <TableCell align="center">USD Value</TableCell>
             <TableCell align="center">Deposit</TableCell>
             <TableCell align="center">Withdraw</TableCell>
             <TableCell align="center">Details</TableCell>

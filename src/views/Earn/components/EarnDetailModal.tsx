@@ -12,11 +12,11 @@ import { LinkButton } from "components/LinkButton";
 import { Bank } from "config/constants/types";
 import { FC } from "react";
 
-interface EarnDetailsModalProps extends ModalProps {
+export interface EarnDetailModalProps extends ModalProps {
   bank: Bank;
 }
 
-export const EarnDetailsModal: FC<EarnDetailsModalProps> = ({
+export const EarnDetailModal: FC<EarnDetailModalProps> = ({
   isOpen,
   onDismiss,
   bank,
