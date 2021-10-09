@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ZERO } from "utils/bigNumber";
 import { useERC20Contract } from "./useContract";
 
-export const useAllowance = (
+export const useTokenAllowance = (
   tokenAddress?: string,
   owner?: string,
   spender?: string

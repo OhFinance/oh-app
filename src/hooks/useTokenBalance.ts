@@ -3,6 +3,7 @@ import { balanceOf } from "helpers/callHelper";
 import { useEffect, useState } from "react";
 import { ZERO } from "utils/bigNumber";
 import { useERC20Contract } from "./useContract";
+import usePoller from "./usePoller";
 import { useWeb3 } from "./useWeb3";
 
 type UseTokenBalanceState = {
@@ -24,10 +25,10 @@ export const useTokenBalance = (tokenAddress: string) => {
   });
   const { account } = useWeb3();
   const contract = useERC20Contract(tokenAddress);
+  const { fastRefresh } = usePoller();
 
   useEffect(() => {
     const fetchBalance = async () => {
-      // const contract = getErc20Contract(tokenAddress, web3);
       try {
         const result = await balanceOf(contract, account);
         setBalanceState({
@@ -46,14 +47,7 @@ export const useTokenBalance = (tokenAddress: string) => {
     if (account && contract) {
       fetchBalance();
     }
-  }, [
-    account,
-    tokenAddress,
-    contract,
-    // web3,
-    SUCCESS,
-    FAILED,
-  ]);
+  }, [account, contract, fastRefresh, tokenAddress, SUCCESS, FAILED]);
 
   return balanceState;
 };

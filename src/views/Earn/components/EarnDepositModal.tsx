@@ -5,10 +5,10 @@ import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
 import { useTokenAddress } from "hooks/useTokenAddress";
-import { ApprovalState, useApprove } from "hooks/useApprove";
+import { ApprovalState, useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useState } from "react";
-import { getFullDisplayBalance } from "utils/formatBalances";
+import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
 import { useBankDeposit } from "../hooks/useBankDeposit";
 
 export interface EarnDepositModalProps extends ModalProps {
@@ -25,7 +25,11 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
   const tokenAddress = useTokenAddress(bank.underlying.address);
   const bankAddress = useTokenAddress(bank.address);
   const { balance } = useTokenBalance(tokenAddress);
-  const { approvalState, onApprove } = useApprove(tokenAddress, bankAddress);
+  const { approvalState, onApprove } = useTokenApprove(
+    tokenAddress,
+    bankAddress,
+    getDecimalAmount(input, bank.decimals)
+  );
   const { onDeposit } = useBankDeposit(bankAddress);
 
   return (
@@ -96,7 +100,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
               onClick={async () => {
                 setPendingTx(true);
                 try {
-                  await onDeposit(new BigNumber(input));
+                  await onDeposit(getDecimalAmount(input, bank.decimals));
                   onDismiss();
                 } catch (e) {
                   console.error(e);

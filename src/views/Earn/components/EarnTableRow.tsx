@@ -11,9 +11,13 @@ import { FC } from "react";
 import { EarnCompositionGroup } from "./EarnCompositionGroup";
 import { FaEllipsisV, FaMinus, FaPlus } from "react-icons/fa";
 import { EarnDetailsModal } from "./EarnDetailsModal";
-import { EarnActionModal } from "./EarnActionModal";
 import { EarnDepositModal } from "./EarnDepositModal";
 import { EarnWithdrawModal } from "./EarnWithdrawModal";
+import { useTokenBalance } from "hooks/useTokenBalance";
+import { useWeb3 } from "hooks/useWeb3";
+import { useTokenAddress } from "hooks/useTokenAddress";
+import { getFullDisplayBalance } from "utils/formatBalances";
+import { Balance } from "components/Balance";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -35,6 +39,10 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
   const [onPresentDetailsModal] = useModal(<EarnDetailsModal bank={bank} />);
   const [onPresentDepositModal] = useModal(<EarnDepositModal bank={bank} />);
   const [onPresentWithdrawModal] = useModal(<EarnWithdrawModal bank={bank} />);
+
+  const { account, chainId } = useWeb3();
+  const address = useTokenAddress(bank.address);
+  const { balance } = useTokenBalance(address);
 
   return (
     <TableRow {...props}>
@@ -62,7 +70,9 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
         <b>18%</b>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
-        <b>0.000</b>
+        <b>
+          <Balance value={getFullDisplayBalance(balance, bank.decimals)} />
+        </b>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <b>$0.000</b>

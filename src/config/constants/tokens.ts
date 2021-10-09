@@ -14,16 +14,8 @@ export const Tokens: { [token: string]: Token } = {
     decimals: 18,
     address: {
       1: "",
-      4: "",
+      4: "0x6b461A994d76d8248a6B439D4a19cDfd821409eE",
       42: "0x6b461A994d76d8248a6B439D4a19cDfd821409eE",
-    },
-  },
-  ohUsdc: {
-    symbol: "OH-USDC",
-    decimals: 6,
-    address: {
-      1: "",
-      4: "",
     },
   },
   usdc: {

@@ -2,19 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { EarnState } from "state/types";
 
 const initialState: EarnState = {
-  displayMode: "table",
+  isCardView: true,
 };
 
 export const earnSlice = createSlice({
   name: "earn",
   initialState,
   reducers: {
-    toggleDisplay: (state) => ({
-      displayMode: state.displayMode === "table" ? "card" : "table",
+    toggleViewMode: (state) => ({
+      ...state,
+      isCardView: !state.isCardView,
     }),
   },
 });
 
-export const { toggleDisplay } = earnSlice.actions;
+export const { toggleViewMode } = earnSlice.actions;
 
 export default earnSlice.reducer;

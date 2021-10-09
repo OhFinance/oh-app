@@ -16,7 +16,7 @@ export interface UserState extends UserAccount {
 }
 
 export interface EarnState {
-  displayMode?: "table" | "card";
+  isCardView?: boolean;
 }
 
 export interface GasState {
