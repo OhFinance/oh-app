@@ -5,7 +5,7 @@ const paths: Path[] = [
   { name: "Earn", path: "/" },
   // { name: "Stake", path: "/stake" },
   // { name: "Vote", path: "/vote" },
-  { name: "Claim", path: "/claim" },
+  // { name: "Claim", path: "/claim" },
 ];
 
 export default paths;

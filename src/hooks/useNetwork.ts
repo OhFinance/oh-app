@@ -1,3 +1,4 @@
+import { SupportedTestNetworks } from "config/constants/networks";
 import { getBlockExplorerUrl } from "utils/networkHelper";
 import { useWeb3 } from "./useWeb3";
 
@@ -6,5 +7,6 @@ export const useNetwork = () => {
 
   return {
     blockExplorerUrl: getBlockExplorerUrl(chainId),
+    isTestnet: SupportedTestNetworks.includes(chainId),
   };
 };

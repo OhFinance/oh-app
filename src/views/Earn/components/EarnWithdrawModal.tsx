@@ -70,6 +70,7 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
             fullWidth
             variant="contained"
             color="primary"
+            disabled={!input}
             onClick={async () => {
               setPendingTx(true);
               try {

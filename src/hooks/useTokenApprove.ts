@@ -10,12 +10,13 @@ import {
   useHasPendingApproval,
   useTransactionAdder,
 } from "state/transactions/hooks";
+import { ethers } from "ethers";
 
 export enum ApprovalState {
-  UNKNOWN,
-  NOT_APPROVED,
-  PENDING,
-  APPROVED,
+  UNKNOWN = "Unknown",
+  NOT_APPROVED = "Not Approved",
+  PENDING = "Pending",
+  APPROVED = "Approved",
 }
 
 export const useTokenApprove = (
@@ -26,6 +27,8 @@ export const useTokenApprove = (
   const { account } = useWeb3();
   const contract = useERC20Contract(tokenAddress);
   const allowance = useTokenAllowance(tokenAddress, account, spender);
+  // console.log(allowance.toString());
+
   const callWithGasPrice = useCallWithGasPrice();
   const addTransaction = useTransactionAdder();
   const pendingApproval = useHasPendingApproval(tokenAddress, spender);
@@ -67,7 +70,7 @@ export const useTokenApprove = (
 
     return callWithGasPrice(contract, "approve", [
       spender,
-      amountToApprove ?? MAX_UINT256,
+      MAX_UINT256.toString(),
     ])
       .then((response: TransactionResponse) => {
         addTransaction(response, {
@@ -82,7 +85,7 @@ export const useTokenApprove = (
       });
   }, [
     addTransaction,
-    amountToApprove,
+    // amountToApprove,
     approvalState,
     callWithGasPrice,
     contract,

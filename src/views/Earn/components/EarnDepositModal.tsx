@@ -4,11 +4,14 @@ import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
 import { useAddress } from "hooks/useAddress";
+import { useNetwork } from "hooks/useNetwork";
 import { ApprovalState, useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useState } from "react";
+import { ZERO } from "utils/bigNumber";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
 import { useBankDeposit } from "../hooks/useBankDeposit";
+import { EarnFaucetButton } from "./EarnFaucetButton";
 
 export interface EarnDepositModalProps extends ModalProps {
   bank: Bank;
@@ -21,15 +24,16 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
 }) => {
   const [input, setInput] = useState("");
   const [pendingTx, setPendingTx] = useState(false);
+  const { isTestnet } = useNetwork();
 
   const underlyingAddress = useAddress(bank.underlying.address);
   const bankAddress = useAddress(bank.address);
 
-  const { balance } = useTokenBalance(bankAddress);
+  const { balance } = useTokenBalance(underlyingAddress);
   const { approvalState, onApprove } = useTokenApprove(
     underlyingAddress,
     bankAddress,
-    getDecimalAmount(input, bank.decimals)
+    getDecimalAmount(input, bank.underlying.decimals)
   );
   const { onDeposit } = useBankDeposit(bankAddress);
 
@@ -79,16 +83,18 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
           />
         </Grid>
         <Grid item>
-          {approvalState === ApprovalState.NOT_APPROVED && (
-            // || approval === ApprovalState.PENDING
+          {(approvalState === ApprovalState.NOT_APPROVED ||
+            approvalState === ApprovalState.PENDING) && (
             <Button
               fullWidth
               variant="contained"
               color="primary"
-              // disabled={approval === ApprovalState.PENDING}
+              disabled={approvalState === ApprovalState.PENDING}
               onClick={onApprove}
             >
-              Approve
+              {approvalState === ApprovalState.PENDING
+                ? `Approving ${bank.underlying.symbol}`
+                : `Approve ${bank.underlying.symbol}`}
             </Button>
           )}
           {(approvalState === ApprovalState.APPROVED ||
@@ -97,11 +103,13 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
               fullWidth
               variant="contained"
               color="primary"
-              disabled={approvalState === ApprovalState.UNKNOWN}
+              disabled={!input || approvalState === ApprovalState.UNKNOWN}
               onClick={async () => {
                 setPendingTx(true);
                 try {
-                  await onDeposit(getDecimalAmount(input, bank.decimals));
+                  await onDeposit(
+                    getDecimalAmount(input, bank.underlying.decimals)
+                  );
                   onDismiss();
                 } catch (e) {
                   console.error(e);
@@ -114,6 +122,11 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
             </Button>
           )}
         </Grid>
+        {isTestnet && (
+          <Grid item>
+            <EarnFaucetButton token={bank.underlying} onClick={() => {}} />
+          </Grid>
+        )}
       </Grid>
     </Modal>
   );

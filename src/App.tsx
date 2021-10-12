@@ -5,6 +5,8 @@ import { Loading } from "components/Loading";
 import { ToastListener } from "contexts/ToastContext";
 import { ScrollManager } from "@ohfinance/oh-ui";
 import { AppContainer } from "components/AppContainer";
+import { usePollBlockNumber } from "state/block/hooks";
+import useEagerConnect from "hooks/useEagerConnect";
 
 // code-splitting to reduce bundle size
 // const Dashboard = lazy(() => import("views/Dashboard"));
@@ -16,6 +18,9 @@ const Claim = lazy(() => import("views/Claim"));
 const Management = lazy(() => import("views/Management"));
 
 const App = () => {
+  usePollBlockNumber();
+  useEagerConnect();
+
   return (
     <BrowserRouter>
       <AppContainer>

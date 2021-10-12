@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AddMulticallListeners, RemoveMulticallListeners } from "./actions";
+import {
+  AddMulticallListeners,
+  ErrorFetchingMulticallResults,
+  FetchingMulticallResults,
+  RemoveMulticallListeners,
+  UpdateMulticallResults,
+} from "./actions";
 import { toCallKey } from "./helpers";
 
 export interface MulticallState {
@@ -53,6 +59,7 @@ export const multicallSlice = createSlice({
           (listeners[chainId][callKey][blocksPerFetch] ?? 0) + 1;
       });
     },
+
     removeMulticallListeners: (
       state,
       action: PayloadAction<RemoveMulticallListeners>
@@ -77,10 +84,69 @@ export const multicallSlice = createSlice({
         }
       });
     },
+    fetchingMulticallResults: (
+      state,
+      action: PayloadAction<FetchingMulticallResults>
+    ) => {
+      const { calls, chainId, fetchingBlockNumber } = action.payload;
+
+      state.callResults[chainId] = state.callResults[chainId] ?? {};
+      calls.forEach((call) => {
+        const callKey = toCallKey(call);
+        const current = state.callResults[chainId][callKey];
+        if (!current) {
+          state.callResults[chainId][callKey] = {
+            fetchingBlockNumber,
+          };
+        } else {
+          if ((current.fetchingBlockNumber ?? 0) >= fetchingBlockNumber) return;
+          state.callResults[chainId][callKey].fetchingBlockNumber =
+            fetchingBlockNumber;
+        }
+      });
+    },
+    errorFetchingMulticallResults: (
+      state,
+      action: PayloadAction<ErrorFetchingMulticallResults>
+    ) => {
+      const { fetchingBlockNumber, chainId, calls } = action.payload;
+      state.callResults[chainId] = state.callResults[chainId] ?? {};
+      calls.forEach((call) => {
+        const callKey = toCallKey(call);
+        const current = state.callResults[chainId][callKey];
+        if (!current) return; // only should be dispatched if we are already fetching
+        if (current.fetchingBlockNumber === fetchingBlockNumber) {
+          delete current.fetchingBlockNumber;
+          current.data = null;
+          current.blockNumber = fetchingBlockNumber;
+        }
+      });
+    },
+    updateMulticallResults: (
+      state,
+      action: PayloadAction<UpdateMulticallResults>
+    ) => {
+      const { chainId, results, blockNumber } = action.payload;
+
+      state.callResults[chainId] = state.callResults[chainId] ?? {};
+      Object.keys(results).forEach((callKey) => {
+        const current = state.callResults[chainId][callKey];
+        if ((current?.blockNumber ?? 0) > blockNumber) return;
+        state.callResults[chainId][callKey] = {
+          data: results[callKey],
+          blockNumber,
+        };
+      });
+    },
   },
 });
 
-export const { addMulticallListeners, removeMulticallListeners } =
-  multicallSlice.actions;
+export const {
+  addMulticallListeners,
+  removeMulticallListeners,
+  fetchingMulticallResults,
+  errorFetchingMulticallResults,
+  updateMulticallResults,
+} = multicallSlice.actions;
 
 export default multicallSlice.reducer;

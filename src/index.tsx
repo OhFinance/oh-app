@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import BigNumber from "bignumber.js";
 import App from "./App";
 import Providers from "Providers";
+import { Updaters } from "Updaters";
 
 // set big number precision
 BigNumber.config({
@@ -11,6 +12,7 @@ BigNumber.config({
 
 ReactDOM.render(
   <Providers>
+    <Updaters />
     <App />
   </Providers>,
   document.getElementById("root")

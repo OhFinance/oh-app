@@ -14,7 +14,7 @@ const banks: Bank[] = [
     decimals: 6,
     address: {
       1: "",
-      4: "",
+      4: "0xCEe95f9Aa3248eC712c001483439A10B180faC9e",
       42: "0xCEe95f9Aa3248eC712c001483439A10B180faC9e",
     },
     description: "Risk-Optimized Lending and Yield Farming",

@@ -1,4 +1,13 @@
+import { getAddress } from "@ethersproject/address";
 
-export const getDisplayAddress = (address:string) => {
-  return address.slice(0, 6) + '...' + address.slice(38)
-} 
+export const isValidAddress = (value: any): string | false => {
+  try {
+    return getAddress(value);
+  } catch {
+    return false;
+  }
+};
+
+export const getDisplayAddress = (address: string) => {
+  return address.slice(0, 6) + "..." + address.slice(38);
+};

@@ -12,10 +12,13 @@ export const useTokenAllowance = (
   const contract = useERC20Contract(tokenAddress);
   const inputs = useMemo(() => [owner, spender], [owner, spender]);
   const allowance = useSingleCallResult(contract, "allowance", inputs).result;
+  console.log(allowance);
 
   return useMemo(
     () =>
-      tokenAddress && allowance ? new BigNumber(allowance.toString()) : ZERO,
+      tokenAddress && allowance
+        ? new BigNumber(allowance.toString())
+        : undefined,
     [tokenAddress, allowance]
   );
 };

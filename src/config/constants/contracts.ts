@@ -1,6 +1,11 @@
 import { Address } from "./types";
 
 const contracts: { [contract: string]: Address } = {
+  multicall: {
+    1: "",
+    4: "0xb57aeb9c0c7e0fd39acdbf45fdab26341419a1fd",
+    42: "0x7f4c2431b4db2ce9ee2f994064a8840ba614bcec",
+  },
   governor: {
     1: "",
   },

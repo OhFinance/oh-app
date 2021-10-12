@@ -21,7 +21,8 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": false,
-    "target": "es5"
+    "target": "es5",
+    "downlevelIteration": true
   },
   "include": [
     "src"
