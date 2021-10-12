@@ -17,7 +17,7 @@ export const Web3NetworkModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
   const isLocalhost = window.location.href.indexOf("localhost") > -1;
   const networks = isLocalhost
     ? [...SupportedNetworks, ...SupportedTestNetworks]
-    : SupportedNetworks;
+    : SupportedTestNetworks; // testnets only for beta
 
   return (
     <Modal title="Select a Network" isOpen={!!isOpen} onDismiss={onDismiss}>

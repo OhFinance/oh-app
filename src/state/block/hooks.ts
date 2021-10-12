@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { AppState, useAppDispatch } from "state";
 import { useIsBrowserTabActive } from "hooks/useIsBrowserTabActive";
-import { simpleRpcProvider } from "utils/web3Providers";
 import { setBlock } from "./state";
 import { useWeb3 } from "hooks/useWeb3";
 

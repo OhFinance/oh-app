@@ -8,7 +8,7 @@ import Fuji from "assets/img/fuji.svg";
 
 export const SupportedNetworks = [1, 43114];
 
-export const SupportedTestNetworks = [4, 42, 43113];
+export const SupportedTestNetworks = [4, 42];
 
 // Avalanche Info: https://docs.avax.network/build/tutorials/platform/launch-your-ethereum-dapp
 export const Networks: { [chainId: number]: Network } = {

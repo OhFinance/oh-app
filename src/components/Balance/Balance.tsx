@@ -6,6 +6,7 @@ export interface BalanceProps {
   decimals?: number;
   delay?: number;
   suffix?: string;
+  prefix?: string;
 }
 
 export const Balance: FC<BalanceProps> = ({
@@ -13,6 +14,7 @@ export const Balance: FC<BalanceProps> = ({
   decimals = 3,
   delay = 1,
   suffix,
+  prefix,
 }) => {
   const previousValue = useRef(0);
 
@@ -26,6 +28,7 @@ export const Balance: FC<BalanceProps> = ({
       end={+value}
       decimals={decimals}
       delay={delay}
+      prefix={prefix}
       suffix={suffix}
       separator=","
     />

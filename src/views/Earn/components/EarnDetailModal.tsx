@@ -11,6 +11,8 @@ import { Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
 import { LinkButton } from "components/LinkButton";
 import { Bank } from "config/constants/types";
 import { FC } from "react";
+import { useNetwork } from "hooks/useNetwork";
+import { useAddress } from "hooks/useAddress";
 
 export interface EarnDetailModalProps extends ModalProps {
   bank: Bank;
@@ -21,6 +23,9 @@ export const EarnDetailModal: FC<EarnDetailModalProps> = ({
   onDismiss,
   bank,
 }) => {
+  const { blockExplorerUrl } = useNetwork();
+  const address = useAddress(bank.address);
+
   return (
     <Modal
       title={`${bank.name} Details`}
@@ -40,7 +45,9 @@ export const EarnDetailModal: FC<EarnDetailModalProps> = ({
           <Typography variant="h6">{bank.symbol}</Typography>
         </Flex>
         <Flex center>
-          <LinkButton link={"https://"}>Contract Address</LinkButton>
+          <LinkButton link={`${blockExplorerUrl}/address/${address}`}>
+            Contract Address
+          </LinkButton>
         </Flex>
       </Box>
       <Flex>

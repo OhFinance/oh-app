@@ -2,7 +2,7 @@ name: Website Deploy, Static CI
 
 on:
   push:
-    branches: [main]
+    branches: [backup/main]
 
 env:
   PACKAGE_PATH: "build"

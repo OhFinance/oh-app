@@ -22,9 +22,9 @@ export const EarnTableView = () => {
             {/* <TableCell>Description</TableCell> */}
             <TableCell align="center">Underlying</TableCell>
             <TableCell align="center">Composition</TableCell>
-            {/* <TableCell>APY</TableCell> */}
-            <TableCell align="center">Balance</TableCell>
-            <TableCell align="center">USD Value</TableCell>
+            <TableCell align="center">TVL</TableCell>
+            {/* <TableCell align="center">Balance</TableCell> */}
+            <TableCell align="center">My Holdings</TableCell>
             <TableCell align="center">Deposit</TableCell>
             <TableCell align="center">Withdraw</TableCell>
             <TableCell align="center">Details</TableCell>

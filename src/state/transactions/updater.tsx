@@ -6,6 +6,8 @@ import useToast from "hooks/useToast";
 import { AppDispatch, AppState } from "../index";
 import { useWeb3 } from "hooks/useWeb3";
 import { checkedTransaction, finalizeTransaction } from "./state";
+import { Flex, Text } from "@ohfinance/oh-ui";
+import { useNetwork } from "hooks/useNetwork";
 
 export function shouldCheck(
   currentBlock: number,
@@ -30,6 +32,7 @@ export function shouldCheck(
 
 export function TransactionUpdater() {
   const { library, chainId } = useWeb3();
+  const { blockExplorerUrl } = useNetwork();
 
   const { currentBlock } = useBlock();
 
@@ -76,21 +79,24 @@ export function TransactionUpdater() {
 
               const toast = receipt.status === 1 ? toastSuccess : toastError;
               toast(
-                "Transaction receipt"
-                // <Flex flexDirection="column">
-                //   <Text>
-                //     {transactions[hash]?.summary ??
-                //       `Hash: ${hash.slice(0, 8)}...${hash.slice(58, 65)}`}
-                //   </Text>
-                //   {chainId && (
-                //     <Link
-                //       external
-                //       href={getBscScanLink(hash, "transaction", chainId)}
-                //     >
-                //       {t("View on BscScan")}
-                //     </Link>
-                //   )}
-                // </Flex>
+                "Transaction receipt",
+                <Flex column>
+                  <Text>
+                    {transactions[hash]?.summary ??
+                      `Hash: ${hash.slice(0, 8)}...${hash.slice(58, 65)}`}
+                  </Text>
+                  {chainId && (
+                    <Text>
+                      <a
+                        href={`${blockExplorerUrl}/tx/${hash}`}
+                        rel="noopenner noreferrer"
+                        target="_blank"
+                      >
+                        View on Block Explorer
+                      </a>
+                    </Text>
+                  )}
+                </Flex>
               );
             } else {
               dispatch(

@@ -52,6 +52,12 @@ export const TokenBalanceModal: FC<TokenBalanceModalProps> = ({
         variant="contained"
         color="secondary"
         startIcon={<FaExchangeAlt />}
+        onClick={() =>
+          window.open(
+            `https://app.sushi.com/swap?inputCurrency=${address}&outputCurrency=ETH`,
+            "_blank"
+          )
+        }
       >
         Swap Oh! Tokens
       </Button>

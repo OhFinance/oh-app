@@ -21,10 +21,10 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return [
       ...getDefaultMiddleware({ thunk: true }),
-      // save({ states: PERSISTED_KEYS }),
+      save({ states: PERSISTED_KEYS }),
     ];
   },
-  // preloadedState: load({ states: PERSISTED_KEYS }),
+  preloadedState: load({ states: PERSISTED_KEYS }),
 });
 
 export type AppDispatch = typeof store.dispatch;

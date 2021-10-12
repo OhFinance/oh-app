@@ -18,6 +18,9 @@ import { useTokenBalance } from "hooks/useTokenBalance";
 import { getFullDisplayBalance } from "utils/formatBalances";
 import { Balance } from "components/Balance";
 import { useAddress } from "hooks/useAddress";
+import { useBankValue } from "views/Earn/hooks/useBankValue";
+import BigNumber from "bignumber.js";
+import { TEN } from "utils/bigNumber";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -42,6 +45,7 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
 
   const address = useAddress(bank.address);
   const { balance } = useTokenBalance(address);
+  const { virtualBalance, getShareValue } = useBankValue(address);
 
   return (
     <TableRow {...props}>
@@ -67,16 +71,30 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
           <EarnCompositionGroup composition={bank.compositionImages} />
         </Flex>
       </TableCell>
-      {/* <TableCell className={isLast && classes.cell}>
-        <b>18%</b>
-      </TableCell> */}
       <TableCell className={isLast && classes.cell}>
+        <Text align="center">
+          <Balance
+            value={getFullDisplayBalance(virtualBalance, bank.decimals, 2)}
+            prefix="$"
+          />
+        </Text>
+      </TableCell>
+      {/* <TableCell className={isLast && classes.cell}>
         <Text align="center">
           <Balance value={getFullDisplayBalance(balance, bank.decimals)} />
         </Text>
-      </TableCell>
+      </TableCell> */}
       <TableCell className={isLast && classes.cell}>
-        <Text align="center">$0.000</Text>
+        <Text align="center">
+          <Balance
+            value={getFullDisplayBalance(
+              getShareValue(balance, bank.decimals),
+              6
+            )}
+            decimals={2}
+            prefix="$"
+          />
+        </Text>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
