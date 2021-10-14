@@ -12,7 +12,7 @@ import useEagerConnect from "hooks/useEagerConnect";
 // const Dashboard = lazy(() => import("views/Dashboard"));
 const Earn = lazy(() => import("views/Earn"));
 const NoMatch = lazy(() => import("views/NoMatch"));
-// const Stake = lazy(() => import("views/Stake"));
+const Stake = lazy(() => import("views/Stake"));
 // const Vote = lazy(() => import("views/Vote"));
 const Claim = lazy(() => import("views/Claim"));
 const Management = lazy(() => import("views/Management"));
@@ -30,12 +30,12 @@ const App = () => {
 
             {/* 
           <Route path="/" exact component={Dashboard} />
-          <Route path="/stake" component={Stake} />
           <Route path="/vote" component={Vote} /> 
           */}
 
             <Route path="/" exact component={Earn} />
             <Route path="/claim" component={Claim} />
+            <Route path="/stake" component={Stake} />
 
             {/* Non-Visible Paths */}
             <Route path="/manage" component={Management} />

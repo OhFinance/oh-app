@@ -5,6 +5,7 @@ import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
 import { useAddress } from "hooks/useAddress";
 import { useNetwork } from "hooks/useNetwork";
+import useToast from "hooks/useToast";
 import { ApprovalState, useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useState } from "react";
@@ -25,6 +26,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
   const [input, setInput] = useState("");
   const [pendingTx, setPendingTx] = useState(false);
   const { isTestnet } = useNetwork();
+  const { toastSuccess, toastError } = useToast();
 
   const underlyingAddress = useAddress(bank.underlying.address);
   const bankAddress = useAddress(bank.address);
@@ -36,6 +38,12 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
     getDecimalAmount(input, bank.underlying.decimals)
   );
   const { onDeposit } = useBankDeposit(bankAddress);
+
+  const handleDeposit = async () => {
+    setPendingTx(true);
+    try {
+    } catch (error) {}
+  };
 
   return (
     <Modal

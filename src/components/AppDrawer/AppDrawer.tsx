@@ -1,7 +1,6 @@
 import { Drawer, makeStyles, SwipeableDrawer } from "@material-ui/core";
 import { useMobile } from "@ohfinance/oh-ui";
 import { DRAWER_WIDTH } from "config/constants/values";
-import { useState } from "react";
 import { useDrawerManager } from "state/user/hooks";
 import { AppDrawerContent } from "./components/AppDrawerContent";
 
@@ -15,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/* 
+  Drawer displayed on left side of view
+  Desktop: Permanent Drawer
+  Mobile: Temporary / Swipeable Drawer
+*/
 export const AppDrawer = () => {
   const classes = useStyles();
   const mobile = useMobile();

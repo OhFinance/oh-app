@@ -109,6 +109,7 @@ export function TransactionUpdater() {
           });
       });
   }, [
+    blockExplorerUrl,
     chainId,
     library,
     transactions,

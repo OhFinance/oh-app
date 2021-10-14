@@ -45,7 +45,6 @@ export const useTokenApprove = (
   }, [amountToApprove, allowance, pendingApproval, spender, tokenAddress]);
 
   const handleApprove = useCallback(async (): Promise<void> => {
-    // try {
     if (approvalState !== ApprovalState.NOT_APPROVED) {
       console.error("approve was called unnecessarily");
       return;

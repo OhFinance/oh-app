@@ -4,7 +4,7 @@ import {
   makeStyles,
   Toolbar,
 } from "@material-ui/core";
-import { useMobile, IconButton, Flex } from "@ohfinance/oh-ui";
+import { useMobile, IconButton, Flex, OH_LOGO_URL } from "@ohfinance/oh-ui";
 import { DRAWER_WIDTH } from "config/constants/values";
 import { AppBarMenu } from "./AppBarMenu";
 import OhLogo from "assets/img/oh-logo.png";
@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/* 
+  Component displayed at very top of view
+  Manages mobile menu and various web3 account components
+*/
 export const AppBar = () => {
   const classes = useStyles();
   const mobile = useMobile();
@@ -39,7 +43,12 @@ export const AppBar = () => {
         </IconButton>
         <Flex grow ml={1}>
           {mobile && (
-            <img src={OhLogo} alt="oh-finance" height="24px" width="auto" />
+            <img
+              src={OH_LOGO_URL}
+              alt="oh-finance"
+              height="24px"
+              width="auto"
+            />
           )}
         </Flex>
         <AppBarMenu />

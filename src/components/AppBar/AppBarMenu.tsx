@@ -8,7 +8,7 @@ export const AppBarMenu = () => {
   const mobile = useMobile();
 
   return (
-    <Grid container spacing={2} alignItems="center" justify="flex-end">
+    <Grid container spacing={2} alignItems="center" justifyContent="flex-end">
       {!mobile && (
         <Grid item>
           <Web3NetworkButton />

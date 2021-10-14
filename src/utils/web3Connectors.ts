@@ -3,6 +3,7 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { ConnectorNames } from "config/constants/types";
 import { DEFAULT_POLLING_INTERVAL } from "config/constants/values";
 import { ethers } from "ethers";
+import { nodes } from "./web3Providers";
 
 // const rpcUrl = getNodeUrl();
 const supportedChainIds = [
@@ -15,10 +16,8 @@ const supportedChainIds = [
 
 const injected = new InjectedConnector({ supportedChainIds });
 
-// need to add rpc urls for wallet connect functionality
 const walletconnect = new WalletConnectConnector({
-  // rpc: { [chainId]: rpcUrl },
-  // bridge: "https://pancakeswap.bridge.walletconnect.org/",
+  rpc: nodes,
   qrcode: true,
   pollingInterval: DEFAULT_POLLING_INTERVAL,
   supportedChainIds,

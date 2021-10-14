@@ -1,8 +1,17 @@
 import { ethers } from "ethers";
-import getRpcUrl from "utils/getRpcUrl";
-import Web3 from "web3";
-import { HttpProviderOptions } from "web3-core-helpers";
 
-const RPC_URL = getRpcUrl();
+// Array of available nodes to connect to
+export const nodes = {
+  1:
+    process.env.REACT_APP_MAINNET_NODE_URL ??
+    "https://mainnet.eth.aragon.network/",
+  4:
+    process.env.REACT_APP_RINKEBY_NODE_URL ??
+    "https://rinkeby.eth.aragon.network/",
+  42:
+    process.env.REACT_APP_KOVAN_NODE_URL ?? "https://kovan.eth.aragon.network/",
+};
 
-export const simpleRpcProvider = new ethers.providers.JsonRpcProvider(RPC_URL);
+/* Fallback RPC Endpoint if no web3 connection, defaults to mainnet */
+export const getDefaultProvider = (chainId?: number) =>
+  new ethers.providers.JsonRpcProvider(nodes[chainId ?? 1]);

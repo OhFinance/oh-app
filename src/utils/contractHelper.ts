@@ -1,5 +1,4 @@
 import { ethers } from "ethers";
-import { simpleRpcProvider } from "./web3Providers";
 import { Web3Provider } from "@ethersproject/providers";
 
 export function getContract(
