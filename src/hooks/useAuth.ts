@@ -12,9 +12,14 @@ import {
   UserRejectedRequestError as UserRejectedRequestErrorWalletConnect,
   WalletConnectConnector,
 } from "@web3-react/walletconnect-connector";
+import { supportedChainIds } from "config/constants/networks";
+import { setupNetwork } from "utils/wallet";
+import { useAppDispatch } from "state";
+import { clearAllTransactions } from "state/transactions/state";
 
 const useAuth = () => {
-  const { account, activate, deactivate } = useWeb3React();
+  const dispatch = useAppDispatch();
+  const { activate, deactivate, chainId } = useWeb3React();
   const { toastError } = useToast();
 
   const login = useCallback(
@@ -22,47 +27,55 @@ const useAuth = () => {
       const connector = connectorLibrary[connectorID];
       if (connector) {
         activate(connector, async (error: Error) => {
-          console.error(error);
-          // if (error instanceof UnsupportedChainIdError) {
-          //   // const hasSetup = await setupNetwork();
-          //   // if (hasSetup) {
-          //   //   activate(connector);
-          //   // }
-          // } else {
-          window.localStorage.removeItem(CONNECTOR_STORAGE_KEY);
-          if (error instanceof NoEthereumProviderError) {
-            toastError("Provider Error", "No provider was found");
-          } else if (
-            error instanceof UserRejectedRequestErrorInjected ||
-            error instanceof UserRejectedRequestErrorWalletConnect
+          if (
+            error instanceof UnsupportedChainIdError &&
+            supportedChainIds.includes(chainId)
           ) {
-            if (connector instanceof WalletConnectConnector) {
-              const walletConnector = connector as WalletConnectConnector;
-              walletConnector.walletConnectProvider = null;
+            const hasSetup = await setupNetwork(chainId);
+            if (hasSetup) {
+              activate(connector);
             }
-            toastError(
-              "Authorization Error",
-              "Please authorize to access your account"
-            );
           } else {
-            toastError(error.name, error.message);
+            window.localStorage.removeItem(CONNECTOR_STORAGE_KEY);
+            if (error instanceof NoEthereumProviderError) {
+              toastError("Provider Error", "No provider was found");
+            } else if (
+              error instanceof UserRejectedRequestErrorInjected ||
+              error instanceof UserRejectedRequestErrorWalletConnect
+            ) {
+              if (connector instanceof WalletConnectConnector) {
+                const walletConnector = connector as WalletConnectConnector;
+                walletConnector.walletConnectProvider = null;
+              }
+              toastError(
+                "Authorization Error",
+                "Please authorize to access your account"
+              );
+            } else {
+              toastError(error.name, error.message);
+            }
           }
-
-          toastError(error.name, error.message);
         });
-
-        console.log("LOGGED IN!");
       } else {
         toastError("Can't find connector", "The connector config is wrong");
       }
     },
-    [activate, toastError]
+    [activate, chainId, toastError]
   );
 
   const logout = useCallback(() => {
     // dispatch(profileClear());
     deactivate();
-  }, [deactivate]);
+    // This localStorage key is set by @web3-react/walletconnect-connector
+    if (window.localStorage.getItem("walletconnect")) {
+      connectorLibrary.walletconnect.close();
+      connectorLibrary.walletconnect.walletConnectProvider = null;
+    }
+    window.localStorage.removeItem(CONNECTOR_STORAGE_KEY);
+    if (chainId) {
+      dispatch(clearAllTransactions({ chainId }));
+    }
+  }, [chainId, deactivate, dispatch]);
 
   return { login, logout };
 };

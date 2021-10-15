@@ -1,4 +1,4 @@
-import { Suspense, FC, ReactElement } from "react"
+import { Suspense, FC, ReactElement } from "react";
 
 export interface ErrorHandledSuspenseProps {
   fallback: ReactElement;
@@ -6,14 +6,7 @@ export interface ErrorHandledSuspenseProps {
 
 export const ErrorHandledSuspense: FC<ErrorHandledSuspenseProps> = ({
   fallback,
-  children
+  children,
 }) => {
-
-  
-
-  return (
-    <Suspense fallback={fallback}>
-      {children}
-    </Suspense>
-  )
-}
+  return <Suspense fallback={fallback}>{children}</Suspense>;
+};

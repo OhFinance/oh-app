@@ -3,18 +3,17 @@ import { PageHeading } from "components/PageHeading";
 import { VoteMetrics } from "./components/VoteMetrics";
 import { VoteTabs } from "./components/VoteTabs";
 import { Web3View } from "components/Web3View";
+import { ComingSoon } from "components/ComingSoon";
 
 const Vote = () => {
   return (
     <Web3View>
-      <PageHeading
-        title="Vote"
-        subtitle="Participate in Decentralized Governance and control the Protocol"
-      />
-      <Box mb={2}>
+      <PageHeading title="Vote" subtitle="Decentralized Governance" />
+      <ComingSoon />
+      {/* <Box mb={2}>
         <VoteMetrics />
       </Box>
-      <VoteTabs />
+      <VoteTabs /> */}
     </Web3View>
   );
 };

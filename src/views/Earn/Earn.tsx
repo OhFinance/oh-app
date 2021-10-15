@@ -24,10 +24,7 @@ const Earn = () => {
 
   return (
     <Web3View>
-      <PageHeading
-        title="Earn"
-        subtitle="Diversified strategies to do more with your DeFi Dollar"
-      />
+      <PageHeading title="Earn" subtitle="Yield Generating DeFi Strategies" />
       <Box mb={2}>
         <Flex justify="space-between" align="center">
           {!mobile && (

@@ -1,26 +1,18 @@
 import { Box, Grid } from "@material-ui/core";
-import { Button, Display, Flex, Heading, Subtitle } from "@ohfinance/oh-ui";
+import { Button, Flex, Heading, Subtitle } from "@ohfinance/oh-ui";
 import { Web3ProviderButton } from "components/Web3ProviderButton";
 import connectors from "config/constants/connectors";
-import useAuth from "hooks/useAuth";
 
 export const Web3Login = () => {
-  const { login } = useAuth();
-
   return (
-    <Display center pullTop>
+    <Flex center column grow={1}>
       <Box mb={2}>
         <Heading align="center">Login with your Wallet</Heading>
       </Box>
       <Grid container spacing={2}>
         {connectors.map((connector, i) => (
           <Grid item key={i} xs={12} md={6}>
-            <Web3ProviderButton
-              connector={connector}
-              onLogin={() => {
-                login(connector.connectorId);
-              }}
-            />
+            <Web3ProviderButton connector={connector} />
           </Grid>
         ))}
       </Grid>
@@ -32,6 +24,6 @@ export const Web3Login = () => {
           Learn More
         </Button>
       </Flex>
-    </Display>
+    </Flex>
   );
 };

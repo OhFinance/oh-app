@@ -1,21 +1,17 @@
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { supportedChainIds } from "config/constants/networks";
 import { ConnectorNames } from "config/constants/types";
 import { DEFAULT_POLLING_INTERVAL } from "config/constants/values";
 import { ethers } from "ethers";
 import { nodes } from "./web3Providers";
 
-// const rpcUrl = getNodeUrl();
-const supportedChainIds = [
-  1, // mainnet
-  4, // rinkeby
-  42, // kovan
-  43113, // avax fuji testnet
-  43114, // avax mainnet
-];
+// Connectors available to initialize Web3 instances
 
+// Injected (i.e. Metamask)
 const injected = new InjectedConnector({ supportedChainIds });
 
+// WalletConnect, hub for mobile access
 const walletconnect = new WalletConnectConnector({
   rpc: nodes,
   qrcode: true,

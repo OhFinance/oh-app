@@ -77,8 +77,9 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
         <Grid item>
           <TokenInput
             placeholder={`Deposit ${bank.underlying.symbol}`}
+            decimals={bank.underlying.decimals}
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onUserInput={(e) => setInput(e)}
             onMax={() => {
               setInput(
                 getFullDisplayBalance(
@@ -132,7 +133,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
         </Grid>
         {isTestnet && (
           <Grid item>
-            <EarnFaucetButton token={bank.underlying} onClick={() => {}} />
+            <EarnFaucetButton token={bank.underlying} />
           </Grid>
         )}
       </Grid>

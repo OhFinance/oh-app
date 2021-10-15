@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 export const ToastContainer: FC<ToastContainerProps> = ({
   toasts,
   onRemove,
-  spacing = 24,
+  spacing = 64,
   duration = 6000,
 }) => {
   const theme = useTheme<Theme>();
@@ -44,7 +44,7 @@ export const ToastContainer: FC<ToastContainerProps> = ({
             duration={duration}
             style={{
               zIndex: (theme.zIndex.snackbar - i).toString(),
-              top: `${TOAST_POSITION + i * spacing}px`,
+              bottom: `${TOAST_POSITION + i * spacing}px`,
             }}
           />
         ))}

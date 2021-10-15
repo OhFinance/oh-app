@@ -5,10 +5,17 @@ import Kovan from "assets/img/kovan.svg";
 import Rinkeby from "assets/img/rinkeby.svg";
 import Avalanche from "assets/img/avax.svg";
 import Fuji from "assets/img/fuji.svg";
+import { isLocalhost } from "utils/misc";
 
 export const SupportedNetworks = [1, 43114];
 
 export const SupportedTestNetworks = [4, 42];
+
+// only include testnets in live version until release
+export const supportedChainIds = [
+  ...SupportedTestNetworks,
+  ...(isLocalhost() && SupportedNetworks),
+];
 
 // Avalanche Info: https://docs.avax.network/build/tutorials/platform/launch-your-ethereum-dapp
 export const Networks: { [chainId: number]: Network } = {
