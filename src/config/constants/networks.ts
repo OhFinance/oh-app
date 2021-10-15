@@ -14,7 +14,7 @@ export const SupportedTestNetworks = [4, 42];
 // only include testnets in live version until release
 export const supportedChainIds = [
   ...SupportedTestNetworks,
-  ...(isLocalhost() && SupportedNetworks),
+  ...(isLocalhost() ? SupportedNetworks : []),
 ];
 
 // Avalanche Info: https://docs.avax.network/build/tutorials/platform/launch-your-ethereum-dapp
