@@ -1,13 +1,7 @@
-import {
-  AppBar as MuiAppBar,
-  Grid,
-  makeStyles,
-  Toolbar,
-} from "@material-ui/core";
+import { AppBar as MuiAppBar, makeStyles, Toolbar } from "@material-ui/core";
 import { useMobile, IconButton, Flex, OH_LOGO_URL } from "@ohfinance/oh-ui";
 import { DRAWER_WIDTH } from "config/constants/values";
 import { AppBarMenu } from "./AppBarMenu";
-import OhLogo from "assets/img/oh-logo.png";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useDrawerManager } from "state/user/hooks";
 

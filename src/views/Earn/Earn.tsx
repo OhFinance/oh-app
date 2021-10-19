@@ -54,7 +54,7 @@ const Earn = () => {
         </Flex>
       </Box>
 
-      {userEarnViewMode === ViewMode.TABLE ? (
+      {!mobile && userEarnViewMode === ViewMode.TABLE ? (
         <EarnTableView />
       ) : (
         <EarnCardView />

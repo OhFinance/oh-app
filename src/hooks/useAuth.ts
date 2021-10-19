@@ -16,6 +16,7 @@ import { supportedChainIds } from "config/constants/networks";
 import { setupNetwork } from "utils/wallet";
 import { useAppDispatch } from "state";
 import { clearAllTransactions } from "state/transactions/state";
+import { clearUser } from "state/user/state";
 
 const useAuth = () => {
   const dispatch = useAppDispatch();
@@ -27,10 +28,7 @@ const useAuth = () => {
       const connector = connectorLibrary[connectorID];
       if (connector) {
         activate(connector, async (error: Error) => {
-          if (
-            error instanceof UnsupportedChainIdError &&
-            supportedChainIds.includes(chainId)
-          ) {
+          if (supportedChainIds.includes(chainId)) {
             const hasSetup = await setupNetwork(chainId);
             if (hasSetup) {
               activate(connector);
@@ -64,7 +62,7 @@ const useAuth = () => {
   );
 
   const logout = useCallback(() => {
-    // dispatch(profileClear());
+    dispatch(clearUser());
     deactivate();
     // This localStorage key is set by @web3-react/walletconnect-connector
     if (window.localStorage.getItem("walletconnect")) {

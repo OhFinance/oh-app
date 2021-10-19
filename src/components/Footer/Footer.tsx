@@ -1,3 +1,5 @@
+import { Box } from "@material-ui/core";
+
 export const Footer = () => {
-  return <div></div>;
+  return <Box mb={2}></Box>;
 };

@@ -4,7 +4,7 @@ import { Web3NetworkModal } from "components/Web3NetworkModal";
 import { NetworkIcons, Networks } from "config/constants/networks";
 import { useWeb3 } from "hooks/useWeb3";
 
-export const Web3NetworkButton = () => {
+export const Web3NetworkButton = ({ ...props }) => {
   const { chainId } = useWeb3();
 
   const [onPresentNetworkModal] = useModal(<Web3NetworkModal />);
@@ -23,6 +23,7 @@ export const Web3NetworkButton = () => {
           style={{ height: "22px", width: "22px" }}
         />
       }
+      {...props}
     >
       {Networks[chainId].chainName}
     </Button>

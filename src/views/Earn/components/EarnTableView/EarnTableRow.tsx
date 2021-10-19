@@ -19,8 +19,6 @@ import { getFullDisplayBalance } from "utils/formatBalances";
 import { Balance } from "components/Balance";
 import { useAddress } from "hooks/useAddress";
 import { useBankValue } from "views/Earn/hooks/useBankValue";
-import BigNumber from "bignumber.js";
-import { TEN } from "utils/bigNumber";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -74,7 +72,8 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       <TableCell className={isLast && classes.cell}>
         <Text align="center">
           <Balance
-            value={getFullDisplayBalance(virtualBalance, bank.decimals, 2)}
+            value={getFullDisplayBalance(virtualBalance, bank.decimals)}
+            decimals={2}
             prefix="$"
           />
         </Text>
@@ -89,7 +88,7 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
           <Balance
             value={getFullDisplayBalance(
               getShareValue(balance, bank.decimals),
-              6
+              bank.decimals
             )}
             decimals={2}
             prefix="$"

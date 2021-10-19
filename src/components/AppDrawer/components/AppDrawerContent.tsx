@@ -1,17 +1,24 @@
 import { Fragment } from "react";
 import {
-  BASE_URL,
   Flex,
-  IconButton,
-  MEDIUM_URL,
-  TWITTER_URL,
+  Link,
+  useMobile,
+  TelegramButton,
+  MediumButton,
+  TwitterButton,
+  GithubButton,
+  BASE_URL,
+  DOCS_URL,
 } from "@ohfinance/oh-ui";
 import OhBrand from "assets/img/oh-brand.png";
-import { Box } from "@material-ui/core";
+import { Box, Divider } from "@material-ui/core";
 import { AppDrawerList } from "./AppDrawerList";
-import { FaHome, FaMediumM, FaTwitter } from "react-icons/fa";
+import { Web3NetworkButton } from "components/Web3NetworkButton";
+import { TokenBalanceButton } from "components/TokenBalanceButton";
 
 export const AppDrawerContent = () => {
+  const mobile = useMobile();
+
   return (
     <Fragment>
       <Flex column grow>
@@ -27,19 +34,39 @@ export const AppDrawerContent = () => {
         </Box>
         <AppDrawerList />
       </Flex>
-      <Box mb={2}>
+
+      {mobile && (
+        <Box my={1} mx={2}>
+          <Flex mb={2}>
+            <Web3NetworkButton fullWidth />
+          </Flex>
+          <Flex mb={2}>
+            <TokenBalanceButton fullWidth />
+          </Flex>
+        </Box>
+      )}
+
+      <Divider variant="middle" />
+      <Box my={2}>
         <Flex center>
-          <IconButton size="medium" href={TWITTER_URL}>
-            <FaTwitter size="32px" />
-          </IconButton>
-          <IconButton size="medium" href={MEDIUM_URL}>
-            <FaMediumM size="32px" />
-          </IconButton>
-          <IconButton size="medium" href={BASE_URL}>
-            <FaHome size="32px" />
-          </IconButton>
+          <TwitterButton />
+          <TelegramButton />
+          <MediumButton />
+          {/* <GithubButton /> */}
         </Flex>
-        {/* <Typography align="center">Version: v{version}</Typography> */}
+
+        <Flex center>
+          <Box mx={1}>
+            <Link external href={BASE_URL}>
+              Home
+            </Link>
+          </Box>
+          <Box mx={1}>
+            <Link external href={DOCS_URL}>
+              Docs
+            </Link>
+          </Box>
+        </Flex>
       </Box>
     </Fragment>
   );

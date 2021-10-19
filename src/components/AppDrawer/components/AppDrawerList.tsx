@@ -11,25 +11,6 @@ import { useHistory } from "react-router";
 import { AppDrawerListIcon } from "./AppDrawerListIcon";
 
 const useStyles = makeStyles((theme) => ({
-  hover: {
-    cursor: "pointer",
-  },
-  active: {
-    color: theme.palette.text.primary,
-    "&:hover": {
-      color: theme.palette.text.secondary,
-    },
-    textDecoration: "underline",
-    textDecorationColor: theme.palette.primary.main,
-    textDecorationThickness: 4,
-    textUnderlinePosition: "under",
-  },
-  link: {
-    color: theme.palette.text.primary,
-    "&:hover": {
-      color: theme.palette.text.secondary,
-    },
-  },
   listItem: {
     padding: theme.spacing(2),
   },
@@ -38,13 +19,6 @@ const useStyles = makeStyles((theme) => ({
 export const AppDrawerList = () => {
   const classes = useStyles();
   const history = useHistory();
-  // const location = useLocation();
-
-  // const [active, setActive] = useState("/");
-
-  // useEffect(() => {
-  //   setActive(location.pathname);
-  // }, [location.pathname, setActive]);
 
   return (
     <List>

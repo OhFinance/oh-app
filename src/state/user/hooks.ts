@@ -2,11 +2,26 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "state";
 import {
+  toggleAppAlert,
   toggleDarkMode,
   toggleDrawerMode,
   updateUserEarnViewMode,
 } from "./state";
 import { ViewMode } from "./types";
+
+export const useAlertManager = (): [boolean, () => void] => {
+  const dispatch = useDispatch<AppDispatch>();
+  const isAlertDisplayed = useSelector<
+    AppState,
+    AppState["user"]["isAlertDisplayed"]
+  >((state) => state.user.isAlertDisplayed);
+
+  const toggleAlert = useCallback(() => {
+    dispatch(toggleAppAlert());
+  }, [dispatch]);
+
+  return [isAlertDisplayed, toggleAlert];
+};
 
 export const useGasPrice = () => {};
 

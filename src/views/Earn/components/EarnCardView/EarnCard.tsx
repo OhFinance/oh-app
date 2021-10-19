@@ -20,6 +20,7 @@ import { useAddress } from "hooks/useAddress";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { Balance } from "components/Balance";
 import { FaEllipsisV } from "react-icons/fa";
+import { useBankValue } from "views/Earn/hooks/useBankValue";
 
 export interface EarnCardProps {
   bank: Bank;
@@ -32,6 +33,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
 
   const address = useAddress(bank.address);
   const { balance } = useTokenBalance(address);
+  const { virtualBalance, getShareValue } = useBankValue(address);
 
   return (
     <Surface>
@@ -66,18 +68,27 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
             <Flex column center>
               <Subheading>
                 <Balance
-                  value={getFullDisplayBalance(balance, bank.decimals)}
+                  value={getFullDisplayBalance(virtualBalance, bank.decimals)}
+                  decimals={2}
+                  prefix="$"
                 />
               </Subheading>
-              <Text align="center">{bank.symbol} Balance</Text>
+              <Text align="center">TVL</Text>
             </Flex>
           </Grid>
           <Grid item xs={12} md={6}>
             <Flex column center>
               <Subheading>
-                <Balance value={getFullDisplayBalance(balance)} />
+                <Balance
+                  value={getFullDisplayBalance(
+                    getShareValue(balance, bank.decimals),
+                    bank.decimals
+                  )}
+                  decimals={2}
+                  prefix="$"
+                />
               </Subheading>
-              <Text align="center">USD Value</Text>
+              <Text align="center">My Holdings</Text>
             </Flex>
           </Grid>
         </Grid>

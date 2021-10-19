@@ -1,5 +1,6 @@
 import { Box, Container, makeStyles } from "@material-ui/core";
 import { Display, Flex } from "@ohfinance/oh-ui";
+import { AppAlert } from "components/AppAlert";
 import { AppBar } from "components/AppBar";
 import { AppDrawer } from "components/AppDrawer";
 import { Footer } from "components/Footer";
@@ -27,16 +28,20 @@ export const AppContainer: FC = ({ children }) => {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="xl">
+    <>
       <AppDrawer />
 
       <Display className={classes.display}>
-        <AppBar />
-        <Flex grow={1} column className={classes.wrapper}>
-          {children}
-        </Flex>
-        <Footer />
+        <AppAlert />
+
+        <Container maxWidth="xl">
+          <AppBar />
+          <Flex grow={1} column className={classes.wrapper}>
+            {children}
+          </Flex>
+          <Footer />
+        </Container>
       </Display>
-    </Container>
+    </>
   );
 };
