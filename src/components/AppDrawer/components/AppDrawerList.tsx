@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const AppDrawerList = () => {
+export const AppDrawerList = ({ onDismiss }: { onDismiss?: () => void }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -26,7 +26,10 @@ export const AppDrawerList = () => {
         <ListItem
           key={i}
           button
-          onClick={() => history.push(path.path)}
+          onClick={() => {
+            history.push(path.path);
+            onDismiss();
+          }}
           className={classes.listItem}
         >
           <ListItemIcon>

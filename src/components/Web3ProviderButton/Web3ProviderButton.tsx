@@ -34,7 +34,7 @@ export const Web3ProviderButton: FC<Web3ProviderButtonProps> = ({
   }, [connectorId, login, title]);
 
   return (
-    <Button fullWidth variant="outlined" onClick={onLogin}>
+    <Button paper fullWidth variant="outlined" onClick={onLogin}>
       <Flex center column p={2}>
         <Flex>
           <img src={icon} height={"48px"} width="auto" alt={title} />

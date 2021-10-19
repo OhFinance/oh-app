@@ -20,7 +20,13 @@ export const Web3NetworkModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
     : SupportedTestNetworks; // testnets only for beta
 
   return (
-    <Modal title="Select a Network" isOpen={!!isOpen} onDismiss={onDismiss}>
+    <Modal
+      title="Select a Network"
+      isOpen={!!isOpen}
+      onDismiss={onDismiss}
+      maxWidth="sm"
+      fullWidth
+    >
       <Grid container spacing={2} direction="column" justify="center">
         {networks.map((networkId: number, i: number) => (
           <Grid item key={i}>

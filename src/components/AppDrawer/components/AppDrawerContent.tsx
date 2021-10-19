@@ -16,7 +16,7 @@ import { AppDrawerList } from "./AppDrawerList";
 import { Web3NetworkButton } from "components/Web3NetworkButton";
 import { TokenBalanceButton } from "components/TokenBalanceButton";
 
-export const AppDrawerContent = () => {
+export const AppDrawerContent = ({ onDismiss }: { onDismiss?: () => void }) => {
   const mobile = useMobile();
 
   return (
@@ -32,7 +32,7 @@ export const AppDrawerContent = () => {
             />
           </Flex>
         </Box>
-        <AppDrawerList />
+        <AppDrawerList onDismiss={onDismiss} />
       </Flex>
 
       {mobile && (

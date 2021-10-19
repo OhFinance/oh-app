@@ -5,19 +5,24 @@ import {
   Box,
   makeStyles,
   IconButton,
+  Grid,
 } from "@material-ui/core";
 import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
 import { LinkButton } from "components/LinkButton";
+import { ThemeSwitcher } from "components/ThemeSwitcher";
 import { Web3AccountAvatar } from "components/Web3AccountAvatar";
 import useAuth from "hooks/useAuth";
 import { useNetwork } from "hooks/useNetwork";
 import { useWeb3 } from "hooks/useWeb3";
 import { FC } from "react";
 import { FaCopy } from "react-icons/fa";
+import { useThemeManager } from "state/user/hooks";
 
 const useStyles = makeStyles((theme) => ({
   input: {
     cursor: "copy",
+    textOverflow: "ellipsis",
+    msTextOverflow: "ellipsis",
   },
 }));
 
@@ -32,6 +37,7 @@ export const Web3AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
       title="Account Details"
       isOpen={!!isOpen}
       onDismiss={onDismiss}
+      maxWidth="sm"
       fullWidth
     >
       <Flex column>

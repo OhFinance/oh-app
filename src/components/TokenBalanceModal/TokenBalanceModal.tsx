@@ -23,7 +23,13 @@ export const TokenBalanceModal: FC<TokenBalanceModalProps> = ({
   const { blockExplorerUrl } = useNetwork();
 
   return (
-    <Modal title="Oh! Token" isOpen={!!isOpen} onDismiss={onDismiss}>
+    <Modal
+      title="Oh! Token"
+      isOpen={!!isOpen}
+      onDismiss={onDismiss}
+      maxWidth="sm"
+      fullWidth
+    >
       <Flex p={2} center>
         <Avatar src={OhToken} style={{ height: "128px", width: "128px" }} />
       </Flex>

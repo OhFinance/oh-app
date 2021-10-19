@@ -11,8 +11,8 @@ import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useState } from "react";
 import { ZERO } from "utils/bigNumber";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
-import { useBankDeposit } from "../hooks/useBankDeposit";
-import { EarnFaucetButton } from "./EarnFaucetButton";
+import { useBankDeposit } from "../../hooks/useBankDeposit";
+import { EarnFaucetButton } from "../EarnFaucetButton";
 
 export interface EarnDepositModalProps extends ModalProps {
   bank: Bank;
@@ -50,6 +50,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
       title={`Deposit ${bank.underlying.symbol}`}
       isOpen={isOpen}
       onDismiss={onDismiss}
+      maxWidth="md"
       fullWidth
     >
       <Grid container direction="column" spacing={2}>

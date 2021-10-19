@@ -8,12 +8,8 @@ import { DRAWER_WIDTH } from "config/constants/values";
 import { FC, Fragment } from "react";
 
 const useStyles = makeStyles((theme) => ({
-  display: {
+  container: {
     overflow: "hidden",
-    // maxWidth: "100%",
-    // [theme.breakpoints.up("md")]: {
-    //   marginLeft: DRAWER_WIDTH,
-    // },
   },
   wrapper: {
     // paddingLeft: theme.spacing(2),
@@ -28,20 +24,18 @@ export const AppContainer: FC = ({ children }) => {
   const classes = useStyles();
 
   return (
-    <>
+    <div className={classes.container}>
       <AppDrawer />
-
-      <Display className={classes.display}>
-        <AppAlert />
-
-        <Container maxWidth="xl">
+      <AppAlert />
+      <Container maxWidth="xl">
+        <Display>
           <AppBar />
           <Flex grow={1} column className={classes.wrapper}>
             {children}
           </Flex>
           <Footer />
-        </Container>
-      </Display>
-    </>
+        </Display>
+      </Container>
+    </div>
   );
 };

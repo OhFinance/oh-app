@@ -36,7 +36,7 @@ export const AppDrawer = () => {
         onClose={toggleOpen}
         onOpen={toggleOpen}
       >
-        <AppDrawerContent />
+        <AppDrawerContent onDismiss={toggleOpen} />
       </SwipeableDrawer>
     );
   }
@@ -51,7 +51,7 @@ export const AppDrawer = () => {
       }}
       open
     >
-      <AppDrawerContent />
+      <AppDrawerContent onDismiss={() => {}} />
     </Drawer>
   );
 };

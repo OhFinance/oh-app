@@ -3,9 +3,12 @@ import {
   Flex,
   Heading,
   IconButton,
+  MediumButton,
   MEDIUM_URL,
   OH_LOGO_URL,
   Paragraph,
+  TelegramButton,
+  TwitterButton,
   TWITTER_URL,
 } from "@ohfinance/oh-ui";
 import { FaMediumM, FaTwitter } from "react-icons/fa";
@@ -27,7 +30,6 @@ export const ComingSoon = () => {
           src={OH_LOGO_URL}
           alt="oh-finance-brand"
           width={250}
-          // width={mobile ? "250px" : "500px"}
           height="auto"
         />
       </Flex>
@@ -36,12 +38,9 @@ export const ComingSoon = () => {
         Follow us on Social Media for the latest updates
       </Paragraph>
       <Flex center>
-        <IconButton href={TWITTER_URL}>
-          <FaTwitter size="32px" />
-        </IconButton>
-        <IconButton href={MEDIUM_URL}>
-          <FaMediumM size="32px" />
-        </IconButton>
+        <TwitterButton />
+        <TelegramButton />
+        <MediumButton />
       </Flex>
     </Flex>
   );

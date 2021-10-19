@@ -35,7 +35,7 @@ export const AppBar = () => {
         <IconButton edge="start" onClick={toggleDrawer}>
           {mobile && <MenuIcon />}
         </IconButton>
-        <Flex grow ml={1}>
+        <Flex grow={1} ml={1}>
           {mobile && (
             <img
               src={OH_LOGO_URL}

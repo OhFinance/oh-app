@@ -32,6 +32,7 @@ export const EarnDetailModal: FC<EarnDetailModalProps> = ({
       isOpen={!!isOpen}
       onDismiss={onDismiss}
       p={0}
+      maxWidth="lg"
       fullWidth
     >
       <Box p={3}>

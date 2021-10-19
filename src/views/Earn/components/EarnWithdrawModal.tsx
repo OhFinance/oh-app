@@ -41,6 +41,7 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
       title={`Withdraw ${bank.underlying.symbol}`}
       isOpen={isOpen}
       onDismiss={onDismiss}
+      maxWidth="md"
       fullWidth
     >
       <Grid container direction="column" spacing={2}>

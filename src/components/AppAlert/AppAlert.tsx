@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
     },
     borderRadius: 0,
     margin: 0,
-    // maxHeight: "56px",
   },
 }));
 
