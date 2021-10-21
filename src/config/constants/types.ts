@@ -10,17 +10,21 @@ export interface Token {
   readonly symbol: string;
   readonly address?: Address;
   readonly decimals?: number;
+  readonly image?: string;
+}
+
+export interface Strategy {
+  readonly protocol?: string;
+  readonly image?: string;
 }
 
 export interface Bank extends Token {
-  readonly image: string;
   readonly name: string;
   readonly description: string;
   readonly alt: string;
   readonly underlying: Token;
-  readonly underlyingImage: string;
-  readonly composition: string[];
-  readonly compositionImages: string[];
+  readonly strategies: Strategy[];
+  readonly chainId: number;
 }
 
 export enum ConnectorNames {

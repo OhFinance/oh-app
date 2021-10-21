@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Button,
   IconButton,
   makeStyles,
@@ -8,9 +9,8 @@ import {
 } from "@material-ui/core";
 import { Flex, Text, useModal } from "@ohfinance/oh-ui";
 import { Bank } from "config/constants/types";
-import { FC } from "react";
-import { EarnCompositionGroup } from "../EarnCompositionGroup";
-import { FaEllipsisV, FaMinus, FaPlus } from "react-icons/fa";
+import { FC, useMemo } from "react";
+import { EarnStrategyGroup } from "../EarnStrategyGroup";
 import { EarnDetailModal } from "../EarnDetailModal";
 import { EarnDepositModal } from "../EarnDepositModal";
 import { EarnWithdrawModal } from "../EarnWithdrawModal";
@@ -19,6 +19,11 @@ import { getFullDisplayBalance } from "utils/formatBalances";
 import { Balance } from "components/Balance";
 import { useAddress } from "hooks/useAddress";
 import { useBankValue } from "views/Earn/hooks/useBankValue";
+import AddRoundedIcon from "@material-ui/icons/AddRounded";
+import RemoveRoundedIcon from "@material-ui/icons/RemoveRounded";
+import MoreVertRoundedIcon from "@material-ui/icons/MoreVertRounded";
+import { NetworkIcons, Networks } from "config/constants/networks";
+import { Skeleton } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -45,38 +50,67 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
   const { balance } = useTokenBalance(address);
   const { virtualBalance, getShareValue } = useBankValue(address);
 
+  const tvl = useMemo(() => {
+    return (
+      virtualBalance && getFullDisplayBalance(virtualBalance, bank.decimals)
+    );
+  }, [virtualBalance, bank]);
+
+  const shareValue = useMemo(() => {
+    return balance && getShareValue(balance, bank.decimals);
+  }, [balance, bank, getShareValue]);
+
+  const myHoldings = useMemo(() => {
+    return shareValue && getFullDisplayBalance(shareValue, bank.decimals);
+  }, [shareValue, bank]);
+
   return (
     <TableRow {...props}>
-      <TableCell className={isLast && classes.cell}>
+      {/* <TableCell className={isLast && classes.cell}>
         <Text>{bank.name}</Text>
-      </TableCell>
+      </TableCell> */}
 
       <TableCell className={isLast && classes.cell}>
-        <Flex center>
-          <Avatar src={bank.image} />
-        </Flex>
-      </TableCell>
-      {/* <TableCell className={isLast && classes.cell}>
-        {bank.description}
-      </TableCell> */}
-      <TableCell className={isLast && classes.cell}>
-        <Flex center>
-          <Avatar src={bank.underlyingImage} />
+        <Flex align="center">
+          <img src={bank.image} alt={bank.alt} height={40} width="auto" />
+          <Box ml={1}>
+            <Text>{bank.symbol}</Text>
+          </Box>
         </Flex>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          <EarnCompositionGroup composition={bank.compositionImages} />
-        </Flex>
-      </TableCell>
-      <TableCell className={isLast && classes.cell}>
-        <Text align="center">
-          <Balance
-            value={getFullDisplayBalance(virtualBalance, bank.decimals)}
-            decimals={2}
-            prefix="$"
+          <img
+            src={NetworkIcons[bank.chainId]}
+            alt={Networks[bank.chainId].chainName}
+            height={40}
+            width="auto"
           />
-        </Text>
+        </Flex>
+      </TableCell>
+      <TableCell className={isLast && classes.cell}>
+        <Flex center>
+          <img
+            src={bank.underlying.image}
+            alt={bank.underlying.symbol}
+            height={40}
+            width="auto"
+          />
+        </Flex>
+      </TableCell>
+      <TableCell className={isLast && classes.cell}>
+        <Flex center>
+          <EarnStrategyGroup bank={bank} />
+        </Flex>
+      </TableCell>
+      <TableCell className={isLast && classes.cell}>
+        <Flex center>
+          {!!tvl ? (
+            <Balance value={tvl} decimals={2} prefix="$" />
+          ) : (
+            <Skeleton variant="rect" width={80} height={24} />
+          )}
+        </Flex>
       </TableCell>
       {/* <TableCell className={isLast && classes.cell}>
         <Text align="center">
@@ -84,22 +118,19 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
         </Text>
       </TableCell> */}
       <TableCell className={isLast && classes.cell}>
-        <Text align="center">
-          <Balance
-            value={getFullDisplayBalance(
-              getShareValue(balance, bank.decimals),
-              bank.decimals
-            )}
-            decimals={2}
-            prefix="$"
-          />
-        </Text>
+        <Flex center>
+          {!!myHoldings ? (
+            <Balance value={myHoldings} decimals={2} prefix="$" />
+          ) : (
+            <Skeleton variant="rect" width={80} height={24} />
+          )}
+        </Flex>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
           {/* <Button color="primary">Deposit</Button> */}
           <IconButton onClick={onPresentDepositModal} size="medium">
-            <FaPlus />
+            <AddRoundedIcon />
           </IconButton>
         </Flex>
       </TableCell>
@@ -107,14 +138,14 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
         <Flex center>
           {/* <Button color="primary">Withdraw</Button> */}
           <IconButton onClick={onPresentWithdrawModal} size="medium">
-            <FaMinus />
+            <RemoveRoundedIcon />
           </IconButton>
         </Flex>
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
           <IconButton onClick={onPresentDetailModal} size="medium">
-            <FaEllipsisV />
+            <MoreVertRoundedIcon />
           </IconButton>
         </Flex>
       </TableCell>

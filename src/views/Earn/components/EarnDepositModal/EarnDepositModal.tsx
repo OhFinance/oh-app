@@ -1,18 +1,18 @@
-import { Grid, Typography } from "@material-ui/core";
-import { Button, Modal, ModalProps } from "@ohfinance/oh-ui";
-import { Balance } from "components/Balance";
-import { TokenInput } from "components/TokenInput";
+import { ModalProps } from "@ohfinance/oh-ui";
+import BigNumber from "bignumber.js";
+import { TransactionConfirmationModal } from "components/TransactionConfirmationModal";
 import { Bank } from "config/constants/types";
 import { useAddress } from "hooks/useAddress";
-import { useNetwork } from "hooks/useNetwork";
-import useToast from "hooks/useToast";
-import { ApprovalState, useTokenApprove } from "hooks/useTokenApprove";
+import { useBankContract } from "hooks/useContract";
+import { useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
-import { FC, useState } from "react";
-import { ZERO } from "utils/bigNumber";
+import { FC, useCallback, useMemo, useState } from "react";
+import { useTransactionAdder } from "state/transactions/hooks";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
-import { useBankDeposit } from "../../hooks/useBankDeposit";
+import { useBankValue } from "views/Earn/hooks/useBankValue";
 import { EarnFaucetButton } from "../EarnFaucetButton";
+import { EarnDepositConfirmation } from "./EarnDepositConfirmation";
+import { EarnDepositInput } from "./EarnDepositInput";
 
 export interface EarnDepositModalProps extends ModalProps {
   bank: Bank;
@@ -23,121 +23,126 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
   onDismiss,
   bank,
 }) => {
+  const [confirming, setConfirming] = useState<boolean>(false);
+  const [txPending, setTxPending] = useState<boolean>(false);
+  const [txHash, setTxHash] = useState<string>("");
+  const addTransaction = useTransactionAdder();
+
   const [input, setInput] = useState("");
-  const [pendingTx, setPendingTx] = useState(false);
-  const { isTestnet } = useNetwork();
-  const { toastSuccess, toastError } = useToast();
 
-  const underlyingAddress = useAddress(bank.underlying.address);
   const bankAddress = useAddress(bank.address);
+  const underlyingAddress = useAddress(bank.underlying.address);
+  const bankContract = useBankContract(bankAddress);
 
-  const { balance } = useTokenBalance(underlyingAddress);
   const { approvalState, onApprove } = useTokenApprove(
     underlyingAddress,
     bankAddress,
     getDecimalAmount(input, bank.underlying.decimals)
   );
-  const { onDeposit } = useBankDeposit(bankAddress);
 
-  const handleDeposit = async () => {
-    setPendingTx(true);
-    try {
-    } catch (error) {}
+  const { balance } = useTokenBalance(underlyingAddress);
+
+  const underlyingBalance = useMemo(() => {
+    return getFullDisplayBalance(balance, bank.underlying.decimals);
+  }, [balance, bank]);
+
+  const { virtualPrice, getTokenValue, getTotalBankShare } =
+    useBankValue(bankAddress);
+
+  const depositAmount = useMemo(() => {
+    return getFullDisplayBalance(
+      getDecimalAmount(input, bank.underlying.decimals),
+      bank.underlying.decimals
+    );
+  }, [bank, input]);
+
+  const receiveAmount = useMemo(() => {
+    const tokenValue = getTokenValue(new BigNumber(input));
+    return getFullDisplayBalance(
+      getDecimalAmount(tokenValue, bank.decimals),
+      bank.decimals
+    );
+  }, [bank, input, getTokenValue]);
+
+  const exchangeRate = useMemo(() => {
+    return virtualPrice && getFullDisplayBalance(virtualPrice, bank.decimals);
+  }, [bank, virtualPrice]);
+
+  const totalShare = useMemo(() => {
+    return input && getTotalBankShare(new BigNumber(input), bank.decimals);
+  }, [bank, input, getTotalBankShare]);
+
+  const handleDeposit = useCallback(async () => {
+    setTxPending(true);
+
+    await bankContract
+      .deposit(getDecimalAmount(input, bank.underlying.decimals).toString())
+      .then((response) => {
+        setTxPending(false);
+
+        addTransaction(response, {
+          summary: `Deposited ${depositAmount} USDC for ${receiveAmount} OH-USDC`,
+        });
+
+        setTxHash(response.hash);
+      })
+      .catch((error) => {
+        setTxPending(false);
+      });
+  }, [bank, bankContract, input, depositAmount, receiveAmount, addTransaction]);
+
+  const handleDismiss = () => {
+    if (confirming) {
+      setConfirming(false);
+    } else if (txPending) {
+      setTxPending(false);
+    } else {
+      setTxHash("");
+    }
+
+    onDismiss();
+  };
+
+  const content = () => {
+    if (!confirming) {
+      return (
+        <EarnDepositInput
+          bank={bank}
+          input={input}
+          setInput={setInput}
+          underlyingBalance={underlyingBalance}
+          onConfirm={() => setConfirming(true)}
+        />
+      );
+    } else if (!txPending) {
+      return (
+        <EarnDepositConfirmation
+          bank={bank}
+          input={input}
+          approvalState={approvalState}
+          depositAmount={depositAmount}
+          receiveAmount={receiveAmount}
+          exchangeRate={exchangeRate}
+          totalShare={new BigNumber(totalShare).toString()}
+          onApprove={onApprove}
+          onConfirm={() => setTxPending(true)}
+          onBack={() => setConfirming(false)}
+          onDeposit={handleDeposit}
+        />
+      );
+    }
   };
 
   return (
-    <Modal
+    <TransactionConfirmationModal
       title={`Deposit ${bank.underlying.symbol}`}
       isOpen={isOpen}
-      onDismiss={onDismiss}
-      maxWidth="md"
-      fullWidth
-    >
-      <Grid container direction="column" spacing={2}>
-        <Grid item>
-          <Grid container alignItems="center" justify="space-between">
-            <Grid item>
-              <Typography variant="h6" align="left">
-                {bank.underlying.symbol} Balance
-              </Typography>
-            </Grid>
-
-            <Grid item>
-              <Typography variant="h6" align="right">
-                <Balance
-                  value={getFullDisplayBalance(
-                    balance,
-                    bank.underlying.decimals
-                  )}
-                  suffix={` ${bank.underlying.symbol}`}
-                />
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item>
-          <TokenInput
-            placeholder={`Deposit ${bank.underlying.symbol}`}
-            decimals={bank.underlying.decimals}
-            value={input}
-            onUserInput={(e) => setInput(e)}
-            onMax={() => {
-              setInput(
-                getFullDisplayBalance(
-                  balance,
-                  bank.underlying.decimals,
-                  bank.underlying.decimals
-                )
-              );
-            }}
-          />
-        </Grid>
-        <Grid item>
-          {(approvalState === ApprovalState.NOT_APPROVED ||
-            approvalState === ApprovalState.PENDING) && (
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={approvalState === ApprovalState.PENDING}
-              onClick={onApprove}
-            >
-              {approvalState === ApprovalState.PENDING
-                ? `Approving ${bank.underlying.symbol}`
-                : `Approve ${bank.underlying.symbol}`}
-            </Button>
-          )}
-          {(approvalState === ApprovalState.APPROVED ||
-            approvalState === ApprovalState.UNKNOWN) && (
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={!input || approvalState === ApprovalState.UNKNOWN}
-              onClick={async () => {
-                setPendingTx(true);
-                try {
-                  await onDeposit(
-                    getDecimalAmount(input, bank.underlying.decimals)
-                  );
-                  onDismiss();
-                } catch (e) {
-                  console.error(e);
-                } finally {
-                  setPendingTx(false);
-                }
-              }}
-            >
-              Deposit
-            </Button>
-          )}
-        </Grid>
-        {isTestnet && (
-          <Grid item>
-            <EarnFaucetButton token={bank.underlying} />
-          </Grid>
-        )}
-      </Grid>
-    </Modal>
+      onDismiss={handleDismiss}
+      hash={txHash}
+      pending={txPending}
+      onBack={() => setTxPending(false)}
+      pendingText={`Depositing ${depositAmount} USDC for ${receiveAmount} OH-USDC...`}
+      content={content}
+    />
   );
 };

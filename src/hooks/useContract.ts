@@ -46,6 +46,10 @@ export const useMulticallContract = () => {
   return useContract(address, MulticallAbi);
 };
 
+export const useTimelockContract = (address: string) => {
+  return useContract(address, OhTimelockAbi);
+};
+
 export const useBankContract = (address: string) => {
   return useContract(address, OhBankAbi);
 };

@@ -8,10 +8,10 @@ import {
   Text,
   useModal,
 } from "@ohfinance/oh-ui";
-import { Avatar, Button, Grid } from "@material-ui/core";
-import { FC } from "react";
+import { Box, Button, Grid } from "@material-ui/core";
+import { FC, useMemo } from "react";
 import { Bank } from "config/constants/types";
-import { EarnCompositionGroup } from "../EarnCompositionGroup";
+import { EarnStrategyGroup } from "../EarnStrategyGroup";
 import { getFullDisplayBalance } from "utils/formatBalances";
 import { EarnDetailModal } from "../EarnDetailModal";
 import { EarnDepositModal } from "../EarnDepositModal";
@@ -21,6 +21,7 @@ import { useTokenBalance } from "hooks/useTokenBalance";
 import { Balance } from "components/Balance";
 import { FaEllipsisV } from "react-icons/fa";
 import { useBankValue } from "views/Earn/hooks/useBankValue";
+import { Skeleton } from "@material-ui/lab";
 
 export interface EarnCardProps {
   bank: Bank;
@@ -35,6 +36,20 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
   const { balance } = useTokenBalance(address);
   const { virtualBalance, getShareValue } = useBankValue(address);
 
+  const tvl = useMemo(() => {
+    return (
+      virtualBalance && getFullDisplayBalance(virtualBalance, bank.decimals)
+    );
+  }, [virtualBalance, bank]);
+
+  const shareValue = useMemo(() => {
+    return balance && getShareValue(balance, bank.decimals);
+  }, [balance, bank, getShareValue]);
+
+  const myHoldings = useMemo(() => {
+    return shareValue && getFullDisplayBalance(shareValue, bank.decimals);
+  }, [shareValue, bank]);
+
   return (
     <Surface>
       <Flex justify="flex-end">
@@ -43,51 +58,58 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
         </IconButton>
       </Flex>
       <Flex center mb={2}>
-        <Avatar src={bank.image} style={{ height: "96px", width: "auto" }} />
+        <img src={bank.image} alt={bank.alt} height={96} width="auto" />
       </Flex>
       <Heading align="center">
         <b>{bank.name}</b>
       </Heading>
-      <Subtitle align="center">{bank.description}</Subtitle>
 
       <Flex align="center" justify="space-between" mt={4} mb={4}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <Flex center column>
-              <Avatar src={bank.underlyingImage} />
-              <Text align="center">Underlying</Text>
+              <img
+                src={bank.underlying.image}
+                alt={bank.underlying.symbol}
+                height={40}
+                width="auto"
+              />
+              <Box mt={1}>
+                <Text align="center">Underlying</Text>
+              </Box>
             </Flex>
           </Grid>
           <Grid item xs={12} md={6}>
             <Flex center column>
-              <EarnCompositionGroup composition={bank.compositionImages} />
-              <Text align="center">Composition</Text>
+              <EarnStrategyGroup bank={bank} />
+              <Box mt={1}>
+                <Text align="center">Strategies</Text>
+              </Box>
             </Flex>
           </Grid>
           <Grid item xs={12} md={6}>
             <Flex column center>
-              <Subheading>
-                <Balance
-                  value={getFullDisplayBalance(virtualBalance, bank.decimals)}
-                  decimals={2}
-                  prefix="$"
-                />
-              </Subheading>
+              {!!tvl ? (
+                <Subheading>
+                  <Balance value={tvl} decimals={2} prefix="$" />
+                </Subheading>
+              ) : (
+                <Skeleton variant="rect" width={80} height={24} />
+              )}
+
               <Text align="center">TVL</Text>
             </Flex>
           </Grid>
           <Grid item xs={12} md={6}>
             <Flex column center>
-              <Subheading>
-                <Balance
-                  value={getFullDisplayBalance(
-                    getShareValue(balance, bank.decimals),
-                    bank.decimals
-                  )}
-                  decimals={2}
-                  prefix="$"
-                />
-              </Subheading>
+              {!!myHoldings ? (
+                <Subheading>
+                  <Balance value={myHoldings} decimals={2} prefix="$" />
+                </Subheading>
+              ) : (
+                <Skeleton variant="rect" width={80} height={24} />
+              )}
+
               <Text align="center">My Holdings</Text>
             </Flex>
           </Grid>

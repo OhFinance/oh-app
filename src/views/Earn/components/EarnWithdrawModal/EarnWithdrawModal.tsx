@@ -1,15 +1,13 @@
 import { Grid, Typography } from "@material-ui/core";
 import { Button, Modal, ModalProps } from "@ohfinance/oh-ui";
-import BigNumber from "bignumber.js";
 import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
 import { useAddress } from "hooks/useAddress";
-import { useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
-import { FC, useCallback, useState } from "react";
+import { FC, useState } from "react";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
-import { useBankWithdraw } from "../hooks/useBankWithdraw";
+import { useBankWithdraw } from "../../hooks/useBankWithdraw";
 
 export interface EarnWithdrawModalProps extends ModalProps {
   bank: Bank;
@@ -26,15 +24,6 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
   const bankAddress = useAddress(bank.address);
   const { balance } = useTokenBalance(tokenAddress);
   const { onWithdraw } = useBankWithdraw(bankAddress);
-
-  const handleUserInput = useCallback(
-    (e: any) => {
-      if (e.currentTarget.validity.valid) {
-        setInput(e.currentTarget.value.replace(/,/g, "."));
-      }
-    },
-    [setInput]
-  );
 
   return (
     <Modal

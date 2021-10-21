@@ -6,11 +6,11 @@ import { EarnCard } from "./EarnCard";
 export const EarnCardView = () => {
   return (
     <Grid container spacing={4}>
-      <Grid item xs={12} md={4}>
-        {banks.map((bank: Bank, i: number) => (
-          <EarnCard key={i} bank={bank} />
-        ))}
-      </Grid>
+      {banks.map((bank: Bank, i: number) => (
+        <Grid item key={i} xs={12} md={4}>
+          <EarnCard bank={bank} />
+        </Grid>
+      ))}
     </Grid>
   );
 };

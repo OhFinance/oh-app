@@ -17,7 +17,7 @@ export const PageHeading: FC<PageHeadingProps> = ({
   return (
     <Box>
       <Heading>{title}</Heading>
-      {subtitle && <Subtitle>{subtitle}</Subtitle>}
+      {subtitle && <Subtitle gutterBottom>{subtitle}</Subtitle>}
       {paragraph && <Paragraph>{paragraph}</Paragraph>}
     </Box>
   );

@@ -6,8 +6,9 @@ export const depositBank = async (
   amount: BigNumber
 ) => {
   const tx = await bankContract.deposit(amount.toString());
-  const receipt = await tx.wait();
-  return receipt.status;
+  // const receipt = await tx.wait();
+  // return receipt.status;
+  return tx.hash;
 };
 
 export const withdrawBank = async (

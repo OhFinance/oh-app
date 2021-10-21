@@ -22,9 +22,6 @@ const contracts: { [contract: string]: Address } = {
     4: "0xEE858AAa2Aff2d378A82865026Ba032f0e095c7d",
     42: "0xf8C99aF1169023Ab0CB35D1510Be0f3Cd3789949",
   },
-  vesting: {
-    1: "",
-  },
 };
 
 export default contracts;

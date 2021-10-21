@@ -1,4 +1,5 @@
 import { Token } from "./types";
+import usdc from "assets/img/usdc.svg";
 
 const tokens: { [token: string]: Token } = {
   dai: {
@@ -26,6 +27,7 @@ const tokens: { [token: string]: Token } = {
       4: "0x4DBCdF9B62e891a7cec5A2568C3F4FAF9E8Abe2b",
       42: "0xb7a4F3E9097C08dA09517b5aB877F7a917224ede", // compound usdc
     },
+    image: usdc,
   },
   usdt: {
     symbol: "USDT",

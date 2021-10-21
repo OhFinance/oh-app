@@ -1,4 +1,5 @@
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -6,6 +7,7 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
+import { Flex, Subheading, Subtitle } from "@ohfinance/oh-ui";
 import { TableSurface } from "components/TableSurface";
 import banks from "config/constants/banks";
 import { Bank } from "config/constants/types";
@@ -13,12 +15,20 @@ import { EarnTableRow } from "./EarnTableRow";
 
 export const EarnTableView = () => {
   return (
-    <TableSurface title="Oh! Yield Indexes">
+    <TableSurface>
+      <Flex p={2} align="baseline">
+        <Box mr={1}>
+          <Subheading gutterBottom={false}>DeFi Indexes</Subheading>
+        </Box>
+        <Subtitle paragraph={false} color="textSecondary">
+          ({banks.length} Indexes)
+        </Subtitle>
+      </Flex>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="center">Icon</TableCell>
+            <TableCell align="center">Chain</TableCell>
             {/* <TableCell>Description</TableCell> */}
             <TableCell align="center">Underlying</TableCell>
             <TableCell align="center">Composition</TableCell>

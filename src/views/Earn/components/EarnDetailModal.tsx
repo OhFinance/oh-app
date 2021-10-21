@@ -37,10 +37,7 @@ export const EarnDetailModal: FC<EarnDetailModalProps> = ({
     >
       <Box p={3}>
         <Flex p={2} center>
-          <Avatar
-            src={bank.image}
-            style={{ height: "128px", width: "128px" }}
-          />
+          <img src={bank.image} alt={bank.symbol} height={128} width="auto" />
         </Flex>
         <Flex center>
           <Typography variant="h6">{bank.symbol}</Typography>
@@ -69,8 +66,12 @@ export const EarnDetailModal: FC<EarnDetailModalProps> = ({
               <TableCell align="right">{bank.underlying.symbol}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="left">Composition</TableCell>
-              <TableCell align="right">{bank.composition.join(", ")}</TableCell>
+              <TableCell align="left">Strategies</TableCell>
+              <TableCell align="right">
+                {bank.strategies
+                  .map((strategy) => strategy.protocol)
+                  .join(", ")}
+              </TableCell>
             </TableRow>
           </TableBody>
           <TableRow>
