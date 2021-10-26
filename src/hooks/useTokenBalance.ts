@@ -6,10 +6,10 @@ import { useERC20Contract } from "./useContract";
 import usePoller from "./usePoller";
 import { useWeb3 } from "./useWeb3";
 
-type UseTokenBalanceState = {
+export interface TokenBalanceState {
   balance: BigNumber;
   fetchStatus: FetchStatus;
-};
+}
 
 export enum FetchStatus {
   NOT_FETCHED = "not-fetched",
@@ -19,7 +19,7 @@ export enum FetchStatus {
 
 export const useTokenBalance = (address: string) => {
   const { NOT_FETCHED, SUCCESS, FAILED } = FetchStatus;
-  const [balanceState, setBalanceState] = useState<UseTokenBalanceState>({
+  const [balanceState, setBalanceState] = useState<TokenBalanceState>({
     balance: ZERO,
     fetchStatus: NOT_FETCHED,
   });

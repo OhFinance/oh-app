@@ -12,10 +12,11 @@ export const SupportedNetworks = [1, 43114];
 export const SupportedTestNetworks = [4, 42];
 
 // only include testnets in live version until release
-export const supportedChainIds = [
-  ...SupportedTestNetworks,
-  ...(isLocalhost() ? SupportedNetworks : []),
-];
+export const supportedChainIds = SupportedNetworks;
+// [
+//   ...SupportedTestNetworks,
+//   ...(isLocalhost() ? SupportedNetworks : []),
+// ];
 
 // Avalanche Info: https://docs.avax.network/build/tutorials/platform/launch-your-ethereum-dapp
 export const Networks: { [chainId: number]: Network } = {
@@ -115,4 +116,13 @@ export const NetworkIcons: { [chainId: number]: string } = {
   42: Kovan,
   43113: Fuji,
   43114: Avalanche,
+};
+
+export const NetworkRouter: { [chainId: number]: string } = {
+  1: `https://app.sushi.com/swap?inputCurrency=0x16ba8efe847ebdfef99d399902ec29397d403c30&outputCurrency=ETH`,
+  // 4: Rinkeby,
+  // 42: Kovan,
+  // 43113: Fuji,
+  43114:
+    "https://traderjoexyz.com/#/trade?inputCurrency=0x937E077aBaEA52d3abf879c9b9d3f2eBd15BAA21&outputCurrency=AVAX",
 };

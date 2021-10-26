@@ -1,5 +1,5 @@
 import { Avatar, Typography } from "@material-ui/core";
-import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
+import { Button, Flex, Modal, ModalProps, Text } from "@ohfinance/oh-ui";
 import { FC } from "react";
 import OhToken from "assets/img/oh-token.svg";
 import { Balance } from "components/Balance";
@@ -10,19 +10,22 @@ import { useNetwork } from "hooks/useNetwork";
 import { LinkButton } from "components/LinkButton";
 import { RegisterTokenButton } from "components/RegisterTokenButton";
 import tokens from "config/constants/tokens";
+import { FetchStatus, TokenBalanceState } from "hooks/useTokenBalance";
+import { Skeleton } from "@material-ui/lab";
 
 export interface TokenBalanceModalProps extends ModalProps {
   address: string;
-  balance: BigNumber;
+  tokenBalance: TokenBalanceState;
 }
 
 export const TokenBalanceModal: FC<TokenBalanceModalProps> = ({
   isOpen,
   onDismiss,
   address,
-  balance,
+  tokenBalance,
 }) => {
-  const { blockExplorerUrl } = useNetwork();
+  const { balance, fetchStatus } = tokenBalance;
+  const { blockExplorerUrl, swapRouterUrl } = useNetwork();
 
   return (
     <Modal
@@ -35,11 +38,18 @@ export const TokenBalanceModal: FC<TokenBalanceModalProps> = ({
       <Flex p={2} center>
         <Avatar src={OhToken} style={{ height: "128px", width: "128px" }} />
       </Flex>
-      <Typography align="center" variant="body1">
-        <b>
-          <Balance value={getFullDisplayBalance(balance)} suffix=" OH" />
-        </b>
-      </Typography>
+      <Flex center>
+        {fetchStatus === FetchStatus.SUCCESS ? (
+          <Text align="center">
+            <b>
+              <Balance value={getFullDisplayBalance(balance)} suffix=" OH" />
+            </b>
+          </Text>
+        ) : (
+          <Skeleton width={60} height={24} />
+        )}
+      </Flex>
+
       <Typography
         align="center"
         variant="subtitle2"
@@ -70,7 +80,8 @@ export const TokenBalanceModal: FC<TokenBalanceModalProps> = ({
         startIcon={<FaExchangeAlt />}
         onClick={() =>
           window.open(
-            `https://app.sushi.com/swap?inputCurrency=${address}&outputCurrency=ETH`,
+            // `https://app.sushi.com/swap?inputCurrency=${address}&outputCurrency=ETH`,
+            swapRouterUrl,
             "_blank"
           )
         }

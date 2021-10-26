@@ -14,10 +14,10 @@ import { Web3NetworkModalButton } from "./components/Web3NetworkModalButton";
 export const Web3NetworkModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
   const { chainId } = useWeb3();
 
-  const isLocalhost = window.location.href.indexOf("localhost") > -1;
-  const networks = isLocalhost
-    ? [...SupportedNetworks, ...SupportedTestNetworks]
-    : SupportedTestNetworks; // testnets only for beta
+  // const isLocalhost = window.location.href.indexOf("localhost") > -1;
+  // const networks = isLocalhost
+  // ? [...SupportedNetworks, ...SupportedTestNetworks]
+  // : SupportedTestNetworks; // testnets only for beta
 
   return (
     <Modal
@@ -28,7 +28,7 @@ export const Web3NetworkModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
       fullWidth
     >
       <Grid container spacing={2} direction="column" justify="center">
-        {networks.map((networkId: number, i: number) => (
+        {SupportedNetworks.map((networkId: number, i: number) => (
           <Grid item key={i}>
             <Web3NetworkModalButton
               networkIcon={NetworkIcons[networkId]}

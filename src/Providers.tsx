@@ -8,6 +8,7 @@ import { getLibrary } from "utils/web3Connectors";
 import store from "state";
 import { FC } from "react";
 import { useThemeManager } from "state/user/hooks";
+import { APYProvider } from "contexts/APYContext";
 
 const ThemeProviderWrapper = ({ children }) => {
   const [isDarkMode] = useThemeManager();
@@ -23,7 +24,9 @@ const Providers: FC = ({ children }) => {
           <ThemeProviderWrapper>
             <ToastProvider>
               <ModalProvider>
-                <PollerProvider>{children}</PollerProvider>
+                <PollerProvider>
+                  <APYProvider>{children}</APYProvider>
+                </PollerProvider>
               </ModalProvider>
             </ToastProvider>
           </ThemeProviderWrapper>

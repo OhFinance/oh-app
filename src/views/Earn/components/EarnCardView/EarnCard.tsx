@@ -22,6 +22,8 @@ import { Balance } from "components/Balance";
 import { FaEllipsisV } from "react-icons/fa";
 import { useBankValue } from "views/Earn/hooks/useBankValue";
 import { Skeleton } from "@material-ui/lab";
+import useAPY from "hooks/useAPY";
+import { NetworkIcons, Networks } from "config/constants/networks";
 
 export interface EarnCardProps {
   bank: Bank;
@@ -35,6 +37,16 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
   const address = useAddress(bank.address);
   const { balance } = useTokenBalance(address);
   const { virtualBalance, getShareValue } = useBankValue(address);
+  const apys = useAPY();
+
+  const apy = useMemo(() => {
+    return (
+      apys &&
+      apys.banks[address] &&
+      apys.banks[address].length &&
+      apys.banks[address][0].apy
+    );
+  }, [address, apys]);
 
   const tvl = useMemo(() => {
     return (
@@ -66,7 +78,20 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
 
       <Flex align="center" justify="space-between" mt={4} mb={4}>
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
+            <Flex center column>
+              <img
+                src={NetworkIcons[bank.chainId]}
+                alt={Networks[bank.chainId].chainName}
+                height={40}
+                width="auto"
+              />
+              <Box mt={1}>
+                <Text align="center">Chain</Text>
+              </Box>
+            </Flex>
+          </Grid>
+          <Grid item xs={12} md={4}>
             <Flex center column>
               <img
                 src={bank.underlying.image}
@@ -79,7 +104,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
               </Box>
             </Flex>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Flex center column>
               <EarnStrategyGroup bank={bank} />
               <Box mt={1}>
@@ -87,10 +112,23 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
               </Box>
             </Flex>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Flex column center>
               {tvl !== undefined ? (
-                <Subheading>
+                <Subheading align="center">
+                  <Balance value={apy} decimals={2} suffix="%" />
+                </Subheading>
+              ) : (
+                <Skeleton width={80} height={40} />
+              )}
+
+              <Text align="center">APY</Text>
+            </Flex>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Flex column center>
+              {tvl !== undefined ? (
+                <Subheading align="center">
                   <Balance value={tvl} decimals={2} prefix="$" />
                 </Subheading>
               ) : (
@@ -100,7 +138,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
               <Text align="center">TVL</Text>
             </Flex>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Flex column center>
               {myHoldings !== undefined ? (
                 <Subheading>

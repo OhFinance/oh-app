@@ -24,6 +24,7 @@ import RemoveRoundedIcon from "@material-ui/icons/RemoveRounded";
 import MoreVertRoundedIcon from "@material-ui/icons/MoreVertRounded";
 import { NetworkIcons, Networks } from "config/constants/networks";
 import { Skeleton } from "@material-ui/lab";
+import useAPY from "hooks/useAPY";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -49,6 +50,16 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
   const address = useAddress(bank.address);
   const { balance } = useTokenBalance(address);
   const { virtualBalance, getShareValue } = useBankValue(address);
+  const apys = useAPY();
+
+  const apy = useMemo(() => {
+    return (
+      apys &&
+      apys.banks[address] &&
+      apys.banks[address].length &&
+      apys.banks[address][0].apy
+    );
+  }, [address, apys]);
 
   const tvl = useMemo(() => {
     return (
@@ -101,6 +112,15 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       <TableCell className={isLast && classes.cell}>
         <Flex center>
           <EarnStrategyGroup bank={bank} />
+        </Flex>
+      </TableCell>
+      <TableCell className={isLast && classes.cell}>
+        <Flex center>
+          {apy !== undefined ? (
+            <Balance value={apy} decimals={2} suffix="%" />
+          ) : (
+            <Skeleton width={80} height={40} />
+          )}
         </Flex>
       </TableCell>
       <TableCell className={isLast && classes.cell}>

@@ -21,7 +21,7 @@ export const EarnTableView = () => {
           <Subheading gutterBottom={false}>DeFi Indexes</Subheading>
         </Box>
         <Subtitle paragraph={false} color="textSecondary">
-          ({banks.length} Indexes)
+          ({banks.length} Index)
         </Subtitle>
       </Flex>
       <Table>
@@ -32,7 +32,7 @@ export const EarnTableView = () => {
             {/* <TableCell>Description</TableCell> */}
             <TableCell align="center">Underlying</TableCell>
             <TableCell align="center">Composition</TableCell>
-            {/* <TableCell align="center">APR</TableCell> */}
+            <TableCell align="center">APY</TableCell>
             <TableCell align="center">TVL</TableCell>
             <TableCell align="center">My Holdings</TableCell>
             <TableCell align="center">Deposit</TableCell>

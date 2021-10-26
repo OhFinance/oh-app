@@ -1,6 +1,6 @@
 import { SupportedTestNetworks } from "config/constants/networks";
 import { useMemo } from "react";
-import { getBlockExplorerUrl } from "utils/networkHelper";
+import { getBlockExplorerUrl, getSwapRouterUrl } from "utils/networkHelper";
 import { useWeb3 } from "./useWeb3";
 
 export const useNetwork = () => {
@@ -10,7 +10,14 @@ export const useNetwork = () => {
     if (chainId) {
       return getBlockExplorerUrl(chainId);
     }
-    return "";
+    return getBlockExplorerUrl(1);
+  }, [chainId]);
+
+  const swapRouterUrl = useMemo(() => {
+    if (chainId) {
+      return getSwapRouterUrl(chainId);
+    }
+    return getSwapRouterUrl(1);
   }, [chainId]);
 
   const isTestnet = useMemo(() => {
@@ -19,6 +26,7 @@ export const useNetwork = () => {
 
   return {
     blockExplorerUrl,
+    swapRouterUrl,
     isTestnet,
   };
 };
