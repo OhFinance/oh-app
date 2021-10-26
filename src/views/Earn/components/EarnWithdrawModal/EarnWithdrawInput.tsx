@@ -3,37 +3,33 @@ import { Button } from "@ohfinance/oh-ui";
 import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
-import { useNetwork } from "hooks/useNetwork";
 import { FC, useCallback } from "react";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
-import { EarnFaucetButton } from "../EarnFaucetButton";
 
-export interface EarnDepositInputProps {
+export interface EarnWithdrawInputProps {
   bank: Bank;
   input: string;
   setInput: (e: any) => void;
   onConfirm: () => void;
-  underlyingBalance: string;
+  bankBalance: string;
 }
 
-export const EarnDepositInput: FC<EarnDepositInputProps> = ({
+export const EarnWithdrawInput: FC<EarnWithdrawInputProps> = ({
   bank,
   input,
   setInput,
   onConfirm,
-  underlyingBalance,
+  bankBalance,
 }) => {
-  const { isTestnet } = useNetwork();
-
   const onMaxInput = useCallback(() => {
     setInput(
       getFullDisplayBalance(
-        getDecimalAmount(underlyingBalance, bank.underlying.decimals),
-        bank.underlying.decimals,
-        bank.underlying.decimals
+        getDecimalAmount(bankBalance, bank.decimals),
+        bank.decimals,
+        bank.decimals
       )
     );
-  }, [bank, underlyingBalance, setInput]);
+  }, [bank, bankBalance, setInput]);
 
   return (
     <Grid container direction="column" spacing={2}>
@@ -41,16 +37,16 @@ export const EarnDepositInput: FC<EarnDepositInputProps> = ({
         <Grid container alignItems="center" justify="space-between">
           <Grid item>
             <Typography variant="h6" align="left">
-              {bank.underlying.symbol} Balance
+              {bank.symbol} Balance
             </Typography>
           </Grid>
 
           <Grid item>
             <Typography variant="h6" align="right">
               <Balance
-                value={underlyingBalance}
-                decimals={bank.underlying.decimals}
-                suffix={` ${bank.underlying.symbol}`}
+                value={bankBalance}
+                decimals={bank.decimals}
+                suffix={` ${bank.symbol}`}
               />
             </Typography>
           </Grid>
@@ -58,8 +54,8 @@ export const EarnDepositInput: FC<EarnDepositInputProps> = ({
       </Grid>
       <Grid item>
         <TokenInput
-          placeholder={`Deposit ${bank.underlying.symbol}`}
-          decimals={bank.underlying.decimals}
+          placeholder={`Withdraw ${bank.underlying.symbol}`}
+          decimals={bank.decimals}
           value={input}
           onUserInput={(e) => setInput(e)}
           onMax={onMaxInput}
@@ -74,15 +70,9 @@ export const EarnDepositInput: FC<EarnDepositInputProps> = ({
           disabled={!input}
           onClick={onConfirm}
         >
-          Deposit
+          Withdraw
         </Button>
       </Grid>
-
-      {isTestnet && (
-        <Grid item>
-          <EarnFaucetButton token={bank.underlying} />
-        </Grid>
-      )}
     </Grid>
   );
 };

@@ -89,12 +89,12 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Flex column center>
-              {!!tvl ? (
+              {tvl !== undefined ? (
                 <Subheading>
                   <Balance value={tvl} decimals={2} prefix="$" />
                 </Subheading>
               ) : (
-                <Skeleton variant="rect" width={80} height={24} />
+                <Skeleton width={80} height={40} />
               )}
 
               <Text align="center">TVL</Text>
@@ -102,12 +102,12 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Flex column center>
-              {!!myHoldings ? (
+              {myHoldings !== undefined ? (
                 <Subheading>
                   <Balance value={myHoldings} decimals={2} prefix="$" />
                 </Subheading>
               ) : (
-                <Skeleton variant="rect" width={80} height={24} />
+                <Skeleton width={80} height={40} />
               )}
 
               <Text align="center">My Holdings</Text>

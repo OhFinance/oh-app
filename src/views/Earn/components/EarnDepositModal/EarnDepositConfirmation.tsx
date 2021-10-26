@@ -1,19 +1,9 @@
-import { Box, Grid, Typography } from "@material-ui/core";
-import {
-  Button,
-  Flex,
-  Heading,
-  IconButton,
-  Subtitle,
-  Text,
-} from "@ohfinance/oh-ui";
+import { Grid } from "@material-ui/core";
+import { Button, Flex, Heading, Text } from "@ohfinance/oh-ui";
 import { Balance } from "components/Balance";
 import { Bank } from "config/constants/types";
 import { ApprovalState } from "hooks/useTokenApprove";
-import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC } from "react";
-import { getFullDisplayBalance } from "utils/formatBalances";
-import BigNumber from "bignumber.js";
 import { BackButton } from "components/BackButton/BackButton";
 
 export interface EarnDepositConfirmationProps {
@@ -25,7 +15,6 @@ export interface EarnDepositConfirmationProps {
   exchangeRate: string;
   totalShare: string;
   onApprove: () => void;
-  onConfirm: () => void;
   onBack: () => void;
   onDeposit: () => void;
 }
@@ -39,7 +28,6 @@ export const EarnDepositConfirmation: FC<EarnDepositConfirmationProps> = ({
   exchangeRate,
   totalShare,
   onApprove,
-  onConfirm,
   onBack,
   onDeposit,
 }) => {
@@ -84,14 +72,15 @@ export const EarnDepositConfirmation: FC<EarnDepositConfirmationProps> = ({
         <Flex align="center" justify="space-between">
           <Text>Bank Token Rate</Text>
           <Text>
-            1 {bank.symbol} = <Balance value={exchangeRate} />{" "}
+            1 {bank.symbol} ={" "}
+            <Balance value={exchangeRate} decimals={bank.underlying.decimals} />{" "}
             {bank.underlying.symbol}
           </Text>
         </Flex>
         <Flex align="center" justify="space-between">
           <Text>Share of Bank</Text>
           <Text>
-            <Balance value={totalShare} />%
+            <Balance value={totalShare} decimals={2} suffix="%" />
           </Text>
         </Flex>
       </Grid>

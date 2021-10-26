@@ -10,7 +10,6 @@ import { FC, useCallback, useMemo, useState } from "react";
 import { useTransactionAdder } from "state/transactions/hooks";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
 import { useBankValue } from "views/Earn/hooks/useBankValue";
-import { EarnFaucetButton } from "../EarnFaucetButton";
 import { EarnDepositConfirmation } from "./EarnDepositConfirmation";
 import { EarnDepositInput } from "./EarnDepositInput";
 
@@ -43,7 +42,11 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
   const { balance } = useTokenBalance(underlyingAddress);
 
   const underlyingBalance = useMemo(() => {
-    return getFullDisplayBalance(balance, bank.underlying.decimals);
+    return getFullDisplayBalance(
+      balance,
+      bank.underlying.decimals,
+      bank.underlying.decimals
+    );
   }, [balance, bank]);
 
   const { virtualPrice, getTokenValue, getTotalBankShare } =
@@ -65,12 +68,18 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
   }, [bank, input, getTokenValue]);
 
   const exchangeRate = useMemo(() => {
-    return virtualPrice && getFullDisplayBalance(virtualPrice, bank.decimals);
+    return (
+      virtualPrice &&
+      getFullDisplayBalance(virtualPrice, bank.decimals, bank.decimals)
+    );
   }, [bank, virtualPrice]);
 
   const totalShare = useMemo(() => {
-    return input && getTotalBankShare(new BigNumber(input), bank.decimals);
-  }, [bank, input, getTotalBankShare]);
+    return (
+      receiveAmount &&
+      getTotalBankShare(getDecimalAmount(receiveAmount, bank.decimals))
+    );
+  }, [bank, receiveAmount, getTotalBankShare]);
 
   const handleDeposit = useCallback(async () => {
     setTxPending(true);
@@ -81,7 +90,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
         setTxPending(false);
 
         addTransaction(response, {
-          summary: `Deposited ${depositAmount} USDC for ${receiveAmount} OH-USDC`,
+          summary: `Deposited ${depositAmount} ${bank.underlying.symbol} for ${receiveAmount} ${bank.symbol}`,
         });
 
         setTxHash(response.hash);
@@ -91,7 +100,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
       });
   }, [bank, bankContract, input, depositAmount, receiveAmount, addTransaction]);
 
-  const handleDismiss = () => {
+  const handleDismiss = useCallback(() => {
     if (confirming) {
       setConfirming(false);
     } else if (txPending) {
@@ -101,7 +110,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
     }
 
     onDismiss();
-  };
+  }, [confirming, txPending, onDismiss]);
 
   const content = () => {
     if (!confirming) {
@@ -125,7 +134,6 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
           exchangeRate={exchangeRate}
           totalShare={new BigNumber(totalShare).toString()}
           onApprove={onApprove}
-          onConfirm={() => setTxPending(true)}
           onBack={() => setConfirming(false)}
           onDeposit={handleDeposit}
         />

@@ -17,7 +17,7 @@ export const Web3Login = () => {
         ))}
       </Grid>
       <Flex mt={4} column center>
-        <Subtitle color="textSecondary" paragraph={false} gutterBottom>
+        <Subtitle color="textSecondary" gutterBottom>
           Don't have a crypto wallet yet?
         </Subtitle>
         <Button color="primary" href="https://docs.oh.finance/">

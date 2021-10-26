@@ -30,17 +30,20 @@ export const useBankValue = (bankAddress: string) => {
     [bankAddress, virtualBalanceResult]
   );
 
+  // get rate of underlying:oh-underlying token
   const getTokenValue = useCallback(
     (tokens: BigNumber) => {
-      return bankAddress && virtualBalance
-        ? new BigNumber(tokens).times(totalSupply).div(virtualBalance)
+      return bankAddress && totalSupply && virtualBalance
+        ? !totalSupply.eq(0)
+          ? new BigNumber(tokens).times(totalSupply).div(virtualBalance)
+          : new BigNumber(tokens).times(1)
         : undefined;
     },
     [bankAddress, totalSupply, virtualBalance]
   );
 
   const getShareValue = useCallback(
-    (shares: BigNumber, decimals?: number) => {
+    (shares: BigNumber, decimals = 18) => {
       return bankAddress && virtualPrice
         ? new BigNumber(shares).times(virtualPrice).div(TEN.pow(decimals))
         : undefined;
@@ -48,10 +51,13 @@ export const useBankValue = (bankAddress: string) => {
     [bankAddress, virtualPrice]
   );
 
+  // get % ownership of bank given shares
   const getTotalBankShare = useCallback(
-    (shares: BigNumber, decimals?: number) => {
+    (shares: BigNumber) => {
       return bankAddress && totalSupply
-        ? new BigNumber(shares).times(TEN.pow(decimals)).div(totalSupply)
+        ? !totalSupply.eq(0)
+          ? shares.div(totalSupply.plus(shares)).times(100)
+          : 100
         : undefined;
     },
     [bankAddress, totalSupply]

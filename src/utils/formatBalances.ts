@@ -23,7 +23,7 @@ export const getFullDisplayBalance = (
 ) => {
   return new BigNumber(balance)
     .dividedBy(TEN.pow(decimals))
-    .toFixed(decimalsToAppear);
+    .toFixed(decimalsToAppear, 1); // 1 = round down
 };
 
 export const formatNumber = (

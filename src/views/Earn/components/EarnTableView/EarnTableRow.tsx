@@ -105,10 +105,10 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          {!!tvl ? (
+          {tvl !== undefined ? (
             <Balance value={tvl} decimals={2} prefix="$" />
           ) : (
-            <Skeleton variant="rect" width={80} height={24} />
+            <Skeleton width={80} height={40} />
           )}
         </Flex>
       </TableCell>
@@ -119,10 +119,10 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       </TableCell> */}
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          {!!myHoldings ? (
+          {myHoldings !== undefined ? (
             <Balance value={myHoldings} decimals={2} prefix="$" />
           ) : (
-            <Skeleton variant="rect" width={80} height={24} />
+            <Skeleton width={80} height={40} />
           )}
         </Flex>
       </TableCell>

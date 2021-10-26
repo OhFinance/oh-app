@@ -1,13 +1,21 @@
 import { Grid, Typography } from "@material-ui/core";
 import { Button, Modal, ModalProps } from "@ohfinance/oh-ui";
+import BigNumber from "bignumber.js";
 import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
+import { TransactionConfirmationModal } from "components/TransactionConfirmationModal";
 import { Bank } from "config/constants/types";
 import { useAddress } from "hooks/useAddress";
+import { useBankContract } from "hooks/useContract";
 import { useTokenBalance } from "hooks/useTokenBalance";
-import { FC, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
+import { useTransactionAdder } from "state/transactions/hooks";
+import { TEN } from "utils/bigNumber";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
+import { useBankValue } from "views/Earn/hooks/useBankValue";
 import { useBankWithdraw } from "../../hooks/useBankWithdraw";
+import { EarnWithdrawConfirmation } from "./EarnWithdrawConfirmation";
+import { EarnWithdrawInput } from "./EarnWithdrawInput";
 
 export interface EarnWithdrawModalProps extends ModalProps {
   bank: Bank;
@@ -18,75 +26,125 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
   onDismiss,
   bank,
 }) => {
+  const [confirming, setConfirming] = useState<boolean>(false);
+  const [txPending, setTxPending] = useState<boolean>(false);
+  const [txHash, setTxHash] = useState<string>("");
+  const addTransaction = useTransactionAdder();
+
   const [input, setInput] = useState("");
-  const [pendingTx, setPendingTx] = useState(false);
-  const tokenAddress = useAddress(bank.address);
+
   const bankAddress = useAddress(bank.address);
-  const { balance } = useTokenBalance(tokenAddress);
-  const { onWithdraw } = useBankWithdraw(bankAddress);
+  const underlyingAddress = useAddress(bank.underlying.address);
+  const bankContract = useBankContract(bankAddress);
+
+  const { balance } = useTokenBalance(bankAddress);
+
+  const bankBalance = useMemo(() => {
+    return getFullDisplayBalance(balance, bank.decimals, bank.decimals);
+  }, [balance, bank]);
+
+  const { virtualPrice, getShareValue, getTotalBankShare } =
+    useBankValue(bankAddress);
+
+  const withdrawAmount = useMemo(() => {
+    return getFullDisplayBalance(
+      getDecimalAmount(input, bank.decimals),
+      bank.decimals
+    );
+  }, [bank, input]);
+
+  const receiveAmount = useMemo(() => {
+    const tokenValue = getShareValue(new BigNumber(input), bank.decimals);
+
+    return getFullDisplayBalance(
+      getDecimalAmount(tokenValue, bank.decimals),
+      bank.decimals
+    );
+  }, [bank, input, getShareValue]);
+
+  const exchangeRate = useMemo(() => {
+    return (
+      virtualPrice &&
+      getFullDisplayBalance(virtualPrice, bank.decimals, bank.decimals)
+    );
+  }, [bank, virtualPrice]);
+
+  const handleWithdraw = useCallback(async () => {
+    setTxPending(true);
+
+    await bankContract
+      .withdraw(getDecimalAmount(input, bank.decimals).toString())
+      .then((response) => {
+        setTxPending(false);
+
+        addTransaction(response, {
+          summary: `Withdrew ${receiveAmount} ${bank.underlying.symbol} for ${withdrawAmount} ${bank.symbol}`,
+        });
+
+        setTxHash(response.hash);
+      })
+      .catch((error) => {
+        console.error(error);
+        setTxPending(false);
+      });
+  }, [
+    bank,
+    bankContract,
+    input,
+    withdrawAmount,
+    receiveAmount,
+    addTransaction,
+  ]);
+
+  const handleDismiss = useCallback(() => {
+    if (confirming) {
+      setConfirming(false);
+    } else if (txPending) {
+      setTxPending(false);
+    } else {
+      setTxHash("");
+    }
+
+    onDismiss();
+  }, [confirming, txPending, onDismiss]);
+
+  const content = () => {
+    if (!confirming) {
+      return (
+        <EarnWithdrawInput
+          bank={bank}
+          input={input}
+          setInput={setInput}
+          bankBalance={bankBalance}
+          onConfirm={() => setConfirming(true)}
+        />
+      );
+    } else if (!txPending) {
+      return (
+        <EarnWithdrawConfirmation
+          bank={bank}
+          input={input}
+          withdrawAmount={withdrawAmount}
+          receiveAmount={receiveAmount}
+          exchangeRate={exchangeRate}
+          // totalShare={new BigNumber(totalShare).toString()}
+          onBack={() => setConfirming(false)}
+          onWithdraw={handleWithdraw}
+        />
+      );
+    }
+  };
 
   return (
-    <Modal
+    <TransactionConfirmationModal
       title={`Withdraw ${bank.underlying.symbol}`}
       isOpen={isOpen}
-      onDismiss={onDismiss}
-      maxWidth="md"
-      fullWidth
-    >
-      <Grid container direction="column" spacing={2}>
-        <Grid item>
-          <Grid container alignItems="center" justify="space-between">
-            <Grid item>
-              <Typography variant="h6" align="left">
-                {bank.symbol} Balance
-              </Typography>
-            </Grid>
-
-            <Grid item>
-              <Typography variant="h6" align="right">
-                <Balance
-                  value={getFullDisplayBalance(balance, bank.decimals)}
-                  suffix={` ${bank.symbol}`}
-                />
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item>
-          <TokenInput
-            placeholder={`Withdraw ${bank.underlying.symbol}`}
-            decimals={bank.decimals}
-            value={input}
-            onUserInput={(e) => setInput(e)}
-            onMax={() => {
-              setInput(
-                getFullDisplayBalance(balance, bank.decimals, bank.decimals)
-              );
-            }}
-          />
-        </Grid>
-        <Grid item>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            disabled={!input}
-            onClick={async () => {
-              setPendingTx(true);
-              try {
-                await onWithdraw(getDecimalAmount(input, bank.decimals));
-                onDismiss();
-              } catch (e) {
-                console.error(e);
-              } finally {
-                setPendingTx(false);
-              }
-            }}
-          >
-            Withdraw
-          </Button>
-        </Grid>
-      </Grid>
-    </Modal>
+      onDismiss={handleDismiss}
+      hash={txHash}
+      pending={txPending}
+      onBack={() => setTxPending(false)}
+      pendingText={`Withdrawing ${receiveAmount} USDC for ${withdrawAmount} OH-USDC...`}
+      content={content}
+    />
   );
 };

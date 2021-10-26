@@ -8,6 +8,8 @@ import { FaExchangeAlt } from "react-icons/fa";
 import BigNumber from "bignumber.js";
 import { useNetwork } from "hooks/useNetwork";
 import { LinkButton } from "components/LinkButton";
+import { RegisterTokenButton } from "components/RegisterTokenButton";
+import tokens from "config/constants/tokens";
 
 export interface TokenBalanceModalProps extends ModalProps {
   address: string;
@@ -51,6 +53,14 @@ export const TokenBalanceModal: FC<TokenBalanceModalProps> = ({
         <LinkButton link={`${blockExplorerUrl}/address/${address}`}>
           Contract Address
         </LinkButton>
+      </Flex>
+
+      <Flex center my={2}>
+        <RegisterTokenButton
+          address={address}
+          symbol={tokens.ohToken.symbol}
+          decimals={tokens.ohToken.decimals}
+        />
       </Flex>
 
       <Button
