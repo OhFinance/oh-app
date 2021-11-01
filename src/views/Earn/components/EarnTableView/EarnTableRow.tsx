@@ -57,7 +57,7 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       apys &&
       apys.banks[address] &&
       apys.banks[address].length &&
-      apys.banks[address][0].apy
+      apys.banks[address][1].apy // 7d apy
     );
   }, [address, apys]);
 
