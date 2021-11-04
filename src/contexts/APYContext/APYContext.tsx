@@ -10,7 +10,7 @@ export interface APYStore {
 }
 
 export interface IAPYContext {
-  banks?: APYStore;
+  [chainId: number]: APYStore;
 }
 
-export const APYContext = createContext<IAPYContext>({ banks: {} });
+export const APYContext = createContext<IAPYContext>({});

@@ -1,49 +1,43 @@
 import axios from "axios";
 import banks from "config/constants/banks";
 import { useEffect, useState } from "react";
-import { APYContext, APYStore, IAPYContext } from ".";
+import { APYContext, IAPYContext } from "./APYContext";
 
 export const APYProvider = ({ children }) => {
-  const [apyState, setApyState] = useState<APYStore>({});
-  const addresses = banks.map((bank) => bank.address[bank.chainId]);
+  const [apyState, setApyState] = useState<IAPYContext>({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAPY = async () => {
-      const address = addresses[0];
+      try {
+        const values = await Promise.all(
+          banks.map((bank) =>
+            axios.get(
+              `https://api.oh.finance/apy?chain=${bank.chainId}&addr=${
+                bank.address[bank.chainId]
+              }`
+            )
+          )
+        );
 
-      if (apyState[address]) {
-        return;
-      }
-
-      axios
-        .get(`https://api.oh.finance/apy?addr=${address}`)
-        .then((result) => {
-          setApyState({
-            [address]: result.data.apys,
-            ...apyState,
-          });
-        })
-        .catch((error) => {
-          // console.error(error);
-          setApyState({
-            [address]: [],
-            ...apyState,
-          });
+        let nextState = {};
+        values.forEach((value, i) => {
+          nextState[banks[i].chainId] = {
+            [banks[i].address[banks[i].chainId]]: value.data.apys,
+            ...nextState[banks[i].chainId],
+          };
         });
+        setApyState(nextState);
+        setLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
     };
 
-    if (addresses) {
+    if (loading) {
       fetchAPY();
     }
-  }, [addresses, apyState]);
+  }, [loading, apyState]);
 
-  return (
-    <APYContext.Provider
-      value={{
-        banks: apyState,
-      }}
-    >
-      {children}
-    </APYContext.Provider>
-  );
+  return <APYContext.Provider value={apyState}>{children}</APYContext.Provider>;
 };

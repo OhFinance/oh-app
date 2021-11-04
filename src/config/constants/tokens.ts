@@ -31,6 +31,14 @@ const tokens: { [token: string]: Token } = {
     },
     image: usdc,
   },
+  usdce: {
+    symbol: "USDC.e",
+    decimals: 6,
+    address: {
+      43114: "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664", // usdc.e
+    },
+    image: usdc,
+  },
   usdt: {
     symbol: "USDT",
     decimals: 6,

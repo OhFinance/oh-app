@@ -42,11 +42,12 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
   const apy = useMemo(() => {
     return (
       apys &&
-      apys.banks[address] &&
-      apys.banks[address].length &&
-      apys.banks[address][1].apy // 7d apy
+      apys[bank.chainId] &&
+      apys[bank.chainId][bank.address[bank.chainId]] &&
+      apys[bank.chainId][bank.address[bank.chainId]].length &&
+      apys[bank.chainId][bank.address[bank.chainId]][1].apy // 7d apy
     );
-  }, [address, apys]);
+  }, [bank, apys]);
 
   const tvl = useMemo(() => {
     return (
@@ -114,7 +115,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Flex column center>
-              {tvl !== undefined ? (
+              {apy !== undefined ? (
                 <Subheading align="center">
                   <Balance value={apy} decimals={2} suffix="%" />
                 </Subheading>

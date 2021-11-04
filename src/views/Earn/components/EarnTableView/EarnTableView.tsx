@@ -21,7 +21,7 @@ export const EarnTableView = () => {
           <Subheading gutterBottom={false}>DeFi Indexes</Subheading>
         </Box>
         <Subtitle paragraph={false} color="textSecondary">
-          ({banks.length} Index)
+          ({banks.length} Indexes)
         </Subtitle>
       </Flex>
       <Table>
