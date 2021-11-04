@@ -8,6 +8,7 @@ import { useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useCallback, useMemo, useState } from "react";
 import { useTransactionAdder } from "state/transactions/hooks";
+import { useApprovalManager } from "state/user/hooks";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
 import { useBankValue } from "views/Earn/hooks/useBankValue";
 import { EarnDepositConfirmation } from "./EarnDepositConfirmation";
@@ -36,6 +37,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
   const { approvalState, onApprove } = useTokenApprove(
     underlyingAddress,
     bankAddress,
+    bank.underlying.symbol,
     getDecimalAmount(input, bank.underlying.decimals)
   );
 
@@ -61,10 +63,12 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
 
   const receiveAmount = useMemo(() => {
     const tokenValue = getTokenValue(new BigNumber(input));
-    return getFullDisplayBalance(
-      getDecimalAmount(tokenValue, bank.decimals),
-      bank.decimals
-    );
+    if (tokenValue) {
+      return getFullDisplayBalance(
+        getDecimalAmount(tokenValue, bank.decimals),
+        bank.decimals
+      );
+    }
   }, [bank, input, getTokenValue]);
 
   const exchangeRate = useMemo(() => {
@@ -75,10 +79,11 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
   }, [bank, virtualPrice]);
 
   const totalShare = useMemo(() => {
-    return (
-      receiveAmount &&
-      getTotalBankShare(getDecimalAmount(receiveAmount, bank.decimals))
-    );
+    if (receiveAmount) {
+      return getTotalBankShare(
+        getDecimalAmount(receiveAmount, bank.decimals)
+      ).toString();
+    }
   }, [bank, receiveAmount, getTotalBankShare]);
 
   const handleDeposit = useCallback(async () => {
@@ -132,7 +137,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
           depositAmount={depositAmount}
           receiveAmount={receiveAmount}
           exchangeRate={exchangeRate}
-          totalShare={new BigNumber(totalShare).toString()}
+          totalShare={totalShare}
           onApprove={onApprove}
           onBack={() => setConfirming(false)}
           onDeposit={handleDeposit}
@@ -149,7 +154,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
       hash={txHash}
       pending={txPending}
       onBack={() => setTxPending(false)}
-      pendingText={`Depositing ${depositAmount} USDC for ${receiveAmount} OH-USDC...`}
+      pendingText={`Depositing ${depositAmount} ${bank.underlying.symbol} for ${receiveAmount} ${bank.symbol}...`}
       content={content}
     />
   );

@@ -4,6 +4,7 @@ import { Balance } from "components/Balance";
 import { Bank } from "config/constants/types";
 import { FC } from "react";
 import { BackButton } from "components/BackButton/BackButton";
+import { Skeleton } from "@material-ui/lab";
 
 export interface EarnWithdrawConfirmationProps {
   bank: Bank;
@@ -35,12 +36,17 @@ export const EarnWithdrawConfirmation: FC<EarnWithdrawConfirmationProps> = ({
 
       <Grid item>
         <Flex align="center">
-          <Heading>
-            <b>
-              <Balance value={receiveAmount} />
-            </b>
-          </Heading>
-          <Flex ml={1}>
+          {receiveAmount !== undefined ? (
+            <Heading gutterBottom={false}>
+              <b>
+                <Balance value={receiveAmount} />
+              </b>
+            </Heading>
+          ) : (
+            <Skeleton width={120} height={60} />
+          )}
+
+          <Flex ml={1} center>
             <img
               src={bank.underlying.image}
               alt={bank.alt}
@@ -59,30 +65,42 @@ export const EarnWithdrawConfirmation: FC<EarnWithdrawConfirmationProps> = ({
       <Grid item>
         <Flex align="center" justify="space-between">
           <Text>Return</Text>
-          <Text>
-            <Balance value={withdrawAmount} /> {bank.symbol}
-          </Text>
+
+          {withdrawAmount !== undefined ? (
+            <Text>
+              <Balance value={withdrawAmount} /> {bank.symbol}
+            </Text>
+          ) : (
+            <Skeleton width={80} height={30} />
+          )}
         </Flex>
         <Flex align="center" justify="space-between">
           <Text>Withdraw</Text>
-          <Text>
-            <Balance value={receiveAmount} /> {bank.underlying.symbol}
-          </Text>
+
+          {receiveAmount !== undefined ? (
+            <Text>
+              <Balance value={receiveAmount} /> {bank.underlying.symbol}
+            </Text>
+          ) : (
+            <Skeleton width={80} height={30} />
+          )}
         </Flex>
         <Flex align="center" justify="space-between">
           <Text>Bank Token Rate</Text>
-          <Text>
-            1 {bank.symbol} ={" "}
-            <Balance value={exchangeRate} decimals={bank.underlying.decimals} />{" "}
-            {bank.underlying.symbol}
-          </Text>
+
+          {exchangeRate !== undefined ? (
+            <Text>
+              1 {bank.symbol} ={" "}
+              <Balance
+                value={exchangeRate}
+                decimals={bank.underlying.decimals}
+              />{" "}
+              {bank.underlying.symbol}
+            </Text>
+          ) : (
+            <Skeleton width={80} height={30} />
+          )}
         </Flex>
-        {/* <Flex align="center" justify="space-between">
-          <Text>Share of Bank</Text>
-          <Text>
-            <Balance value={totalShare} />%
-          </Text>
-        </Flex> */}
       </Grid>
 
       <Grid item>

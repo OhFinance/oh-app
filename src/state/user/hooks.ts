@@ -6,6 +6,7 @@ import {
   toggleDarkMode,
   toggleDrawerMode,
   updateUserEarnViewMode,
+  toggleApproval,
 } from "./state";
 import { ViewMode } from "./types";
 
@@ -51,6 +52,20 @@ export const useThemeManager = (): [boolean, () => void] => {
   }, [dispatch]);
 
   return [isDark, toggleTheme];
+};
+
+export const useApprovalManager = (): [boolean, () => void] => {
+  const dispatch = useDispatch<AppDispatch>();
+  const isExactApproval = useSelector<
+    AppState,
+    AppState["user"]["isExactApproval"]
+  >((state) => state.user.isExactApproval);
+
+  const toggleExactApproval = useCallback(() => {
+    dispatch(toggleApproval());
+  }, [dispatch]);
+
+  return [isExactApproval, toggleExactApproval];
 };
 
 export const useUserEarnViewMode = (): [

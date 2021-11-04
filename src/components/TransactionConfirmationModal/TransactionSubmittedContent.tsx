@@ -7,10 +7,11 @@ import { useNetwork } from "hooks/useNetwork";
 
 export interface TransactionSubmittedContentProps {
   hash: string;
+  onDismiss: () => void;
 }
 
 export const TransactionSubmittedContent: FC<TransactionSubmittedContentProps> =
-  ({ hash }) => {
+  ({ hash, onDismiss }) => {
     const { blockExplorerUrl } = useNetwork();
 
     return (
@@ -35,7 +36,7 @@ export const TransactionSubmittedContent: FC<TransactionSubmittedContentProps> =
           </LinkButton>
         </Grid>
         <Grid item>
-          <Button onClick={() => {}} color="primary" variant="contained">
+          <Button onClick={onDismiss} color="primary" variant="contained">
             Close
           </Button>
         </Grid>

@@ -10,6 +10,7 @@ export interface UserState {
   isAlertDisplayed: boolean;
   isDarkMode: boolean;
   isDrawerOpen: boolean;
+  isExactApproval: boolean;
   userEarnViewMode: ViewMode;
 }
 
@@ -20,6 +21,7 @@ export const initialState: UserState = {
   isAlertDisplayed: true,
   isDarkMode: false,
   isDrawerOpen: false,
+  isExactApproval: false,
   userEarnViewMode: ViewMode.TABLE,
 };
 
@@ -38,6 +40,9 @@ export const userSlice = createSlice({
     },
     toggleDrawerMode: (state) => {
       state.isDrawerOpen = !state.isDrawerOpen;
+    },
+    toggleApproval: (state) => {
+      state.isExactApproval = !state.isExactApproval;
     },
     updateGasPrice: (state, action: PayloadAction<UpdateGasPrice>) => {
       state.gasPrice = action.payload.gasPrice;
@@ -63,6 +68,7 @@ export const {
   toggleAppAlert,
   toggleDarkMode,
   toggleDrawerMode,
+  toggleApproval,
   updateGasPrice,
   updateUserEarnViewMode,
 } = userSlice.actions;

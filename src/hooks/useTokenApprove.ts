@@ -10,6 +10,7 @@ import {
   useHasPendingApproval,
   useTransactionAdder,
 } from "state/transactions/hooks";
+import { useApprovalManager } from "state/user/hooks";
 
 export enum ApprovalState {
   UNKNOWN = "Unknown",
@@ -21,6 +22,7 @@ export enum ApprovalState {
 export const useTokenApprove = (
   tokenAddress?: string,
   spender?: string,
+  symbol?: string,
   amountToApprove?: BigNumber
 ) => {
   const { account } = useWeb3();
@@ -29,6 +31,7 @@ export const useTokenApprove = (
 
   const callWithGasPrice = useCallWithGasPrice();
   const addTransaction = useTransactionAdder();
+  const [isExactApproval] = useApprovalManager();
   const pendingApproval = useHasPendingApproval(tokenAddress, spender);
 
   const approvalState: ApprovalState = useMemo(() => {
@@ -36,7 +39,6 @@ export const useTokenApprove = (
       return ApprovalState.UNKNOWN;
     }
 
-    // amountToApprove will be defined if currentAllowance is
     return allowance.lt(amountToApprove)
       ? pendingApproval
         ? ApprovalState.PENDING
@@ -67,11 +69,11 @@ export const useTokenApprove = (
 
     return callWithGasPrice(contract, "approve", [
       spender,
-      MAX_UINT256.toString(),
+      isExactApproval ? amountToApprove.toString() : MAX_UINT256.toString(),
     ])
       .then((response: TransactionResponse) => {
         addTransaction(response, {
-          summary: `Approve Token`,
+          summary: `Approve ${symbol ?? "Token"}`,
           approval: { tokenAddress, spender },
         });
         console.log();
@@ -82,11 +84,13 @@ export const useTokenApprove = (
       });
   }, [
     addTransaction,
-    // amountToApprove,
+    amountToApprove,
     approvalState,
     callWithGasPrice,
     contract,
+    isExactApproval,
     spender,
+    symbol,
     tokenAddress,
   ]);
 

@@ -36,7 +36,7 @@ export const TransactionConfirmationModal: FC<TransactionConfirmationModalProps>
             onBack={onBack}
           />
         ) : hash ? (
-          <TransactionSubmittedContent hash={hash} />
+          <TransactionSubmittedContent hash={hash} onDismiss={onDismiss} />
         ) : (
           content()
         )}
