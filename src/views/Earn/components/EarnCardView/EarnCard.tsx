@@ -45,7 +45,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
       apys[bank.chainId] &&
       apys[bank.chainId][bank.address[bank.chainId]] &&
       apys[bank.chainId][bank.address[bank.chainId]].length &&
-      apys[bank.chainId][bank.address[bank.chainId]][1].apy // 7d apy
+      apys[bank.chainId][bank.address[bank.chainId]][0].apy // 24h apy
     );
   }, [bank, apys]);
 

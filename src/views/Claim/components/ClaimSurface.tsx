@@ -23,6 +23,10 @@ export const ClaimSurface: FC<ClaimSurfaceProps> = ({ timelock }) => {
   const { totalClaimBalance, claimedBalance, claimableBalance } =
     useClaimData(address);
 
+  if (!totalClaimBalance || totalClaimBalance.eq(0)) {
+    return null;
+  }
+
   return (
     <Surface>
       <Flex align="center">
