@@ -24,7 +24,8 @@ import RemoveRoundedIcon from "@material-ui/icons/RemoveRounded";
 import MoreVertRoundedIcon from "@material-ui/icons/MoreVertRounded";
 import { NetworkIcons, Networks } from "config/constants/networks";
 import { Skeleton } from "@material-ui/lab";
-import useAPY from "hooks/useAPY";
+import { useBankAPYData } from "state/banks/hooks";
+import { Tooltip } from "components/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
   cell: {
@@ -50,17 +51,7 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
   const address = useAddress(bank.address);
   const { balance } = useTokenBalance(address);
   const { virtualBalance, getShareValue } = useBankValue(address);
-  const apys = useAPY();
-
-  const apy = useMemo(() => {
-    return (
-      apys &&
-      apys[bank.chainId] &&
-      apys[bank.chainId][bank.address[bank.chainId]] &&
-      apys[bank.chainId][bank.address[bank.chainId]].length &&
-      apys[bank.chainId][bank.address[bank.chainId]][0].apy // 24h apy
-    );
-  }, [bank, apys]);
+  const [apys] = useBankAPYData(bank.chainId, bank.address[bank.chainId]);
 
   const tvl = useMemo(() => {
     return (
@@ -117,8 +108,27 @@ export const EarnTableRow: FC<EarnTableRowProps> = ({
       </TableCell>
       <TableCell className={isLast && classes.cell}>
         <Flex center>
-          {apy !== undefined ? (
-            <Balance value={apy} decimals={2} suffix="%" />
+          {apys && apys.length ? (
+            <>
+              <Balance value={apys[0].apy} decimals={2} suffix="%" />
+              <Flex center ml={1}>
+                <Tooltip
+                  title={
+                    <>
+                      <Text style={{ fontSize: 10 }}>
+                        Daily APY: {apys[0].apy.toPrecision(3)}%
+                      </Text>
+                      <Text style={{ fontSize: 10 }}>
+                        Weekly APY: {apys[1].apy.toPrecision(3)}%
+                      </Text>
+                      <Text style={{ fontSize: 10 }}>
+                        Monthly APY: {apys[2].apy.toPrecision(3)}%
+                      </Text>
+                    </>
+                  }
+                />
+              </Flex>
+            </>
           ) : (
             <Skeleton width={80} height={40} />
           )}

@@ -22,8 +22,9 @@ import { Balance } from "components/Balance";
 import { FaEllipsisV } from "react-icons/fa";
 import { useBankValue } from "views/Earn/hooks/useBankValue";
 import { Skeleton } from "@material-ui/lab";
-import useAPY from "hooks/useAPY";
 import { NetworkIcons, Networks } from "config/constants/networks";
+import { useBankAPYData } from "state/banks/hooks";
+import { Tooltip } from "components/Tooltip";
 
 export interface EarnCardProps {
   bank: Bank;
@@ -37,17 +38,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
   const address = useAddress(bank.address);
   const { balance } = useTokenBalance(address);
   const { virtualBalance, getShareValue } = useBankValue(address);
-  const apys = useAPY();
-
-  const apy = useMemo(() => {
-    return (
-      apys &&
-      apys[bank.chainId] &&
-      apys[bank.chainId][bank.address[bank.chainId]] &&
-      apys[bank.chainId][bank.address[bank.chainId]].length &&
-      apys[bank.chainId][bank.address[bank.chainId]][0].apy // 24h apy
-    );
-  }, [bank, apys]);
+  const [apys] = useBankAPYData(bank.chainId, bank.address[bank.chainId]);
 
   const tvl = useMemo(() => {
     return (
@@ -115,10 +106,29 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Flex column center>
-              {apy !== undefined ? (
-                <Subheading align="center">
-                  <Balance value={apy} decimals={2} suffix="%" />
-                </Subheading>
+              {apys && apys.length ? (
+                <>
+                  <Subheading align="center">
+                    <Balance value={apys[0].apy} decimals={2} suffix="%" />
+                  </Subheading>{" "}
+                  <Flex center ml={1}>
+                    <Tooltip
+                      title={
+                        <>
+                          <Text style={{ fontSize: 10 }}>
+                            Daily APY: {apys[0].apy.toPrecision(3)}%
+                          </Text>
+                          <Text style={{ fontSize: 10 }}>
+                            Weekly APY: {apys[1].apy.toPrecision(3)}%
+                          </Text>
+                          <Text style={{ fontSize: 10 }}>
+                            Monthly APY: {apys[2].apy.toPrecision(3)}%
+                          </Text>
+                        </>
+                      }
+                    />
+                  </Flex>
+                </>
               ) : (
                 <Skeleton width={80} height={40} />
               )}

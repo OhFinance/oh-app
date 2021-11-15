@@ -1,6 +1,8 @@
 export const DRAWER_WIDTH = 240;
 export const TOAST_POSITION = 24;
 
+export const MAXIMUM_RETRIES = 5;
+
 export const DEFAULT_POLLING_INTERVAL = 12000;
 export const DEFAULT_COLOR_MODE = "light";
 

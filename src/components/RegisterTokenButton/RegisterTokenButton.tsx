@@ -25,6 +25,7 @@ export const RegisterTokenButton: FC<RegisterTokenButtonProps> = ({
 
   return (
     <Button
+      variant="contained"
       onClick={() => registerToken(address, symbol, decimals)}
       endIcon={
         <img

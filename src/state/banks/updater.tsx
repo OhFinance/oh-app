@@ -1,11 +1,13 @@
 import axios from "axios";
 import banks from "config/constants/banks";
+import { MAXIMUM_RETRIES } from "config/constants/values";
 import { useEffect, useState } from "react";
-import { APYContext, IAPYContext } from "./APYContext";
+import { useBankAPYManager } from "./hooks";
 
-export const APYProvider = ({ children }) => {
-  const [apyState, setApyState] = useState<IAPYContext>({});
+export function BankUpdater() {
+  const [retries, setRetries] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [setBankAPYData] = useBankAPYManager();
 
   useEffect(() => {
     const fetchAPY = async () => {
@@ -20,24 +22,27 @@ export const APYProvider = ({ children }) => {
           )
         );
 
-        let nextState = {};
+        let bankAPYs = [];
         values.forEach((value, i) => {
-          nextState[banks[i].chainId] = {
-            [banks[i].address[banks[i].chainId]]: value.data.apys,
-            ...nextState[banks[i].chainId],
-          };
+          const bank = banks[i];
+          bankAPYs.push({
+            chainId: bank.chainId,
+            address: bank.address[bank.chainId],
+            apys: value.data.apys,
+          });
         });
-        setApyState(nextState);
+        setBankAPYData(bankAPYs);
         setLoading(false);
       } catch (e) {
         console.log(e);
+        setRetries(retries + 1);
       }
     };
 
-    if (loading) {
+    if (loading && retries < MAXIMUM_RETRIES) {
       fetchAPY();
     }
-  }, [loading, apyState]);
+  }, [loading, retries, setBankAPYData]);
 
-  return <APYContext.Provider value={apyState}>{children}</APYContext.Provider>;
-};
+  return null;
+}
