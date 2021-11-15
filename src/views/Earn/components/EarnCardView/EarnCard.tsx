@@ -107,7 +107,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
           <Grid item xs={12} md={4}>
             <Flex column center>
               {apys && apys.length ? (
-                <>
+                <Flex center>
                   <Subheading align="center">
                     <Balance value={apys[0].apy} decimals={2} suffix="%" />
                   </Subheading>{" "}
@@ -128,7 +128,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
                       }
                     />
                   </Flex>
-                </>
+                </Flex>
               ) : (
                 <Skeleton width={80} height={40} />
               )}
