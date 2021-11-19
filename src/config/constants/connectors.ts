@@ -15,4 +15,9 @@ const connectors: Connector[] = [
   },
 ];
 
+export const connectorNames: { [connectorId: string]: string } = {
+  [ConnectorNames.Injected]: "Metamask",
+  [ConnectorNames.WalletConnect]: "WalletConnect",
+};
+
 export default connectors;

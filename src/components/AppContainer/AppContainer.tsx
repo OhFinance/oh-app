@@ -30,7 +30,7 @@ export const AppContainer: FC = ({ children }) => {
       <Container maxWidth="xl">
         <Display>
           <AppBar />
-          <Flex grow={1} column className={classes.wrapper}>
+          <Flex mt={2} grow={1} column className={classes.wrapper}>
             {children}
           </Flex>
           <Footer />

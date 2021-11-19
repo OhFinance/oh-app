@@ -21,7 +21,7 @@ export const useBankAPYManager = (): [(bankAPYs: SetBankAPY[]) => void] => {
 export const useBankAPYData = (
   chainId: number,
   address: string
-): [APYData[] | undefined] => {
+): APYData[] | undefined => {
   const apys = useSelector<AppState, APYData[] | undefined>(
     (s) =>
       s.banks &&
@@ -30,5 +30,5 @@ export const useBankAPYData = (
       s.banks[chainId][address].apys
   );
 
-  return [apys];
+  return apys;
 };

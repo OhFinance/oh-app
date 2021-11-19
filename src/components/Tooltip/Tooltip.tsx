@@ -1,5 +1,6 @@
-import { Tooltip as MuiTooltip } from "@material-ui/core";
+import { Box, Tooltip as MuiTooltip } from "@material-ui/core";
 import HelpOutlineRoundedIcon from "@material-ui/icons/HelpOutlineRounded";
+import AssessmentRoundedIcon from "@material-ui/icons/AssessmentRounded";
 import { FC, ReactNode } from "react";
 
 export interface TooltipProps {
@@ -7,6 +8,7 @@ export interface TooltipProps {
   placement?: any;
   maxWidth?: number;
   size?: number;
+  icon?: "help" | "chart";
 }
 
 export const Tooltip: FC<TooltipProps> = ({
@@ -14,18 +16,37 @@ export const Tooltip: FC<TooltipProps> = ({
   placement,
   maxWidth,
   size,
+  icon = "help",
 }) => {
+  const getIcon = () => {
+    switch (icon) {
+      case "chart":
+        return (
+          <AssessmentRoundedIcon
+            style={{ fontSize: `${size ?? 18}px` }}
+            color="inherit"
+          />
+        );
+
+      default:
+        return (
+          <HelpOutlineRoundedIcon
+            style={{ fontSize: `${size ?? 18}px` }}
+            color="primary"
+          />
+        );
+    }
+  };
+
   return (
     <MuiTooltip
-      title={title}
+      title={<Box p={1}>{title}</Box>}
       placement={placement ?? "top"}
       style={{ maxWidth: maxWidth ?? 200 }}
+      disableFocusListener
       arrow
     >
-      <HelpOutlineRoundedIcon
-        style={{ fontSize: `${size ?? 18}px` }}
-        color="primary"
-      />
+      {getIcon()}
     </MuiTooltip>
   );
 };

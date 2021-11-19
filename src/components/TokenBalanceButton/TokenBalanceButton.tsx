@@ -25,18 +25,15 @@ export const TokenBalanceButton = ({ ...props }) => {
 
   return (
     <Button
-      // variant="contained"
       onClick={onPresentBalanceModal}
       endIcon={<img src={OhToken} alt="oh-token" height={24} width="auto" />}
       {...props}
     >
-      {/* <Flex align="center"> */}
       {fetchStatus === FetchStatus.SUCCESS ? (
         <Balance value={getFullDisplayBalance(balance)} />
       ) : (
-        <Skeleton width={40} height={22} />
+        <Skeleton width={40} height={30} />
       )}
-      {/* </Flex> */}
     </Button>
   );
 };

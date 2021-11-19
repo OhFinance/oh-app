@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import { DOCS_URL } from "@ohfinance/oh-ui";
 import { DRAWER_WIDTH } from "config/constants/values";
 import { useState } from "react";
 import { useAlertManager } from "state/user/hooks";
@@ -31,8 +32,12 @@ export const AppAlert = () => {
       className={classes.alert}
       onClose={() => toggleAlert(false)}
     >
-      This is a beta version of the Oh! Finance protocol. Please use at your own
-      risk.
+      Please use at your own discretion. Always do your own research into
+      underlying risks with DeFi and protocols.{" "}
+      <a href={`${DOCS_URL}/general/security`} target="_blank" rel="noreferrer">
+        See here
+      </a>{" "}
+      to view measures taken to secure Oh! Finance.
     </Alert>
   );
 };

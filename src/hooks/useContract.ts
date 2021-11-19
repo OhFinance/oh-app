@@ -53,3 +53,7 @@ export const useTimelockContract = (address: string) => {
 export const useBankContract = (address: string) => {
   return useContract(address, OhBankAbi);
 };
+
+export const useManagerContract = (address: string) => {
+  return useContract(address, OhManagerAbi);
+};

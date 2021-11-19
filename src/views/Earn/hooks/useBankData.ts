@@ -5,7 +5,7 @@ import { useCallback, useMemo } from "react";
 import { useSingleCallResult } from "state/multicall/hooks";
 import { TEN, ZERO } from "utils/bigNumber";
 
-export const useBankValue = (bankAddress: string) => {
+export const useBankData = (bankAddress: string) => {
   const bank = useBankContract(bankAddress);
   const totalSupply = useTotalSupply(bankAddress);
   const virtualPriceResult = useSingleCallResult(bank, "virtualPrice").result;

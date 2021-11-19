@@ -1,5 +1,6 @@
 import axios from "axios";
 import banks from "config/constants/banks";
+import { supportedChainIds } from "config/constants/networks";
 import { MAXIMUM_RETRIES } from "config/constants/values";
 import { useEffect, useState } from "react";
 import { useBankAPYManager } from "./hooks";
@@ -12,8 +13,11 @@ export function BankUpdater() {
   useEffect(() => {
     const fetchAPY = async () => {
       try {
+        const allBanks = supportedChainIds
+          .map((chainId) => banks[chainId])
+          .flat();
         const values = await Promise.all(
-          banks.map((bank) =>
+          allBanks.map((bank) =>
             axios.get(
               `https://api.oh.finance/apy?chain=${bank.chainId}&addr=${
                 bank.address[bank.chainId]
@@ -24,7 +28,7 @@ export function BankUpdater() {
 
         let bankAPYs = [];
         values.forEach((value, i) => {
-          const bank = banks[i];
+          const bank = allBanks[i];
           bankAPYs.push({
             chainId: bank.chainId,
             address: bank.address[bank.chainId],

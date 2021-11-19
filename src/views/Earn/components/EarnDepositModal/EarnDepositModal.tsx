@@ -10,7 +10,7 @@ import { FC, useCallback, useMemo, useState } from "react";
 import { useTransactionAdder } from "state/transactions/hooks";
 import { useApprovalManager } from "state/user/hooks";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
-import { useBankValue } from "views/Earn/hooks/useBankValue";
+import { useBankData } from "views/Earn/hooks/useBankData";
 import { EarnDepositConfirmation } from "./EarnDepositConfirmation";
 import { EarnDepositInput } from "./EarnDepositInput";
 
@@ -52,7 +52,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
   }, [balance, bank]);
 
   const { virtualPrice, getTokenValue, getTotalBankShare } =
-    useBankValue(bankAddress);
+    useBankData(bankAddress);
 
   const depositAmount = useMemo(() => {
     return getFullDisplayBalance(

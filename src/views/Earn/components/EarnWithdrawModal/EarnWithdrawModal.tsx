@@ -1,8 +1,5 @@
-import { Grid, Typography } from "@material-ui/core";
-import { Button, Modal, ModalProps } from "@ohfinance/oh-ui";
+import { ModalProps } from "@ohfinance/oh-ui";
 import BigNumber from "bignumber.js";
-import { Balance } from "components/Balance";
-import { TokenInput } from "components/TokenInput";
 import { TransactionConfirmationModal } from "components/TransactionConfirmationModal";
 import { Bank } from "config/constants/types";
 import { useAddress } from "hooks/useAddress";
@@ -10,10 +7,8 @@ import { useBankContract } from "hooks/useContract";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useCallback, useMemo, useState } from "react";
 import { useTransactionAdder } from "state/transactions/hooks";
-import { TEN } from "utils/bigNumber";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
-import { useBankValue } from "views/Earn/hooks/useBankValue";
-import { useBankWithdraw } from "../../hooks/useBankWithdraw";
+import { useBankData } from "views/Earn/hooks/useBankData";
 import { EarnWithdrawConfirmation } from "./EarnWithdrawConfirmation";
 import { EarnWithdrawInput } from "./EarnWithdrawInput";
 
@@ -34,7 +29,6 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
   const [input, setInput] = useState("");
 
   const bankAddress = useAddress(bank.address);
-  const underlyingAddress = useAddress(bank.underlying.address);
   const bankContract = useBankContract(bankAddress);
 
   const { balance } = useTokenBalance(bankAddress);
@@ -43,8 +37,7 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
     return getFullDisplayBalance(balance, bank.decimals, bank.decimals);
   }, [balance, bank]);
 
-  const { virtualPrice, getShareValue, getTotalBankShare } =
-    useBankValue(bankAddress);
+  const { virtualPrice, getShareValue } = useBankData(bankAddress);
 
   const withdrawAmount = useMemo(() => {
     return getFullDisplayBalance(

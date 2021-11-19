@@ -1,17 +1,22 @@
 import { Box, Grid } from "@material-ui/core";
-import { Button, Flex, Heading, Subtitle } from "@ohfinance/oh-ui";
+import { Button, DOCS_URL, Flex, Heading, Subtitle } from "@ohfinance/oh-ui";
 import { Web3ProviderButton } from "components/Web3ProviderButton";
 import connectors from "config/constants/connectors";
 
-export const Web3Login = () => {
+const Login = () => {
   return (
     <Flex center column grow={1}>
       <Box mb={2}>
-        <Heading align="center">Login with your Wallet</Heading>
+        <Heading align="center" gutterBottom>
+          Connect Wallet
+        </Heading>
+        <Subtitle align="center" color="textSecondary">
+          Login to Oh! Finance
+        </Subtitle>
       </Box>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} justifyContent="center">
         {connectors.map((connector, i) => (
-          <Grid item key={i} xs={12} md={6}>
+          <Grid item key={i} xs={12} md={8}>
             <Web3ProviderButton connector={connector} />
           </Grid>
         ))}
@@ -20,10 +25,12 @@ export const Web3Login = () => {
         <Subtitle color="textSecondary" gutterBottom>
           Don't have a crypto wallet yet?
         </Subtitle>
-        <Button color="primary" href="https://docs.oh.finance/">
+        <Button color="primary" href={DOCS_URL}>
           Learn More
         </Button>
       </Flex>
     </Flex>
   );
 };
+
+export default Login;

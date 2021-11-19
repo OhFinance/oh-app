@@ -1,32 +1,20 @@
-import { PageHeading } from "components/PageHeading";
-import { Web3View } from "components/Web3View";
-import { useUserEarnViewMode } from "state/user/hooks";
-import { Box } from "@material-ui/core";
-import { Flex, useMobile } from "@ohfinance/oh-ui";
-import { ViewMode } from "state/user/types";
-import { EarnTableView } from "./components/EarnTableView/EarnTableView";
-import { EarnCardView } from "./components/EarnCardView";
-import { EarnViewToggle } from "./components/EarnViewToggle/EarnViewToggle";
+import { Grid } from "@material-ui/core";
+import banks from "config/constants/banks";
+import { Bank } from "config/constants/types";
+import { useWeb3 } from "hooks/useWeb3";
+import { EarnCard } from "./components/EarnCard";
 
 const Earn = () => {
-  const mobile = useMobile();
-  const [userEarnViewMode] = useUserEarnViewMode();
+  const { chainId } = useWeb3();
 
   return (
-    <Web3View>
-      <PageHeading title="Earn" subtitle="Yield Generating DeFi Strategies" />
-      <Box mb={2}>
-        <Flex justify="space-between" align="center">
-          {!mobile && <EarnViewToggle />}
-        </Flex>
-      </Box>
-
-      {!mobile && userEarnViewMode === ViewMode.TABLE ? (
-        <EarnTableView />
-      ) : (
-        <EarnCardView />
-      )}
-    </Web3View>
+    <Grid container justifyContent="center" spacing={4}>
+      {banks[chainId].map((bank: Bank, i: number) => (
+        <Grid item key={i} xs={12} md={8}>
+          <EarnCard bank={bank} />
+        </Grid>
+      ))}
+    </Grid>
   );
 };
 
