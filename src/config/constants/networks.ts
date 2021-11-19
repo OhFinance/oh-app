@@ -7,7 +7,7 @@ import Avalanche from "assets/img/avax.svg";
 import Fuji from "assets/img/fuji.svg";
 import { isLocalhost } from "utils/misc";
 
-export const SupportedNetworks = [1, 43114];
+export const SupportedNetworks = [1, 43114, 4, 42];
 
 export const SupportedTestNetworks = [4, 42];
 

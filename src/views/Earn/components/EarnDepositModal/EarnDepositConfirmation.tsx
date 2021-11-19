@@ -6,8 +6,6 @@ import { ApprovalState } from "hooks/useTokenApprove";
 import { FC } from "react";
 import { BackButton } from "components/BackButton/BackButton";
 import { Skeleton } from "@material-ui/lab";
-import { ThemeSwitcher } from "components/ThemeSwitcher";
-import { useApprovalManager } from "state/user/hooks";
 
 export interface EarnDepositConfirmationProps {
   bank: Bank;

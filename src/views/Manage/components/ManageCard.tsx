@@ -86,7 +86,7 @@ export const ManageCard: FC<ManageCardProps> = ({
               />
             ))
           : [...Array(3)].map((_, i: number) => (
-              <Flex align="center" justifyContent="space-between">
+              <Flex key={i} align="center" justifyContent="space-between">
                 <Skeleton width={120} height={40} />
                 <Skeleton width={120} height={40} />
               </Flex>
