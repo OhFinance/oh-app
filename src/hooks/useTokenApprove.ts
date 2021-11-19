@@ -76,7 +76,6 @@ export const useTokenApprove = (
           summary: `Approve ${symbol ?? "Token"}`,
           approval: { tokenAddress, spender },
         });
-        console.log();
       })
       .catch((error: Error) => {
         console.error("Failed to approve token", error);

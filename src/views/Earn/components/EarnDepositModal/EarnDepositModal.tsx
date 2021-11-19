@@ -95,7 +95,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
         setTxPending(false);
 
         addTransaction(response, {
-          summary: `Deposited ${depositAmount} ${bank.underlying.symbol} for ${receiveAmount} ${bank.symbol}`,
+          summary: `Deposit ${depositAmount} ${bank.underlying.symbol} for ${receiveAmount} ${bank.symbol}`,
         });
 
         setTxHash(response.hash);
