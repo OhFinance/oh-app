@@ -1,32 +1,13 @@
-import { Box, Grid } from "@material-ui/core";
-import {
-  Button,
-  Flex,
-  Modal,
-  ModalProps,
-  Subheading,
-  Subtitle,
-} from "@ohfinance/oh-ui";
-import { LinkButton } from "components/LinkButton";
-import { Web3AccountAvatar } from "components/Web3AccountAvatar";
-import { connectorNames } from "config/constants/connectors";
-import { ConnectorNames } from "config/constants/types";
-import { CONNECTOR_STORAGE_KEY } from "config/constants/values";
-import useAuth from "hooks/useAuth";
-import { useNetwork } from "hooks/useNetwork";
-import { useWeb3 } from "hooks/useWeb3";
-import { FC } from "react";
-import { FaCopy } from "react-icons/fa";
-import { getDisplayAddress } from "utils/formatAddress";
+import { ButtonGroup } from "@material-ui/core";
+import { Button, Flex, Modal, ModalProps } from "@ohfinance/oh-ui";
+import { FC, useState } from "react";
+import { Web3AccountView } from "./components/Web3AccountView";
+import { Web3TransactionsView } from "./components/Web3TransactionsView";
+
+export type AccountViewMode = "account" | "transactions";
 
 export const Web3AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
-  const { logout } = useAuth();
-  const { account } = useWeb3();
-  const { blockExplorerUrl } = useNetwork();
-
-  const connectorId = window.localStorage.getItem(
-    CONNECTOR_STORAGE_KEY
-  ) as ConnectorNames;
+  const [viewMode, setViewMode] = useState<AccountViewMode>("account");
 
   return (
     <Modal
@@ -35,60 +16,27 @@ export const Web3AccountModal: FC<ModalProps> = ({ isOpen, onDismiss }) => {
       onDismiss={onDismiss}
       maxWidth="sm"
       fullWidth
+      p={0}
     >
-      <Flex column>
-        <Flex center>
-          <Web3AccountAvatar account={account} size={128} />
-        </Flex>
-
-        <Flex center my={1}>
-          <Subheading align="center">
-            <b>{getDisplayAddress(account)}</b>
-          </Subheading>
-        </Flex>
-
-        <Grid container alignItems="center" justifyContent="center" spacing={2}>
-          <Grid item>
-            <Button
-              color="primary"
-              size="small"
-              onClick={() => navigator.clipboard.writeText(account)}
-              endIcon={<FaCopy style={{ height: 12, width: 12 }} />}
-              style={{ paddingLeft: 16, paddingRight: 16 }}
-            >
-              Copy Address
-            </Button>
-          </Grid>
-          <Grid item>
-            <LinkButton link={`${blockExplorerUrl}/address/${account}`}>
-              View on Block Explorer
-            </LinkButton>
-          </Grid>
-        </Grid>
-
-        <Box textAlign="center" mt={2}>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              logout();
-              onDismiss();
-            }}
-          >
-            Disconnect Wallet
+      <Flex center>
+        <ButtonGroup>
+          <Button style={{ width: 150 }} onClick={() => setViewMode("account")}>
+            Account
           </Button>
-        </Box>
-        <Flex center my={1}>
-          <Subtitle
-            align="center"
-            color="textSecondary"
-            style={{ fontSize: 14 }}
+          <Button
+            style={{ width: 150 }}
+            onClick={() => setViewMode("transactions")}
           >
-            Connected with {connectorNames[connectorId]}
-          </Subtitle>
-        </Flex>
+            Transactions
+          </Button>
+        </ButtonGroup>
       </Flex>
+
+      {viewMode === "account" ? (
+        <Web3AccountView onDismiss={onDismiss} />
+      ) : (
+        <Web3TransactionsView />
+      )}
     </Modal>
   );
 };

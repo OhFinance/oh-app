@@ -71,7 +71,7 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
         setTxPending(false);
 
         addTransaction(response, {
-          summary: `Withdrew ${receiveAmount} ${bank.underlying.symbol} for ${withdrawAmount} ${bank.symbol}`,
+          summary: `Withdraw ${receiveAmount} ${bank.underlying.symbol} for ${withdrawAmount} ${bank.symbol}`,
         });
 
         setTxHash(response.hash);
