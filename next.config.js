@@ -5,11 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000');
 
-/**
- * @type {import('next/dist/next-server/server/config').NextConfig}
- **/
 module.exports = withPlugins([
-  [withBundleAnalyzer],
   [
     {
       webpack(config) {
@@ -50,6 +46,11 @@ module.exports = withPlugins([
         });
         return config;
       },
+    },
+  ],
+  [withBundleAnalyzer],
+  [
+    {
       pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
       eslint: {
         dirs: ['src', 'scripts'],
