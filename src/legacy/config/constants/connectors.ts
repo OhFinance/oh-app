@@ -1,8 +1,8 @@
-import { Connector, ConnectorNames } from './types';
 import MetamaskLogo from 'assets/img/metamask.svg';
 import WalletConnectLogo from 'assets/img/walletconnect.svg';
+import { Connector, ConnectorNames } from './types';
 
-const connectors: Connector[] = [
+export const connectors: Connector[] = [
   {
     title: 'Metamask',
     icon: MetamaskLogo,
@@ -19,5 +19,3 @@ export const connectorNames: { [connectorId: string]: string } = {
   [ConnectorNames.Injected]: 'Metamask',
   [ConnectorNames.WalletConnect]: 'WalletConnect',
 };
-
-export default connectors;
