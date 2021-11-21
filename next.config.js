@@ -48,6 +48,7 @@ module.exports = withPlugins([
             and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
           },
         });
+        return config;
       },
       pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
       eslint: {
