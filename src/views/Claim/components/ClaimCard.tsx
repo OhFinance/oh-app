@@ -82,7 +82,7 @@ export const ClaimCard: FC<ClaimCardProps> = ({ timelock }) => {
       return dateDiffInDays(start, end);
     } else {
       const start = new Date(timelockStart * 1000);
-      const end = new Date(timelock.lockPeriod + timelockStart * 1000);
+      const end = new Date(timelock.lockPeriod * 1000 + timelockStart * 1000);
       return dateDiffInDays(start, end);
     }
   }, [timelockStart, timelock]);
