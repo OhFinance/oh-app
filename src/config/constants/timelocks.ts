@@ -1,10 +1,4 @@
-import { Address } from "./types";
-
-export interface Timelock {
-  name: string;
-  lockPeriod: number; // emission peiod after cliff in seconds
-  address?: Address;
-}
+import { Timelock } from "./types";
 
 export const timelocks: Timelock[] = [
   // Seed & Private

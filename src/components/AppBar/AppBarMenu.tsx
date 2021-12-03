@@ -11,7 +11,7 @@ export const AppBarMenu = () => {
   const [onPresentSettingsModal] = useModal(<SettingsModal />);
 
   return (
-    <Grid container spacing={2} alignItems="center" justifyContent="flex-end">
+    <Grid container spacing={2} alignItems="center" justify="flex-end">
       {/* {!mobile && (
         <Grid item>
           <Web3NetworkButton />

@@ -1,5 +1,6 @@
 import { Grid } from "@material-ui/core";
-import { Timelock, timelocks } from "config/constants/timelocks";
+import { timelocks } from "config/constants/timelocks";
+import { Timelock } from "config/constants/types";
 import { useWeb3 } from "hooks/useWeb3";
 import { ClaimCard } from "./components/ClaimCard";
 
@@ -11,7 +12,7 @@ const Claim = () => {
   }
 
   return (
-    <Grid container justifyContent="center" spacing={4}>
+    <Grid container justify="center" spacing={4}>
       {timelocks.map((timelock: Timelock, i: number) => (
         <Grid item key={i} xs={12} md={8}>
           <ClaimCard timelock={timelock} />

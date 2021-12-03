@@ -12,7 +12,7 @@ import {
 import { Balance } from "components/Balance";
 import { LinkButton } from "components/LinkButton";
 import { Tooltip, TooltipText } from "components/Tooltip";
-import { Timelock } from "config/constants/timelocks";
+import { Timelock } from "config/constants/types";
 import { useAddress } from "hooks/useAddress";
 import { useTimelockContract } from "hooks/useContract";
 import { useNetwork } from "hooks/useNetwork";
@@ -22,11 +22,7 @@ import { getFullDisplayBalance } from "utils/formatBalances";
 import { dateDiffInDays, now } from "utils/misc";
 import { useClaimData } from "../hooks/useClaimData";
 
-export interface ClaimCardProps {
-  timelock: Timelock;
-}
-
-export const ClaimCard: FC<ClaimCardProps> = ({ timelock }) => {
+export const ClaimCard = ({ timelock }: { timelock: Timelock }) => {
   const [pendingTx, setPendingTx] = useState<boolean>(false);
   const addTransaction = useTransactionAdder();
   const { blockExplorerUrl } = useNetwork();

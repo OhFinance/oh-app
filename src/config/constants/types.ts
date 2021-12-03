@@ -56,3 +56,14 @@ export interface NativeCurrency {
   symbol: string;
   decimals: number;
 }
+
+export interface Timelock {
+  readonly name: string;
+  readonly lockPeriod: number; // emission peiod after cliff in seconds
+  readonly address?: Address;
+}
+
+export interface Pool {
+  readonly name: string;
+  readonly staked: Token;
+}

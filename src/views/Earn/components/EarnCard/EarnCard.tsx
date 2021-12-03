@@ -98,7 +98,7 @@ export const EarnCard: FC<EarnCardProps> = ({ bank }) => {
           <Grid
             container
             alignItems="center"
-            justifyContent="center"
+            justify="center"
             spacing={4}
           >
             <Grid item xs={12}>

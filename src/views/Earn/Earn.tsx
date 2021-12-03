@@ -8,7 +8,7 @@ const Earn = () => {
   const { chainId } = useWeb3();
 
   return (
-    <Grid container justifyContent="center" spacing={4}>
+    <Grid container justify="center" spacing={4}>
       {banks[chainId].map((bank: Bank, i: number) => (
         <Grid item key={i} xs={12} md={8}>
           <EarnCard bank={bank} />

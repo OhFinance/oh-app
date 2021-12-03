@@ -95,7 +95,7 @@ export const TokenBalanceModal: FC<TokenBalanceModalProps> = ({
           <Grid
             container
             alignItems="center"
-            justifyContent="center"
+            justify="center"
             spacing={3}
           >
             <Grid item>

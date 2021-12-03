@@ -93,7 +93,7 @@ export const ManageCard: FC<ManageCardProps> = ({
             ))}
       </Box>
 
-      <Grid container alignItems="center" justifyContent="center" spacing={2}>
+      <Grid container alignItems="center" justify="center" spacing={2}>
         <Grid item xs={12} md={4}>
           <Button
             fullWidth

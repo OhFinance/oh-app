@@ -14,7 +14,7 @@ const Login = () => {
           Login to Oh! Finance
         </Subtitle>
       </Box>
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container spacing={2} justify="center">
         {connectors.map((connector, i) => (
           <Grid item key={i} xs={12} md={8}>
             <Web3ProviderButton connector={connector} />

@@ -32,7 +32,7 @@ export const Web3AccountView = ({ onDismiss }) => {
         </Subheading>
       </Flex>
 
-      <Grid container alignItems="center" justifyContent="center" spacing={2}>
+      <Grid container alignItems="center" justify="center" spacing={2}>
         <Grid item>
           <Button
             color="primary"
