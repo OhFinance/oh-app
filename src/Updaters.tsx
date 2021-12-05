@@ -12,7 +12,7 @@ export const Updaters = () => {
       <BankUpdater />
       <MulticallUpdater />
       <PriceUpdater />
-      {/* <SupplyUpdater /> */}
+      <SupplyUpdater />
       <TransactionUpdater />
       {/* <TVLUpdater /> */}
     </Fragment>

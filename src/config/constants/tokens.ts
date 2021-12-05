@@ -34,10 +34,10 @@ const tokens: { [token: string]: Token } = {
     image: ohToken,
   },
   ohSushiLp: {
-    symbol: "OH",
+    symbol: "OH/ETH SLP",
     decimals: 18,
     address: {
-      1: "",
+      1: "0xCb4288eE0484B51CCb8d40893c4812df72CD5F70",
       4: "",
       42: "",
     },
