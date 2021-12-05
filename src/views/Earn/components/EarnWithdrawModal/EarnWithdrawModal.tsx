@@ -110,6 +110,7 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
           setInput={setInput}
           bankBalance={bankBalance}
           onConfirm={() => setConfirming(true)}
+          onDismiss={handleDismiss}
         />
       );
     } else if (!txPending) {
@@ -120,8 +121,8 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
           withdrawAmount={withdrawAmount}
           receiveAmount={receiveAmount}
           exchangeRate={exchangeRate}
-          // totalShare={new BigNumber(totalShare).toString()}
           onBack={() => setConfirming(false)}
+          onDismiss={handleDismiss}
           onWithdraw={handleWithdraw}
         />
       );

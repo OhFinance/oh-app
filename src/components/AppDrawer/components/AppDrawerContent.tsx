@@ -38,21 +38,21 @@ export const AppDrawerContent = ({ onDismiss }: { onDismiss?: () => void }) => {
           <AppDrawerList onDismiss={onDismiss} />
         </Box>
 
-        <AppDrawerPrices />
+        <Box mb={4}>
+          <AppDrawerPrices />
+        </Box>
       </Flex>
 
       <Box my={1} mx={2}>
-        <Flex mb={2}>
-          <Web3NetworkButton fullWidth />
-        </Flex>
         {mobile && (
-          <Flex mb={2}>
+          <Flex mb={1}>
             <TokenBalanceButton fullWidth />
           </Flex>
         )}
+        <Flex>
+          <Web3NetworkButton fullWidth />
+        </Flex>
       </Box>
-
-      {/* <Web3NetworkButton /> */}
 
       <Divider variant="middle" />
       <Box my={2}>

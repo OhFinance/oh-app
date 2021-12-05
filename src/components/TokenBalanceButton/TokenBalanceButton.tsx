@@ -1,5 +1,4 @@
-import { Box, Button } from "@material-ui/core";
-import { Flex, useModal } from "@ohfinance/oh-ui";
+import { Button, useModal } from "@ohfinance/oh-ui";
 import { TokenBalanceModal } from "components/TokenBalanceModal";
 import { useAddress } from "hooks/useAddress";
 import { FetchStatus, useTokenBalance } from "hooks/useTokenBalance";

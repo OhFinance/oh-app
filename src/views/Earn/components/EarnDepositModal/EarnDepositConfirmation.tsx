@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import { Button, Flex, Heading, Text } from "@ohfinance/oh-ui";
 import { Balance } from "components/Balance";
 import { Bank } from "config/constants/types";
@@ -18,6 +18,7 @@ export interface EarnDepositConfirmationProps {
   onApprove: () => void;
   onBack: () => void;
   onDeposit: () => void;
+  onDismiss: () => void;
 }
 
 export const EarnDepositConfirmation: FC<EarnDepositConfirmationProps> = ({
@@ -31,6 +32,7 @@ export const EarnDepositConfirmation: FC<EarnDepositConfirmationProps> = ({
   onApprove,
   onBack,
   onDeposit,
+  onDismiss,
 }) => {
   return (
     <Grid container direction="column" spacing={2}>
@@ -40,26 +42,24 @@ export const EarnDepositConfirmation: FC<EarnDepositConfirmationProps> = ({
       </Grid>
 
       <Grid item>
-        <Flex align="center">
+        <Box mb={1}>
           {receiveAmount !== undefined ? (
-            <Heading gutterBottom={false}>
-              <b>
-                <Balance value={receiveAmount} />
-              </b>
-            </Heading>
+            <Flex align="center">
+              <Heading gutterBottom={false}>
+                <b>
+                  <Balance value={receiveAmount} />
+                </b>
+              </Heading>
+              <Flex ml={1} center>
+                <img src={bank.image} alt={bank.alt} height={40} width="auto" />
+              </Flex>
+            </Flex>
           ) : (
-            <Skeleton width={120} height={60} />
+            <Skeleton width={240} height={60} />
           )}
+        </Box>
 
-          <Flex ml={1} center>
-            <img src={bank.image} alt={bank.alt} height={40} width="auto" />
-          </Flex>
-        </Flex>
-      </Grid>
-
-      <Grid item>
         <Heading>{bank.symbol} Bank Tokens</Heading>
-        {/* <Text color="textSecondary">Outputs are estimated</Text> */}
       </Grid>
 
       <Grid item>
@@ -115,32 +115,42 @@ export const EarnDepositConfirmation: FC<EarnDepositConfirmationProps> = ({
       </Grid>
 
       <Grid item>
-        {(approvalState === ApprovalState.NOT_APPROVED ||
-          approvalState === ApprovalState.PENDING) && (
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            disabled={approvalState === ApprovalState.PENDING}
-            onClick={onApprove}
-          >
-            {approvalState === ApprovalState.PENDING
-              ? `Approving ${bank.underlying.symbol}`
-              : `Approve ${bank.underlying.symbol}`}
-          </Button>
-        )}
-        {(approvalState === ApprovalState.APPROVED ||
-          approvalState === ApprovalState.UNKNOWN) && (
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            disabled={!input || approvalState === ApprovalState.UNKNOWN}
-            onClick={onDeposit}
-          >
-            Deposit
-          </Button>
-        )}
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Button fullWidth variant="contained" onClick={onDismiss}>
+              Cancel
+            </Button>
+          </Grid>
+
+          <Grid item xs={6}>
+            {(approvalState === ApprovalState.NOT_APPROVED ||
+              approvalState === ApprovalState.PENDING) && (
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={approvalState === ApprovalState.PENDING}
+                onClick={onApprove}
+              >
+                {approvalState === ApprovalState.PENDING
+                  ? `Approving ${bank.underlying.symbol}`
+                  : `Approve ${bank.underlying.symbol}`}
+              </Button>
+            )}
+            {(approvalState === ApprovalState.APPROVED ||
+              approvalState === ApprovalState.UNKNOWN) && (
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={!input || approvalState === ApprovalState.UNKNOWN}
+                onClick={onDeposit}
+              >
+                Deposit
+              </Button>
+            )}
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );

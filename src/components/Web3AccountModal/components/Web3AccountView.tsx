@@ -34,15 +34,12 @@ export const Web3AccountView = ({ onDismiss }) => {
 
       <Grid container alignItems="center" justify="center" spacing={2}>
         <Grid item>
-          <Button
-            color="primary"
-            size="small"
+          <LinkButton
+            icon="copy"
             onClick={() => navigator.clipboard.writeText(account)}
-            endIcon={<FaCopy style={{ height: 12, width: 12 }} />}
-            style={{ paddingLeft: 16, paddingRight: 16 }}
           >
             Copy Address
-          </Button>
+          </LinkButton>
         </Grid>
         <Grid item>
           <LinkButton link={`${blockExplorerUrl}/address/${account}`}>

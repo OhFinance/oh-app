@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@material-ui/core";
-import { Button } from "@ohfinance/oh-ui";
+import { Button, Flex } from "@ohfinance/oh-ui";
 import { Balance } from "components/Balance";
 import { TokenInput } from "components/TokenInput";
 import { Bank } from "config/constants/types";
@@ -13,6 +13,7 @@ export interface EarnDepositInputProps {
   input: string;
   setInput: (e: any) => void;
   onConfirm: () => void;
+  onDismiss: () => void;
   underlyingBalance: string;
 }
 
@@ -21,6 +22,7 @@ export const EarnDepositInput: FC<EarnDepositInputProps> = ({
   input,
   setInput,
   onConfirm,
+  onDismiss,
   underlyingBalance,
 }) => {
   const { isTestnet } = useNetwork();
@@ -67,15 +69,28 @@ export const EarnDepositInput: FC<EarnDepositInputProps> = ({
       </Grid>
 
       <Grid item>
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          disabled={!input}
-          onClick={onConfirm}
-        >
-          Deposit
-        </Button>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Flex>
+              <Button fullWidth variant="contained" onClick={onDismiss}>
+                Cancel
+              </Button>
+            </Flex>
+          </Grid>
+          <Grid item xs={6}>
+            <Flex>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={!input}
+                onClick={onConfirm}
+              >
+                Deposit
+              </Button>
+            </Flex>
+          </Grid>
+        </Grid>
       </Grid>
 
       {isTestnet && (

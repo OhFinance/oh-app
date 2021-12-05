@@ -126,6 +126,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
           setInput={setInput}
           underlyingBalance={underlyingBalance}
           onConfirm={() => setConfirming(true)}
+          onDismiss={handleDismiss}
         />
       );
     } else if (!txPending) {
@@ -141,6 +142,7 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
           onApprove={onApprove}
           onBack={() => setConfirming(false)}
           onDeposit={handleDeposit}
+          onDismiss={handleDismiss}
         />
       );
     }

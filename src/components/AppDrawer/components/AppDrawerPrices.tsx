@@ -1,6 +1,6 @@
 import { Box, Grid } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 import { Flex, Text } from "@ohfinance/oh-ui";
-import { TextSkeleton } from "components/Skeleton";
 import { supportedTokenPrices } from "config/constants/tokens";
 import { usePriceManager } from "state/prices/hooks";
 
@@ -20,7 +20,7 @@ export const AppDrawerPrices = () => {
                 </Text>
               </Flex>
             ) : (
-              <TextSkeleton width={160} height={20} />
+              <Skeleton width={160} height={20} />
             )}
           </Box>
         </Grid>

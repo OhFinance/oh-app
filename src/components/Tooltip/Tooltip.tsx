@@ -1,6 +1,7 @@
 import { Box, Tooltip as MuiTooltip } from "@material-ui/core";
 import HelpOutlineRoundedIcon from "@material-ui/icons/HelpOutlineRounded";
 import AssessmentRoundedIcon from "@material-ui/icons/AssessmentRounded";
+import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded";
 import { FC, ReactNode } from "react";
 
 export interface TooltipProps {
@@ -22,7 +23,7 @@ export const Tooltip: FC<TooltipProps> = ({
     switch (icon) {
       case "chart":
         return (
-          <AssessmentRoundedIcon
+          <EventNoteRoundedIcon
             style={{ fontSize: `${size ?? 18}px` }}
             color="inherit"
           />

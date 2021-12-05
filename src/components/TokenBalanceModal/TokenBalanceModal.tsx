@@ -92,12 +92,7 @@ export const TokenBalanceModal: FC<TokenBalanceModalProps> = ({
         </Flex>
 
         <Flex center my={3}>
-          <Grid
-            container
-            alignItems="center"
-            justify="center"
-            spacing={3}
-          >
+          <Grid container alignItems="center" justify="center" spacing={3}>
             <Grid item>
               <Link external href={GECKO_URL}>
                 <img src={CoinGecko} alt="coin-gecko" height={40} />

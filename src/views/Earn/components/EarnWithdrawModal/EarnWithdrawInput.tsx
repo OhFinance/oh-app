@@ -11,6 +11,7 @@ export interface EarnWithdrawInputProps {
   input: string;
   setInput: (e: any) => void;
   onConfirm: () => void;
+  onDismiss: () => void;
   bankBalance: string;
 }
 
@@ -19,6 +20,7 @@ export const EarnWithdrawInput: FC<EarnWithdrawInputProps> = ({
   input,
   setInput,
   onConfirm,
+  onDismiss,
   bankBalance,
 }) => {
   const onMaxInput = useCallback(() => {
@@ -63,15 +65,24 @@ export const EarnWithdrawInput: FC<EarnWithdrawInputProps> = ({
       </Grid>
 
       <Grid item>
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          disabled={!input}
-          onClick={onConfirm}
-        >
-          Withdraw
-        </Button>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Button fullWidth variant="contained" onClick={onDismiss}>
+              Cancel
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={!input}
+              onClick={onConfirm}
+            >
+              Withdraw
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
