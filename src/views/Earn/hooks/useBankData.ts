@@ -3,7 +3,7 @@ import { useBankContract } from "hooks/useContract";
 import useTotalSupply from "hooks/useTotalSupply";
 import { useCallback, useMemo } from "react";
 import { useSingleCallResult } from "state/multicall/hooks";
-import { TEN, ZERO } from "utils/bigNumber";
+import { TEN } from "utils/bigNumber";
 
 export const useBankData = (bankAddress: string) => {
   const bank = useBankContract(bankAddress);

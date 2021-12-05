@@ -16,7 +16,7 @@ import { Timelock } from "config/constants/types";
 import { useAddress } from "hooks/useAddress";
 import { useTimelockContract } from "hooks/useContract";
 import { useNetwork } from "hooks/useNetwork";
-import { FC, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTransactionAdder } from "state/transactions/hooks";
 import { getFullDisplayBalance } from "utils/formatBalances";
 import { dateDiffInDays, now } from "utils/misc";

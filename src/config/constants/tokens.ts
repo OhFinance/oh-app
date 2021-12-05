@@ -1,6 +1,17 @@
 import { Token } from "./types";
 import usdc from "assets/img/usdc.svg";
-import ohToken from "assets/img/oh-token.svg"
+import ohToken from "assets/img/oh-token.svg";
+
+// token prices supported on sidebar
+export const supportedTokenPrices = ["OH", "BTC", "ETH", "AVAX"];
+
+// token ids for coingecko price api
+export const supportedTokenIds = {
+  OH: "oh-finance",
+  BTC: "bitcoin",
+  ETH: "ethereum",
+  AVAX: "avalanche-2",
+};
 
 const tokens: { [token: string]: Token } = {
   dai: {
@@ -20,7 +31,7 @@ const tokens: { [token: string]: Token } = {
       42: "0x6b461A994d76d8248a6B439D4a19cDfd821409eE",
       43114: "0x937E077aBaEA52d3abf879c9b9d3f2eBd15BAA21",
     },
-    image: ohToken
+    image: ohToken,
   },
   ohSushiLp: {
     symbol: "OH",
@@ -30,7 +41,7 @@ const tokens: { [token: string]: Token } = {
       4: "",
       42: "",
     },
-    image: ohToken
+    image: ohToken,
   },
   ohJoeLp: {
     symbol: "OH",

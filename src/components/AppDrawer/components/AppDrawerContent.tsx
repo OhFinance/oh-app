@@ -15,6 +15,7 @@ import { Box, Divider } from "@material-ui/core";
 import { AppDrawerList } from "./AppDrawerList";
 import { Web3NetworkButton } from "components/Web3NetworkButton";
 import { TokenBalanceButton } from "components/TokenBalanceButton";
+import { AppDrawerPrices } from "./AppDrawerPrices";
 
 export const AppDrawerContent = ({ onDismiss }: { onDismiss?: () => void }) => {
   const mobile = useMobile();
@@ -32,7 +33,12 @@ export const AppDrawerContent = ({ onDismiss }: { onDismiss?: () => void }) => {
             />
           </Flex>
         </Box>
-        <AppDrawerList onDismiss={onDismiss} />
+
+        <Box mb={4}>
+          <AppDrawerList onDismiss={onDismiss} />
+        </Box>
+
+        <AppDrawerPrices />
       </Flex>
 
       <Box my={1} mx={2}>

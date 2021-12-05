@@ -7,7 +7,10 @@ import updateVersion from "./actions";
 import banks from "./banks/state";
 import block from "./block/state";
 import multicall from "./multicall/state";
+import prices from "./prices/state";
+import supply from "./supply/state";
 import transactions from "./transactions/state";
+import tvl from "./tvl/state";
 import user from "./user/state";
 
 const PERSISTED_KEYS: string[] = ["user", "transactions"];
@@ -18,8 +21,11 @@ const store = configureStore({
     banks,
     block,
     multicall,
-    user,
+    prices,
+    supply,
     transactions,
+    tvl,
+    user,
   },
   middleware: (getDefaultMiddleware) => {
     return [

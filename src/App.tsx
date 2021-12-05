@@ -12,7 +12,7 @@ import Login from "views/Login";
 import NoMatch from "views/NoMatch";
 
 // code-splitting to reduce bundle size
-// const Dashboard = lazy(() => import("views/Dashboard"));
+const Dashboard = lazy(() => import("views/Dashboard"));
 const Earn = lazy(() => import("views/Earn"));
 const Stake = lazy(() => import("views/Stake"));
 const Vote = lazy(() => import("views/Vote"));

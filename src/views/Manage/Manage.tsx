@@ -23,9 +23,10 @@ const Manage = () => {
         .finance(address)
         .then((response) => {
           setTxPending(false);
-          addTransaction(response, { summary: `Finance - ${address}` });
+          addTransaction(response, { summary: "Finance" });
         })
         .catch((error) => {
+          console.error(error);
           setTxPending(false);
         });
     },
@@ -40,9 +41,10 @@ const Manage = () => {
         .financeAll(address)
         .then((response) => {
           setTxPending(false);
-          addTransaction(response, { summary: `Finance All - ${address}` });
+          addTransaction(response, { summary: "Finance All" });
         })
         .catch((error) => {
+          console.error(error);
           setTxPending(false);
         });
     },
@@ -57,9 +59,10 @@ const Manage = () => {
         .rebalance(address)
         .then((response) => {
           setTxPending(false);
-          addTransaction(response, { summary: `Rebalance - ${address}` });
+          addTransaction(response, { summary: "Rebalance" });
         })
         .catch((error) => {
+          console.error(error);
           setTxPending(false);
         });
     },
