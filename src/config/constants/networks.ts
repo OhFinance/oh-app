@@ -12,7 +12,10 @@ export const SupportedNetworks = [1, 43114];
 export const SupportedTestNetworks = [4, 42];
 
 // only include testnets in live version until release
-export const supportedChainIds = SupportedNetworks;
+export const supportedChainIds = [
+  ...SupportedNetworks,
+  ...SupportedTestNetworks,
+];
 // [
 //   ...SupportedTestNetworks,
 //   ...(isLocalhost() ? SupportedNetworks : []),

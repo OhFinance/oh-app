@@ -1,20 +1,39 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "state";
-import { updateCombinedTVL } from "./state";
+import { UpdateHistoryTVL } from "./actions";
+import { TVLState, updateHistoryTVL, updateLatestTVL } from "./state";
 
-export const useCombinedTVL = (): [number, (tvl: number) => void] => {
+export const useLatestTVL = (): [number, (tvl: number) => void] => {
   const dispatch = useDispatch<AppDispatch>();
-  const tvl = useSelector<AppState, AppState["tvl"]["combined"]>(
-    (state) => state.tvl.combined
+  const tvl = useSelector<AppState, AppState["tvl"]["latest"]>(
+    (state) => state.tvl.latest
   );
 
-  const setCombinedTVL = useCallback(
+  const setLatestTVL = useCallback(
     (tvl: number) => {
-      dispatch(updateCombinedTVL(tvl));
+      dispatch(updateLatestTVL(tvl));
     },
     [dispatch]
   );
 
-  return [tvl, setCombinedTVL];
+  return [tvl, setLatestTVL];
+};
+
+export const useHistoryTVL = (): [
+  TVLState,
+  (tvls: UpdateHistoryTVL[]) => void
+] => {
+  const dispatch = useDispatch<AppDispatch>();
+  const history = useSelector<AppState, AppState["tvl"]>((state) => state.tvl);
+
+  const setHistoryTVL = useCallback(
+    (tvls: UpdateHistoryTVL[]) => {
+      console.log(tvls);
+      dispatch(updateHistoryTVL(tvls));
+    },
+    [dispatch]
+  );
+
+  return [history, setHistoryTVL];
 };
