@@ -32,8 +32,8 @@ const App = () => {
           <Switch>
             {!!account ? (
               <>
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/" exact component={Earn} />
+                <Route path="/" exact component={Dashboard} />
+                <Route path="/earn" component={Earn} />
                 <Route path="/claim" component={Claim} />
                 <Route path="/manage" component={Manage} />
                 <Route path="/stake" component={Stake} />

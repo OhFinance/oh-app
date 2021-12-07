@@ -33,8 +33,7 @@ export const AppDrawerList = ({ onDismiss }: { onDismiss?: () => void }) => {
       case "vote":
         return <AccountBalanceRoundedIcon />;
       default:
-        return <MonetizationOnRoundedIcon />;
-      // return <DashboardRoundedIcon />;
+        return <DashboardRoundedIcon />;
     }
   };
 

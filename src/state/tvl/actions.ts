@@ -1,8 +1,6 @@
-export interface SetCombinedTVL {
-  tvl: number;
-}
+import { TVLHistoryData } from "./types";
 
-export interface SetChainTVL {
+export interface UpdateHistoryTVL {
   chainId: number;
-  tvl: number;
+  data: TVLHistoryData[];
 }

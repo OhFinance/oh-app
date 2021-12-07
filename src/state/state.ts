@@ -4,6 +4,7 @@ import { load, save } from "redux-localstorage-simple";
 import { isLocalhost } from "utils/misc";
 import updateVersion from "./actions";
 
+import apy from "./apy/state";
 import banks from "./banks/state";
 import block from "./block/state";
 import multicall from "./multicall/state";
@@ -18,6 +19,7 @@ const PERSISTED_KEYS: string[] = ["user", "transactions"];
 const store = configureStore({
   devTools: isLocalhost(),
   reducer: {
+    apy,
     banks,
     block,
     multicall,

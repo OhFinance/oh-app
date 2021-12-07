@@ -1,24 +1,41 @@
 import axios from "axios";
 import banks from "config/constants/banks";
+import { SupportedNetworks } from "config/constants/networks";
 import { MAXIMUM_RETRIES } from "config/constants/values";
 import { useEffect, useState } from "react";
+import { useHistoryAPY } from "./hooks";
 
 export function APYUpdater() {
   const [retries, setRetries] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [, setHistoryAPY] = useHistoryAPY();
 
   useEffect(() => {
-    const fetchHistoricalAPY = async () => {
+    const fetchHistoryAPY = async () => {
       try {
-        const values = await Promise.all([
-          axios.get(
-            `https://api.oh.finance/apy/history?chain=1&timespan_days=1&addr=${banks[1][0].address[1]}`
-          ),
-          axios.get(
-            `https://api.oh.finance/apy/history?chain=43114&timespan_days=1&addr=${banks[43114][0].address[43114]}`
-          ),
-        ]);
+        const allBanks = SupportedNetworks.map(
+          (chainId) => banks[chainId]
+        ).flat();
 
+        const requests = await Promise.all(
+          allBanks.map((bank) =>
+            axios.get(
+              `https://api.oh.finance/apy/history?chain=${bank.chainId}&addr=${
+                bank.address[bank.chainId]
+              }`
+            )
+          )
+        );
+
+        const apys = [];
+        requests.forEach((request) => {
+          apys.push({
+            chainId: request.data.chain,
+            data: request.data.data,
+          });
+        });
+
+        setHistoryAPY(apys);
         setLoading(false);
       } catch (e) {
         console.error(e);
@@ -27,9 +44,9 @@ export function APYUpdater() {
     };
 
     if (loading && retries < MAXIMUM_RETRIES) {
-      fetchHistoricalAPY();
+      fetchHistoryAPY();
     }
-  }, []);
+  }, [loading, retries, setHistoryAPY]);
 
   return null;
 }

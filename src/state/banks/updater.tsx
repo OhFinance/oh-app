@@ -1,6 +1,6 @@
 import axios from "axios";
 import banks from "config/constants/banks";
-import { supportedChainIds } from "config/constants/networks";
+import { SupportedNetworks } from "config/constants/networks";
 import { MAXIMUM_RETRIES } from "config/constants/values";
 import { useEffect, useState } from "react";
 import { useBankAPYManager } from "./hooks";
@@ -13,9 +13,9 @@ export function BankUpdater() {
   useEffect(() => {
     const fetchAPY = async () => {
       try {
-        const allBanks = supportedChainIds
-          .map((chainId) => banks[chainId])
-          .flat();
+        const allBanks = SupportedNetworks.map(
+          (chainId) => banks[chainId]
+        ).flat();
         const values = await Promise.all(
           allBanks.map((bank) =>
             axios.get(

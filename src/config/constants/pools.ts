@@ -17,4 +17,19 @@ export const pools: { [chainId: number]: Pool[] } = {
       staked: banks[1][0],
     },
   ],
+  42: [],
+  43114: [
+    {
+      name: "Oh! Finance",
+      staked: tokens.ohToken,
+    },
+    {
+      name: "Oh! Finance Trader Joe LP",
+      staked: tokens.ohJoeLp,
+    },
+    {
+      name: "Oh! USDC.e",
+      staked: banks[43114][0],
+    },
+  ],
 };
