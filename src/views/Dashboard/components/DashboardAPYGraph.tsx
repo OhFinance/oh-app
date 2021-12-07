@@ -51,14 +51,24 @@ export const DashboardAPYGraph = () => {
       scales: {
         y: {
           beginAtZero: true,
+          ticks: {
+            callback: (value) => `${value.toLocaleString()}%`,
+          },
         },
         x: {
           reverse: true,
         },
       },
+
       plugins: {
         legend: {
           position: "bottom" as const,
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) =>
+              `${context.dataset.label}: ${context.parsed.y.toLocaleString()}%`,
+          },
         },
         title: {
           display: true,

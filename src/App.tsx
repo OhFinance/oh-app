@@ -30,20 +30,14 @@ const App = () => {
       <AppContainer>
         <ErrorHandledSuspense fallback={<Loading />}>
           <Switch>
-            {!!account ? (
-              <>
-                <Route path="/" exact component={Dashboard} />
-                <Route path="/earn" component={Earn} />
-                <Route path="/claim" component={Claim} />
-                <Route path="/manage" component={Manage} />
-                <Route path="/stake" component={Stake} />
-                <Route path="/vote" component={Vote} />
-              </>
-            ) : (
-              <>
-                <Route component={Login} />
-              </>
-            )}
+            <Route path="/" exact component={Dashboard} />
+
+            {/* Auth'd Routes */}
+            <Route path="/earn" component={!!account ? Earn : Login} />
+            <Route path="/claim" component={!!account ? Claim : Login} />
+            <Route path="/manage" component={!!account ? Manage : Login} />
+            <Route path="/stake" component={!!account ? Stake : Login} />
+            <Route path="/vote" component={!!account ? Vote : Login} />
 
             {/* 404 */}
             <Route component={NoMatch} />
