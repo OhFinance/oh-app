@@ -25,18 +25,18 @@ export const DashboardTVLGraph = () => {
           data: isLoaded
             ? history[-1].filter((_, i) => i % 24 === 0).map((h) => h.tvl)
             : [],
-          backgroundColor: theme.palette.secondary.dark,
-          borderColor: theme.palette.secondary.main,
-          pointBackgroundColor: theme.palette.secondary.dark,
+          backgroundColor: theme.palette.primary.dark,
+          borderColor: theme.palette.primary.main,
+          pointBackgroundColor: theme.palette.primary.dark,
         },
         {
           label: "Ethereum",
           data: isLoaded
             ? history[1].filter((_, i) => i % 24 === 0).map((h) => h.tvl)
             : [],
-          backgroundColor: theme.palette.primary.dark,
-          borderColor: theme.palette.primary.main,
-          pointBackgroundColor: theme.palette.primary.dark,
+          backgroundColor: theme.palette.secondary.dark,
+          borderColor: theme.palette.secondary.main,
+          pointBackgroundColor: theme.palette.secondary.dark,
         },
         {
           label: "Avalanche",
@@ -53,7 +53,6 @@ export const DashboardTVLGraph = () => {
 
   const options = useMemo(() => {
     return {
-      responsive: true,
       animation: {
         duration: 2000,
       },

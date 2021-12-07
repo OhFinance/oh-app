@@ -21,7 +21,7 @@ export const DashboardAPYGraph = () => {
       labels,
       datasets: [
         {
-          label: "Ethereum",
+          label: "OH-USDC",
           data: isLoaded
             ? history[1].filter((_, i) => i % 24 === 0).map((h) => h.apy)
             : [],
@@ -30,7 +30,7 @@ export const DashboardAPYGraph = () => {
           pointBackgroundColor: theme.palette.primary.dark,
         },
         {
-          label: "Avalanche",
+          label: "OH-USDC.e",
           data: isLoaded
             ? history[43114].filter((_, i) => i % 24 === 0).map((h) => h.apy)
             : [],
@@ -44,7 +44,6 @@ export const DashboardAPYGraph = () => {
 
   const options = useMemo(() => {
     return {
-      responsive: true,
       animation: {
         duration: 2000,
       },
