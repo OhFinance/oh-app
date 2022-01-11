@@ -6,6 +6,8 @@ import benqi from "assets/img/benqi.png";
 import traderJoe from "assets/img/trader-joe.png";
 import ohUsdc from "assets/img/oh-usdc.svg";
 import ohUsdce from "assets/img/oh-usdc-e.svg";
+import ohUsdte from "assets/img/oh-usdt-e.svg";
+import ohDaie from "assets/img/oh-dai-e.png";
 import tokens from "./tokens";
 
 const banks: { [chainId: number]: Bank[] } = {
@@ -44,8 +46,40 @@ const banks: { [chainId: number]: Bank[] } = {
       underlying: tokens.usdce,
       strategies: [
         { protocol: "Aave V2", image: aave },
-        { protocol: "Benqi", image: benqi },
-        { protocol: "Banker Joe", image: traderJoe },
+        { protocol: "Curve", image: crv },
+      ],
+    },
+    {
+      image: ohUsdte,
+      name: "Oh! USDT.e",
+      symbol: "OH-USDT.e",
+      decimals: 6,
+      chainId: 43114,
+      address: {
+        43114: "0xd96AbEcf6AA022735CFa9CB512d63645b0834720",
+      },
+      description: "Avalanche C-Chain Optimized Lending and Yield Farming",
+      alt: "oh-usdt.e",
+      underlying: tokens.usdte,
+      strategies: [
+        { protocol: "Aave V2", image: aave },
+        { protocol: "Curve", image: crv },
+      ],
+    },
+    {
+      image: ohDaie,
+      name: "Oh! DAI.e",
+      symbol: "OH-DAI.e",
+      decimals: 18,
+      chainId: 43114,
+      address: {
+        43114: "0xF74303DD14E511CCD90219594e8069d36Da01DCD",
+      },
+      description: "Avalanche C-Chain Optimized Lending and Yield Farming",
+      alt: "oh-dai.e",
+      underlying: tokens.daie,
+      strategies: [
+        { protocol: "Aave V2", image: aave },
         { protocol: "Curve", image: crv },
       ],
     },
