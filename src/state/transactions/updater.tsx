@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { getBscScanLink } from "utils";
 import { useBlock } from "state/block/hooks";
@@ -8,6 +8,9 @@ import { useWeb3 } from "hooks/useWeb3";
 import { checkedTransaction, finalizeTransaction } from "./state";
 import { Flex, Text } from "@ohfinance/oh-ui";
 import { useNetwork } from "hooks/useNetwork";
+import { TransactionDetails } from "./types";
+import { TransactionType } from "./actions";
+import { getDisplayAddress } from "utils/formatAddress";
 
 export function shouldCheck(
   currentBlock: number,
@@ -28,6 +31,42 @@ export function shouldCheck(
   }
   // otherwise every block
   return true;
+}
+
+function TransactionSummary(details?: TransactionDetails): string | undefined {
+  if (!details) {
+    return undefined;
+  }
+  switch (details.info.type) {
+    case TransactionType.APPROVAL: {
+      return `Approval of ${getDisplayAddress(details.info.spender)}`;
+    }
+    case TransactionType.BANK_DEPOSIT: {
+      return `Deposit ${details.info.depositAmount} ${details.info.depositSymbol} for ${details.info.receiveAmount} ${details.info.receiveSymbol}`;
+    }
+    case TransactionType.BANK_WITHDRAW: {
+      return `Withdraw ${details.info.receiveAmount} ${details.info.receiveSymbol} for ${details.info.withdrawAmount} ${details.info.withdrawSymbol}`;
+    }
+    case TransactionType.OH_VESTING: {
+      return "OH Vested";
+    }
+    case TransactionType.FINANCE: {
+      return "Finance";
+    }
+    case TransactionType.FINANCE_ALL: {
+      return "Finance All";
+    }
+    case TransactionType.DEPOSIT_LOCKED_STAKING: {
+      return `Deposited for ${Math.floor(
+        details.info.duration / 60 / 60 / 24
+      )} days`;
+    }
+    case TransactionType.DEPOSIT_FLEXIBLE_STAKING: {
+      return `Deposited for flexible staking`;
+    }
+    default:
+      return undefined;
+  }
 }
 
 export function TransactionUpdater() {
@@ -78,11 +117,12 @@ export function TransactionUpdater() {
               );
 
               const toast = receipt.status === 1 ? toastSuccess : toastError;
+
               toast(
                 "Transaction receipt",
                 <Flex column>
                   <Text>
-                    {transactions[hash]?.summary ??
+                    {TransactionSummary(transactions[hash]) ??
                       `Hash: ${hash.slice(0, 8)}...${hash.slice(58, 65)}`}
                   </Text>
                   {chainId && (

@@ -1,7 +1,6 @@
 import { Grid } from "@material-ui/core";
 import { DashboardAPYGraph } from "./components/DashboardAPYGraph";
 import { DashboardMetrics } from "./components/DashboardMetrics";
-import { DashboardSupply } from "./components/DashboardSupply";
 import { DashboardTVLGraph } from "./components/DashboardTVLGraph";
 
 const Dashboard = () => {

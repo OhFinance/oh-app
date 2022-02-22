@@ -11,6 +11,7 @@ import {
   useTransactionAdder,
 } from "state/transactions/hooks";
 import { useApprovalManager } from "state/user/hooks";
+import { TransactionType } from "state/transactions/actions";
 
 export enum ApprovalState {
   UNKNOWN = "Unknown",
@@ -73,8 +74,9 @@ export const useTokenApprove = (
     ])
       .then((response: TransactionResponse) => {
         addTransaction(response, {
-          summary: `Approve ${symbol ?? "Token"}`,
-          approval: { tokenAddress, spender },
+          type: TransactionType.APPROVAL,
+          spender,
+          tokenAddress,
         });
       })
       .catch((error: Error) => {

@@ -4,18 +4,26 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
   TableHead,
   TableRow,
 } from "@material-ui/core";
 import { Flex } from "@ohfinance/oh-ui";
-import { Balance } from "components/Balance";
+import BigNumber from "bignumber.js";
+
 import { TableSurface } from "components/TableSurface";
 import { Tooltip } from "components/Tooltip";
-import { Pool } from "config/constants/types";
+import { Pool } from "config/constants/pools";
+import { useCallback, useState } from "react";
+import { TVLStateUpdater } from "views/Stake/Stake";
 import { StakePoolTableRow } from "./StakePoolTableRow";
 
-export const StakePoolTable = ({ pools }: { pools: Pool[] }) => {
+export const StakePoolTable = ({
+  pools,
+  updateState,
+}: {
+  pools: Pool[];
+  updateState: TVLStateUpdater;
+}) => {
   return (
     <TableSurface>
       <TableContainer>
@@ -36,15 +44,16 @@ export const StakePoolTable = ({ pools }: { pools: Pool[] }) => {
                   <Tooltip size={12} title="asdf" />
                 </Flex>
               </TableCell>
-              <TableCell align="right">Wallet</TableCell>
+              <TableCell align="right">Claimable Rewards</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {pools.map((pool, i) => (
               <StakePoolTableRow
+                key={`staking-pool-${pool.poolAddress}-${i}`}
                 pool={pool}
+                updateState={updateState}
                 bottomBorder={i !== pools.length - 1}
-                key={i}
               />
             ))}
           </TableBody>

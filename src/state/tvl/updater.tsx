@@ -4,7 +4,6 @@ import axios from "axios";
 import banks from "config/constants/banks";
 import { SupportedNetworks } from "config/constants/networks";
 import { MAXIMUM_RETRIES } from "config/constants/values";
-import { request } from "http";
 import { useEffect, useState } from "react";
 import { useHistoryTVL, useLatestTVL } from "./hooks";
 
@@ -12,7 +11,7 @@ export function TVLUpdater() {
   const [retries, setRetries] = useState(0);
   const [loading, setLoading] = useState(true);
   const [latest, setLatestTVL] = useLatestTVL();
-  const [history, setHistoryTVL] = useHistoryTVL();
+  const [, setHistoryTVL] = useHistoryTVL();
 
   useEffect(() => {
     const fetchLatestTVL = async () => {
@@ -39,7 +38,6 @@ export function TVLUpdater() {
         const allBanks = SupportedNetworks.map(
           (chainId) => banks[chainId]
         ).flat();
-        console.log("HI");
 
         const requests = await Promise.all([
           axios.get("https://api.oh.finance/tvl/history?addr=all&chain=-1"),
@@ -51,7 +49,6 @@ export function TVLUpdater() {
             )
           ),
         ]);
-        console.log(requests);
 
         const tvls = [];
         requests.forEach((req) => {

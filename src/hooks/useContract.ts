@@ -2,17 +2,14 @@ import { Contract } from "@ethersproject/contracts";
 import { useMemo } from "react";
 import { getContract } from "utils/contractHelper";
 import { useWeb3 } from "./useWeb3";
+import MCStakingABI from "config/abi/MCStaking.json";
 import ERC20Abi from "config/abi/IERC20.json";
 import ERC20PermitAbi from "config/abi/IERC20Permit.json";
 import ERC20FaucetAbi from "config/abi/IERC20Faucet.json";
 import OhBankAbi from "config/abi/OhBank.json";
 import MulticallAbi from "config/abi/Multicall.json";
-import OhGovernorAbi from "config/abi/OhGovernor.json";
-import OhForumAbi from "config/abi/OhForum.json";
-import OhLiquidatorAbi from "config/abi/OhLiquidator.json";
 import OhManagerAbi from "config/abi/OhManager.json";
 import OhTimelockAbi from "config/abi/OhTimelock.json";
-import OhTokenAbi from "config/abi/OhToken.json";
 import { useAddress } from "./useAddress";
 import contracts from "config/constants/contracts";
 
@@ -29,7 +26,7 @@ export const useContract = (address?: string, abi?: any): Contract | null => {
   }, [address, abi, account, library]);
 };
 
-export const useERC20Contract = (address: string) => {
+export const useERC20Contract = (address?: string) => {
   return useContract(address, ERC20Abi);
 };
 
@@ -56,4 +53,8 @@ export const useBankContract = (address: string) => {
 
 export const useManagerContract = (address: string) => {
   return useContract(address, OhManagerAbi);
+};
+
+export const useStakingContract = (address: string) => {
+  return useContract(address, MCStakingABI);
 };

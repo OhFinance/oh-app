@@ -1,4 +1,4 @@
-import { Box, Divider, Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import {
   Button,
@@ -17,6 +17,7 @@ import { useAddress } from "hooks/useAddress";
 import { useTimelockContract } from "hooks/useContract";
 import { useNetwork } from "hooks/useNetwork";
 import { useCallback, useMemo, useState } from "react";
+import { TransactionType } from "state/transactions/actions";
 import { useTransactionAdder } from "state/transactions/hooks";
 import { getFullDisplayBalance } from "utils/formatBalances";
 import { dateDiffInDays, now } from "utils/misc";
@@ -62,7 +63,7 @@ export const ClaimCard = ({ timelock }: { timelock: Timelock }) => {
       .claim()
       .then((response) => {
         addTransaction(response, {
-          summary: `Vest OH`,
+          type: TransactionType.OH_VESTING,
         });
         setPendingTx(false);
       })

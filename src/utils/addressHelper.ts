@@ -4,10 +4,6 @@ import tokens from "config/constants/tokens";
 
 // token addresses
 
-export const getOhUsdcAddress = (): Address => {
-  return tokens.ohUsdc.address;
-};
-
 export const getTokenAddress = (): Address => {
   return tokens.ohToken.address;
 };

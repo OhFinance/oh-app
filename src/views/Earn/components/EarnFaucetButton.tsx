@@ -1,7 +1,6 @@
 import { Button } from "@ohfinance/oh-ui";
 import BigNumber from "bignumber.js";
 import { Token } from "config/constants/types";
-import { useNetwork } from "hooks/useNetwork";
 import { FC } from "react";
 import { TEN } from "utils/bigNumber";
 import { useFaucetToken } from "../hooks/useFaucetToken";

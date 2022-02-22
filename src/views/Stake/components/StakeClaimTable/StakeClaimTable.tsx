@@ -7,12 +7,27 @@ import {
   TableRow,
 } from "@material-ui/core";
 import { TableSurface } from "components/TableSurface";
-import OhToken from "assets/img/oh-token.svg";
-import { Flex } from "@ohfinance/oh-ui";
-import { Balance } from "components/Balance";
 import { StakeClaimTableRow } from "./StakeClaimTableRow";
-import { pools } from "config/constants/pools";
+import { POOLS, Pool } from "config/constants/pools";
 import { useWeb3 } from "hooks/useWeb3";
+import { useDeposits } from "hooks/useDeposits";
+
+const RowsContainer = ({ pool }: { pool: Pool }) => {
+  const deposits = useDeposits(pool.escrowAddress);
+
+  return (
+    <>
+      {deposits.deposits.map((deposit, i) => (
+        <StakeClaimTableRow
+          key={`${i}-${deposit.end.toNumber()}-${deposit.start.toNumber()}`}
+          pool={pool}
+          deposit={deposit}
+          depositId={i}
+        />
+      ))}
+    </>
+  );
+};
 
 export const StakeClaimTable = () => {
   const { chainId } = useWeb3();
@@ -24,7 +39,7 @@ export const StakeClaimTable = () => {
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox"></TableCell>
-              <TableCell>Claim</TableCell>
+              <TableCell>Pool</TableCell>
               <TableCell align="right">Amount</TableCell>
               <TableCell align="right">USD Value</TableCell>
               <TableCell align="right">Status</TableCell>
@@ -32,7 +47,12 @@ export const StakeClaimTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <StakeClaimTableRow pool={pools[chainId][0]} />
+            {POOLS[chainId].map((pool, i) => (
+              <RowsContainer
+                pool={pool}
+                key={`${i}-${pool.poolAddress}-claimrows`}
+              />
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

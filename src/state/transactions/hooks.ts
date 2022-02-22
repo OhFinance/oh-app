@@ -4,31 +4,20 @@ import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "state";
 import { now } from "utils/misc";
+import { TransactionInfo, TransactionType } from "./actions";
 import { addTransaction } from "./state";
 import { TransactionDetails } from "./types";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useTransactionAdder(): (
   response: TransactionResponse,
-  customData?: {
-    summary?: string;
-    approval?: { tokenAddress: string; spender: string };
-  }
+  info: TransactionInfo
 ) => void {
   const { chainId, account } = useWeb3();
   const dispatch = useDispatch<AppDispatch>();
 
   return useCallback(
-    (
-      response: TransactionResponse,
-      {
-        summary,
-        approval,
-      }: {
-        summary?: string;
-        approval?: { tokenAddress: string; spender: string };
-      } = {}
-    ) => {
+    (response: TransactionResponse, info: TransactionInfo) => {
       if (!account || !chainId) {
         return;
       }
@@ -43,8 +32,7 @@ export function useTransactionAdder(): (
           hash,
           from: account,
           chainId,
-          approval,
-          summary,
+          info,
         })
       );
     },
@@ -91,14 +79,14 @@ export function useHasPendingApproval(
         if (!tx) return false;
         if (tx.receipt) {
           return false;
+        } else {
+          if (tx.info.type !== TransactionType.APPROVAL) return false;
+          return (
+            tx.info.spender === spender &&
+            tx.info.tokenAddress === tokenAddress &&
+            isTransactionRecent(tx)
+          );
         }
-        const { approval } = tx;
-        if (!approval) return false;
-        return (
-          approval.spender === spender &&
-          approval.tokenAddress === tokenAddress &&
-          isTransactionRecent(tx)
-        );
       }),
     [allTransactions, spender, tokenAddress]
   );

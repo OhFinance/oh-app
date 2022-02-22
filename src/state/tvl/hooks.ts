@@ -29,7 +29,6 @@ export const useHistoryTVL = (): [
 
   const setHistoryTVL = useCallback(
     (tvls: UpdateHistoryTVL[]) => {
-      console.log(tvls);
       dispatch(updateHistoryTVL(tvls));
     },
     [dispatch]

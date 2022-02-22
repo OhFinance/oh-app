@@ -21,9 +21,7 @@ export const getFullDisplayBalance = (
   decimals = 18,
   decimalsToAppear = 3
 ) => {
-  return new BigNumber(balance)
-    .dividedBy(TEN.pow(decimals))
-    .toFixed(decimalsToAppear, 1); // 1 = round down
+  return balance.dividedBy(TEN.pow(decimals)).toFixed(decimalsToAppear, 1); // 1 = round down
 };
 
 export const formatNumber = (

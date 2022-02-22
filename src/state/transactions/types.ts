@@ -1,3 +1,5 @@
+import { TransactionInfo } from "./actions";
+
 export interface SerializableTransactionReceipt {
   to: string;
   from: string;
@@ -11,8 +13,7 @@ export interface SerializableTransactionReceipt {
 
 export interface TransactionDetails {
   hash: string;
-  approval?: { tokenAddress: string; spender: string };
-  summary?: string;
+  info: TransactionInfo;
   receipt?: SerializableTransactionReceipt;
   lastCheckedBlockNumber?: number;
   addedTime: number;

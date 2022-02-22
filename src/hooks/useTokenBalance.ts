@@ -1,5 +1,4 @@
 import BigNumber from "bignumber.js";
-import { Address } from "config/constants/types";
 import { useEffect, useState } from "react";
 import { ZERO } from "utils/bigNumber";
 import { useERC20Contract } from "./useContract";

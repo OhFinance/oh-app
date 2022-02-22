@@ -6,15 +6,41 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
-import { Flex } from "@ohfinance/oh-ui";
-import { Balance } from "components/Balance";
 import { TableSurface } from "components/TableSurface";
-import OhToken from "assets/img/oh-token.svg";
 import { StakeDepositTableRow } from "./StakeDepositTableRow";
-import { pools } from "config/constants/pools";
+import { POOLS, Pool } from "config/constants/pools";
 import { useWeb3 } from "hooks/useWeb3";
+import { useDeposits } from "hooks/useDeposits";
+import { TVLStateUpdater } from "views/Stake/Stake";
 
-export const StakeDepositTable = () => {
+const RowsContainer = ({
+  pool,
+  updateState,
+}: {
+  pool: Pool;
+  updateState: TVLStateUpdater;
+}) => {
+  const deposits = useDeposits(pool.poolAddress);
+
+  return (
+    <>
+      {deposits.deposits.map((deposit, i) => (
+        <StakeDepositTableRow
+          updateState={updateState}
+          key={`${i}-${deposit.end.toNumber()}-${deposit.start.toNumber()}`}
+          pool={pool}
+          deposit={deposit}
+          depositId={i}
+        />
+      ))}
+    </>
+  );
+};
+export const StakeDepositTable = ({
+  updateState,
+}: {
+  updateState: TVLStateUpdater;
+}) => {
   const { chainId } = useWeb3();
 
   return (
@@ -24,15 +50,19 @@ export const StakeDepositTable = () => {
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox"></TableCell>
-              <TableCell>Deposit</TableCell>
+              <TableCell>Pool</TableCell>
               <TableCell align="right">Amount Staked</TableCell>
               <TableCell align="right">Lock Date</TableCell>
               <TableCell align="right">Unlock Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {[...Array(1)].map(() => (
-              <StakeDepositTableRow pool={pools[chainId][0]} />
+            {POOLS[chainId].map((pool, i) => (
+              <RowsContainer
+                pool={pool}
+                updateState={updateState}
+                key={`${i}-${pool.poolAddress}-depositsrows`}
+              />
             ))}
           </TableBody>
         </Table>

@@ -13,3 +13,25 @@ export const dateDiffInDays = (a: Date, b: Date) => {
 export function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
+
+const short_months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+export const unixToDate = (unix: number) => {
+  const date = new Date(unix * 1000);
+  const day = date.getUTCDate();
+  const month = short_months[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
+  return `${day} ${month} ${year}`;
+};

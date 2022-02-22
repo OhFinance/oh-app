@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { Box, Table, TableBody, TableCell, TableRow } from "@material-ui/core";
 import { Flex, Modal, ModalProps, Subheading } from "@ohfinance/oh-ui";
 import { LinkButton } from "components/LinkButton";
 import { Bank } from "config/constants/types";

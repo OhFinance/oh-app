@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { Surface } from "@ohfinance/oh-ui";
-import { DisplayValue, DisplayValueCard } from "components/DisplayValue";
+import { DisplayValue } from "components/DisplayValue";
 import { usePriceManager } from "state/prices/hooks";
 import { useCirculatingSupply } from "state/supply/hooks";
 import { useLatestTVL } from "state/tvl/hooks";

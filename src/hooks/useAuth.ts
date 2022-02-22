@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from "react";
-import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
+import { useCallback } from "react";
+import { useWeb3React } from "@web3-react/core";
 import { ConnectorNames } from "config/constants/types";
 import { connectorLibrary } from "utils/web3Connectors";
 import useToast from "./useToast";

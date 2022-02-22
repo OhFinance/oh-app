@@ -11,6 +11,11 @@ export type OptionalMethodInputs =
 export interface Call {
   address: string;
   callData: string;
+  gasRequired?: number;
+}
+
+export interface CallStateResult extends ReadonlyArray<any> {
+  readonly [key: string]: any;
 }
 
 export interface CallState {
@@ -34,6 +39,10 @@ export interface CallResult {
 export interface ListenerOptions {
   // how often this data should be fetched, by default 1
   readonly blocksPerFetch?: number;
+}
+
+export interface ListenerOptionsWithGas extends ListenerOptions {
+  readonly gasRequired?: number;
 }
 
 export interface Result extends ReadonlyArray<any> {

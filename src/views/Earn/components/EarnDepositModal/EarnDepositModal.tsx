@@ -7,8 +7,8 @@ import { useBankContract } from "hooks/useContract";
 import { useTokenApprove } from "hooks/useTokenApprove";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useCallback, useMemo, useState } from "react";
+import { TransactionType } from "state/transactions/actions";
 import { useTransactionAdder } from "state/transactions/hooks";
-import { useApprovalManager } from "state/user/hooks";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
 import { useBankData } from "views/Earn/hooks/useBankData";
 import { EarnDepositConfirmation } from "./EarnDepositConfirmation";
@@ -95,7 +95,11 @@ export const EarnDepositModal: FC<EarnDepositModalProps> = ({
         setTxPending(false);
 
         addTransaction(response, {
-          summary: `Deposit ${depositAmount} ${bank.underlying.symbol} for ${receiveAmount} ${bank.symbol}`,
+          type: TransactionType.BANK_DEPOSIT,
+          depositAmount,
+          depositSymbol: bank.underlying.symbol,
+          receiveAmount,
+          receiveSymbol: bank.symbol,
         });
 
         setTxHash(response.hash);

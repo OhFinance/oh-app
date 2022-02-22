@@ -5,6 +5,7 @@ import { Bank } from "config/constants/types";
 import { useManagerContract } from "hooks/useContract";
 import { useWeb3 } from "hooks/useWeb3";
 import { useCallback, useState } from "react";
+import { TransactionType } from "state/transactions/actions";
 import { useTransactionAdder } from "state/transactions/hooks";
 import { ManageCard } from "./components/ManageCard";
 
@@ -23,7 +24,7 @@ const Manage = () => {
         .finance(address)
         .then((response) => {
           setTxPending(false);
-          addTransaction(response, { summary: "Finance" });
+          addTransaction(response, { type: TransactionType.FINANCE });
         })
         .catch((error) => {
           console.error(error);
@@ -41,7 +42,7 @@ const Manage = () => {
         .financeAll(address)
         .then((response) => {
           setTxPending(false);
-          addTransaction(response, { summary: "Finance All" });
+          addTransaction(response, { type: TransactionType.FINANCE_ALL });
         })
         .catch((error) => {
           console.error(error);
@@ -59,7 +60,7 @@ const Manage = () => {
         .rebalance(address)
         .then((response) => {
           setTxPending(false);
-          addTransaction(response, { summary: "Rebalance" });
+          addTransaction(response, { type: TransactionType.REBALANCE });
         })
         .catch((error) => {
           console.error(error);

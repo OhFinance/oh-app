@@ -15,13 +15,23 @@ export const supportedTokenIds = {
   AVAX: "avalanche-2",
 };
 
-const tokens: { [token: string]: Token } = {
+const tokens = {
   dai: {
     symbol: "DAI",
     decimals: 6,
     address: {
       1: "0x0000000000000000000000000000000000000000",
       4: "",
+    },
+  },
+  weth: {
+    symbol: "WETH",
+    decimals: 18,
+    address: {
+      1: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      4: "",
+      42: "",
+      43114: "",
     },
   },
   ohToken: {
@@ -96,5 +106,7 @@ const tokens: { [token: string]: Token } = {
     },
   },
 };
+
+export type AppToken = typeof tokens;
 
 export default tokens;

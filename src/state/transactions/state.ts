@@ -21,12 +21,12 @@ export const transactionSlice = createSlice({
   initialState,
   reducers: {
     addTransaction: (transactions, action: PayloadAction<AddTransaction>) => {
-      const { approval, chainId, from, hash, summary } = action.payload;
+      const { info, chainId, from, hash } = action.payload;
       if (transactions[chainId]?.[hash]) {
         throw Error("Attempted to add existing transaction.");
       }
       const txs = transactions[chainId] ?? {};
-      txs[hash] = { hash, approval, summary, from, addedTime: now() };
+      txs[hash] = { hash, info, from, addedTime: now() };
       transactions[chainId] = txs;
     },
     clearAllTransactions: (

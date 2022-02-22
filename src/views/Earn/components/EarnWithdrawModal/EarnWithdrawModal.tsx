@@ -6,6 +6,7 @@ import { useAddress } from "hooks/useAddress";
 import { useBankContract } from "hooks/useContract";
 import { useTokenBalance } from "hooks/useTokenBalance";
 import { FC, useCallback, useMemo, useState } from "react";
+import { TransactionType } from "state/transactions/actions";
 import { useTransactionAdder } from "state/transactions/hooks";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
 import { useBankData } from "views/Earn/hooks/useBankData";
@@ -71,7 +72,11 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
         setTxPending(false);
 
         addTransaction(response, {
-          summary: `Withdraw ${receiveAmount} ${bank.underlying.symbol} for ${withdrawAmount} ${bank.symbol}`,
+          type: TransactionType.BANK_WITHDRAW,
+          receiveAmount,
+          receiveSymbol: bank.underlying.symbol,
+          withdrawAmount,
+          withdrawSymbol: bank.symbol,
         });
 
         setTxHash(response.hash);

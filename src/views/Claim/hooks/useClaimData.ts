@@ -3,7 +3,6 @@ import { useTimelockContract } from "hooks/useContract";
 import { useWeb3 } from "hooks/useWeb3";
 import { useMemo } from "react";
 import { useSingleCallResult } from "state/multicall/hooks";
-import { ZERO } from "utils/bigNumber";
 
 export const useClaimData = (timelockAddress: string) => {
   const { account } = useWeb3();
