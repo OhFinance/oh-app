@@ -20,20 +20,17 @@ const RowsContainer = ({
   pool: Pool;
   updateState: TVLStateUpdater;
 }) => {
-  const deposits = useDeposits(pool.poolAddress);
-
+  const deposit = useDeposits(pool.poolAddress);
+  if (!deposit.deposit) {
+    return null;
+  }
   return (
-    <>
-      {deposits.deposits.map((deposit, i) => (
-        <StakeDepositTableRow
-          updateState={updateState}
-          key={`${i}-${deposit.end.toNumber()}-${deposit.start.toNumber()}`}
-          pool={pool}
-          deposit={deposit}
-          depositId={i}
-        />
-      ))}
-    </>
+    <StakeDepositTableRow
+      updateState={updateState}
+      key={`${deposit.deposit.end}-${deposit.deposit.start}`}
+      pool={pool}
+      deposit={deposit.deposit}
+    />
   );
 };
 export const StakeDepositTable = ({

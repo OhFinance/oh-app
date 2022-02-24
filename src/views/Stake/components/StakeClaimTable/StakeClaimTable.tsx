@@ -11,17 +11,21 @@ import { StakeClaimTableRow } from "./StakeClaimTableRow";
 import { POOLS, Pool } from "config/constants/pools";
 import { useWeb3 } from "hooks/useWeb3";
 import { useDeposits } from "hooks/useDeposits";
+import { useLocks } from "hooks/useLocks";
 
 const RowsContainer = ({ pool }: { pool: Pool }) => {
   const deposits = useDeposits(pool.escrowAddress);
-
+  const locks = useLocks(pool.escrowAddress);
+  if (locks === null) {
+    return null;
+  }
   return (
     <>
-      {deposits.deposits.map((deposit, i) => (
+      {locks.map((lock, i) => (
         <StakeClaimTableRow
-          key={`${i}-${deposit.end.toNumber()}-${deposit.start.toNumber()}`}
+          key={`${i}-${lock.end}-${lock.amount.toNumber()}`}
           pool={pool}
-          deposit={deposit}
+          lock={lock}
           depositId={i}
         />
       ))}

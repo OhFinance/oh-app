@@ -14,20 +14,18 @@ import useCoingeckoUsdPrice from "hooks/useCoingeckoPrice";
 import { useWeb3 } from "hooks/useWeb3";
 export interface StakeDepositRowProps {
   pool: Pool;
-  deposit: DepositsState["deposits"][0];
+  deposit: DepositsState["deposit"];
   updateState: TVLStateUpdater;
-  depositId: number;
 }
 
 export const StakeDepositTableRow: FC<StakeDepositRowProps> = ({
   pool,
   deposit,
   updateState,
-  depositId,
 }) => {
   const { chainId } = useWeb3();
   const [handlePresentDepositModal] = useModal(
-    <StakeDepositModal pool={pool} depositId={depositId} deposit={deposit} />
+    <StakeDepositModal pool={pool} deposit={deposit} />
   );
   const classes = useStakingStyles();
   const usdPrice = useCoingeckoUsdPrice(pool.token.address[chainId]);
@@ -40,7 +38,7 @@ export const StakeDepositTableRow: FC<StakeDepositRowProps> = ({
   }, [updateState, pool, deposit.amount]);
 
   const canWithdraw = useMemo(
-    () => Math.floor(Date.now()) > deposit.end.toNumber(),
+    () => Math.floor(Date.now()) > deposit.end,
     [deposit.end]
   );
   return (
@@ -68,10 +66,10 @@ export const StakeDepositTableRow: FC<StakeDepositRowProps> = ({
         </b>
       </TableCell>
       <TableCell align="right">
-        <b>{unixToDate(deposit.start.toNumber())}</b>
+        <b>{unixToDate(deposit.start)}</b>
       </TableCell>
       <TableCell align="right">
-        <b>{unixToDate(deposit.end.toNumber())}</b>
+        <b>{unixToDate(deposit.end)}</b>
       </TableCell>
     </TableRow>
   );

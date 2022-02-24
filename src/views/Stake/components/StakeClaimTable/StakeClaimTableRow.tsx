@@ -10,32 +10,33 @@ import { getFullDisplayBalance } from "utils/formatBalances";
 import useStakingStyles from "../styles";
 import useCoingeckoUsdPrice from "hooks/useCoingeckoPrice";
 import { useWeb3 } from "hooks/useWeb3";
+import BigNumber from "bignumber.js";
 
 export interface StakeClaimTableRowProps {
   pool: Pool;
-  deposit: DepositsState["deposits"][0];
+  lock: { amount: BigNumber; end: number };
   depositId: number;
 }
 
 export const StakeClaimTableRow: FC<StakeClaimTableRowProps> = ({
   pool,
-  deposit,
+  lock,
   depositId,
 }) => {
   const [handlePresentClaimModal] = useModal(
-    <StakeClaimModal pool={pool} deposit={deposit} depositId={depositId} />
+    <StakeClaimModal pool={pool} deposit={lock} depositId={depositId} />
   );
   const { chainId } = useWeb3();
   const usdPrice = useCoingeckoUsdPrice(pool.rewardToken.address[chainId]);
   const classes = useStakingStyles();
   const status = useMemo(() => {
     const now = Math.floor(Date.now() / 1000);
-    if (now < deposit.end.toNumber()) {
+    if (now < lock.end) {
       return "Locked";
     } else {
       return "Unlocked";
     }
-  }, [deposit]);
+  }, [lock]);
   return (
     <TableRow
       hover={status === "Unlocked"}
@@ -54,7 +55,7 @@ export const StakeClaimTableRow: FC<StakeClaimTableRowProps> = ({
       <TableCell align="right">
         <b>
           <Balance
-            value={getFullDisplayBalance(deposit.amount)}
+            value={getFullDisplayBalance(lock.amount)}
             suffix={" " + pool.rewardToken.symbol}
           />
         </b>
@@ -64,7 +65,7 @@ export const StakeClaimTableRow: FC<StakeClaimTableRowProps> = ({
           {!usdPrice.loading && !usdPrice.error ? (
             <Balance
               value={getFullDisplayBalance(
-                deposit.amount.multipliedBy(usdPrice.result)
+                lock.amount.multipliedBy(usdPrice.result)
               )}
               decimals={2}
               prefix="$"
@@ -78,7 +79,7 @@ export const StakeClaimTableRow: FC<StakeClaimTableRowProps> = ({
         <b>{status}</b>
       </TableCell>
       <TableCell align="right">
-        <b>{unixToDate(deposit.end.toNumber())}</b>
+        <b>{unixToDate(lock.end)}</b>
       </TableCell>
     </TableRow>
   );

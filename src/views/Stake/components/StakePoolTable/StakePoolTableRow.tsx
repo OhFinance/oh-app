@@ -5,7 +5,7 @@ import { Pool } from "config/constants/pools";
 import { StakePoolModal } from "../StakePoolModal";
 import { getFullDisplayBalance } from "utils/formatBalances";
 import { useClaimableRewards } from "hooks/useClaimableRewards";
-import { useFetchPoolTvl } from "state/staking/hooks";
+import { useFetchPoolTvl, usePoolRewards } from "state/staking/hooks";
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { TVLStateUpdater } from "views/Stake/Stake";
 import BigNumber from "bignumber.js";
@@ -30,6 +30,7 @@ export const StakePoolTableRow = ({
   const { chainId, library, account } = useWeb3();
   const [onPresentStakeModal] = useModal(<StakePoolModal pool={pool} />);
   const classes = useStakingStyles();
+  const totalClaimed = usePoolRewards(pool);
   const claimableRewards = useClaimableRewards(pool);
   const fetchPoolTvl = useFetchPoolTvl(pool);
   const usdPrice = useCoingeckoUsdPrice(pool.token.address[chainId]);
@@ -45,7 +46,6 @@ export const StakePoolTableRow = ({
       return usdPrice.result;
     }
   }, [lpTokenPrice, usdPrice]);
-  console.log({ lpTokenPrice, usdPrice, usedPrice, pool });
 
   useEffect(() => {
     if (fetchPoolTvl !== null) {
@@ -55,6 +55,15 @@ export const StakePoolTableRow = ({
       });
     }
   }, [fetchPoolTvl, updateState, pool, usedPrice]);
+
+  useEffect(() => {
+    if (totalClaimed !== null) {
+      updateState("byPoolClaimedRewards", pool, {
+        value: totalClaimed.dividedBy(TEN.pow(18)),
+        usdPrice: rewardUsdPrice.result,
+      });
+    }
+  }, [totalClaimed, updateState, pool, rewardUsdPrice.result]);
 
   useEffect(() => {
     if (claimableRewards.balance) {

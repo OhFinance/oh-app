@@ -9,7 +9,11 @@ import {
 } from "state/multicall/hooks";
 import ERC20ABI from "config/abi/IERC20.json";
 import BigNumber from "bignumber.js";
-import { useERC20Contract } from "hooks/useContract";
+import {
+  useERC20Contract,
+  useEscrowContract,
+  useStakingContract,
+} from "hooks/useContract";
 import tokens from "config/constants/tokens";
 import { Pool, POOLS } from "config/constants/pools";
 import { CallStateResult } from "state/multicall/types";
@@ -141,14 +145,26 @@ export function usePoolTvl(pool: Pool): BigNumber | null {
   return useMemo(() => tvl[pool.poolAddress] || null, [tvl, pool.poolAddress]);
 }
 
+export const usePoolRewards = (pool: Pool): BigNumber | null => {
+  const stakingContract = useStakingContract(pool.poolAddress);
+
+  const result = useSingleCallResult(stakingContract, "totalClaimed");
+
+  return useMemo(() => {
+    if (!result?.loading && !result?.error) {
+      return new BigNumber(result?.result?.[0]?.toString());
+    } else {
+      return null;
+    }
+  }, [result]);
+};
+
 export const usePoolsRewards = () => {
   const { chainId } = useWeb3();
   const ohToken = tokens.ohToken.address[chainId];
 
   // tmp mc token
-  const ERC20TOKEN = useERC20Contract(
-    "0x949d48eca67b17269629c7194f4b727d4ef9e5d6"
-  );
+  const ERC20TOKEN = useERC20Contract(ohToken);
 
   const pools: Pool[] | undefined = useMemo(
     () => (chainId in POOLS ? POOLS[chainId] : undefined),

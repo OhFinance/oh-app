@@ -31,7 +31,7 @@ export const useClaimableRewards = (pool: Pool) => {
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        const result = await contract.withdrawableRewardsOf(account);
+        const result = await contract.rewards(account);
         setBalanceState({
           balance: new BigNumber(result.toString()),
           fetchStatus: SUCCESS,

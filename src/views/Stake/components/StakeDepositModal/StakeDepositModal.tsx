@@ -14,15 +14,15 @@ import { StakeDepositModalContent } from "./StakeDepositModalContent";
 
 export interface StakeDepositModalProps extends ModalProps {
   pool: Pool;
-  depositId: number;
-  deposit: DepositsState["deposits"][0];
+
+  deposit: DepositsState["deposit"];
 }
 
 export const StakeDepositModal: FC<StakeDepositModalProps> = ({
   isOpen,
   onDismiss,
   pool,
-  depositId,
+
   deposit,
 }) => {
   const [confirming, setConfirming] = useState<boolean>(false);
@@ -47,15 +47,14 @@ export const StakeDepositModal: FC<StakeDepositModalProps> = ({
   async function onUnstake() {
     if (!chainId || !library || !account) return;
 
-    let estimate = poolContract.estimateGas.withdraw;
-    let method = poolContract.withdraw;
-    let args = [depositId, account];
+    let estimate = poolContract.estimateGas.exit;
+    let method = poolContract.exit;
 
     setTxPending(true);
 
-    await estimate(...args)
+    await estimate()
       .then((estimatedGasLimit) =>
-        method(...args, {
+        method(undefined, {
           gasLimit: calculateGasMargin(estimatedGasLimit),
         }).then((response) => {
           setTxPending(false);

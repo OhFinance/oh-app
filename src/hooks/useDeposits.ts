@@ -5,7 +5,7 @@ import usePoller from "./usePoller";
 import { useWeb3 } from "./useWeb3";
 
 export interface DepositsState {
-  deposits: { amount: BigNumber; start: BigNumber; end: BigNumber }[];
+  deposit?: { amount: BigNumber; start: number; end: number };
   fetchStatus: FetchStatus;
 }
 
@@ -18,7 +18,7 @@ export enum FetchStatus {
 export const useDeposits = (address: string) => {
   const { NOT_FETCHED, SUCCESS, FAILED } = FetchStatus;
   const [balanceState, setBalanceState] = useState<DepositsState>({
-    deposits: [],
+    deposit: undefined,
     fetchStatus: NOT_FETCHED,
   });
   const { account } = useWeb3();
@@ -30,11 +30,11 @@ export const useDeposits = (address: string) => {
       try {
         const result = await contract.getDepositsOf(account);
         setBalanceState({
-          deposits: result.map((item) => ({
-            amount: new BigNumber(item.amount.toString()),
-            end: new BigNumber(item.end.toString()),
-            start: new BigNumber(item.start.toString()),
-          })),
+          deposit: {
+            amount: new BigNumber(result.amount.toString()),
+            end: result.end.toNumber(),
+            start: result.start.toNumber(),
+          },
           fetchStatus: SUCCESS,
         });
       } catch (e) {

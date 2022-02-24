@@ -2,7 +2,7 @@ import { Contract } from "@ethersproject/contracts";
 import { useMemo } from "react";
 import { getContract } from "utils/contractHelper";
 import { useWeb3 } from "./useWeb3";
-import MCStakingABI from "config/abi/MCStaking.json";
+import OHSTAKINGABI from "config/abi/OhStaking.json";
 import ERC20Abi from "config/abi/IERC20.json";
 import ERC20PermitAbi from "config/abi/IERC20Permit.json";
 import ERC20FaucetAbi from "config/abi/IERC20Faucet.json";
@@ -10,6 +10,7 @@ import OhBankAbi from "config/abi/OhBank.json";
 import MulticallAbi from "config/abi/Multicall.json";
 import OhManagerAbi from "config/abi/OhManager.json";
 import OhTimelockAbi from "config/abi/OhTimelock.json";
+import ESCROWABI from "config/abi/Escrow.json";
 import { useAddress } from "./useAddress";
 import contracts from "config/constants/contracts";
 
@@ -56,5 +57,9 @@ export const useManagerContract = (address: string) => {
 };
 
 export const useStakingContract = (address: string) => {
-  return useContract(address, MCStakingABI);
+  return useContract(address, OHSTAKINGABI);
+};
+
+export const useEscrowContract = (address: string) => {
+  return useContract(address, ESCROWABI);
 };

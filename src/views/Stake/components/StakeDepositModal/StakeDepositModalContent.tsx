@@ -11,7 +11,7 @@ import { getFullDisplayBalance } from "utils/formatBalances";
 
 export interface StakeDepositModalContentProps {
   pool: Pool;
-  deposit?: DepositsState["deposits"][0];
+  deposit?: DepositsState["deposit"];
   withdraw: () => Promise<void>;
 }
 

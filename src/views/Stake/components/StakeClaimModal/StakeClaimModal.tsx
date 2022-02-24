@@ -1,4 +1,5 @@
 import { ModalProps } from "@ohfinance/oh-ui";
+import BigNumber from "bignumber.js";
 import { TransactionConfirmationModal } from "components/TransactionConfirmationModal";
 import { Pool } from "config/constants/pools";
 import { useStakingContract } from "hooks/useContract";
@@ -13,7 +14,7 @@ import { StakeDepositModalContent } from "../StakeDepositModal/StakeDepositModal
 
 export interface StakeClaimModalProps extends ModalProps {
   pool: Pool;
-  deposit: DepositsState["deposits"][0];
+  deposit: { amount: BigNumber; end: number };
   depositId: number;
 }
 
@@ -22,7 +23,6 @@ export const StakeClaimModal: FC<StakeClaimModalProps> = ({
   onDismiss,
   pool,
   deposit,
-  depositId,
 }) => {
   const [confirming, setConfirming] = useState<boolean>(false);
   const [txPending, setTxPending] = useState<boolean>(false);
@@ -47,15 +47,14 @@ export const StakeClaimModal: FC<StakeClaimModalProps> = ({
   async function onUnstake() {
     if (!chainId || !library || !account) return;
 
-    let estimate = poolContract.estimateGas.withdraw;
-    let method = poolContract.withdraw;
-    let args = [depositId, account];
+    let estimate = poolContract.estimateGas.redeem;
+    let method = poolContract.redeem;
 
     setTxPending(true);
 
-    await estimate(...args)
+    await estimate()
       .then((estimatedGasLimit) =>
-        method(...args, {
+        method(undefined, {
           gasLimit: calculateGasMargin(estimatedGasLimit),
         }).then((response) => {
           setTxPending(false);
@@ -78,7 +77,7 @@ export const StakeClaimModal: FC<StakeClaimModalProps> = ({
   const content = () => (
     <StakeDepositModalContent
       pool={pool}
-      deposit={deposit}
+      deposit={{ ...deposit, start: 0 }}
       withdraw={onUnstake}
     />
   );
