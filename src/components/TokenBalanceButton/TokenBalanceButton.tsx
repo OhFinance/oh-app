@@ -8,9 +8,10 @@ import { getFullDisplayBalance } from "utils/formatBalances";
 import { Balance } from "../Balance";
 import OhToken from "assets/img/oh-token.svg";
 import { Skeleton } from "@material-ui/lab";
+import tokens from "config/constants/tokens";
 
 export const TokenBalanceButton = ({ ...props }) => {
-  const { account } = useWeb3();
+  const { account, chainId } = useWeb3();
   const address = useAddress(getTokenAddress());
   const tokenBalance = useTokenBalance(address);
   const { balance, fetchStatus } = tokenBalance;
@@ -18,7 +19,10 @@ export const TokenBalanceButton = ({ ...props }) => {
     <TokenBalanceModal address={address} tokenBalance={tokenBalance} />
   );
 
-  if (!account) {
+  if (
+    !account ||
+    !Object.keys(tokens.ohToken.address).includes(chainId.toString())
+  ) {
     return null;
   }
 

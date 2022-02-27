@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     height: "32px",
     width: "32px",
-    backgroundColor: "#efc45c",
     color: "#efc45c",
   },
   activeIcon: {

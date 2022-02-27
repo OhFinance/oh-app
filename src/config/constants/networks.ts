@@ -4,10 +4,11 @@ import Ethereum from "assets/img/eth.svg";
 import Kovan from "assets/img/kovan.svg";
 import Rinkeby from "assets/img/rinkeby.svg";
 import Avalanche from "assets/img/avax.svg";
+import Moonriver from "assets/img/movr.svg";
 import Fuji from "assets/img/fuji.svg";
 import { isLocalhost } from "utils/misc";
 
-export const SupportedNetworks = [1, 43114];
+export const SupportedNetworks = [1, 1285, 43114];
 
 export const SupportedTestNetworks = [4, 42];
 
@@ -89,6 +90,17 @@ export const Networks: { [chainId: number]: Network } = {
     rpcUrls: ["https://rpcapi.fantom.network"],
     blockExplorerUrls: ["https://ftmscan.com"],
   },
+  1285: {
+    chainId: "0x505",
+    chainName: "Moonriver",
+    nativeCurrency: {
+      name: "Moonriver",
+      symbol: "MOVR",
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc.moonriver.moonbeam.network"],
+    blockExplorerUrls: ["https://moonriver.moonscan.io/"],
+  },
   43113: {
     chainId: "0xa869",
     chainName: "Fuji",
@@ -117,6 +129,7 @@ export const NetworkIcons: { [chainId: number]: string } = {
   1: Ethereum,
   4: Rinkeby,
   42: Kovan,
+  1285: Moonriver,
   43113: Fuji,
   43114: Avalanche,
 };

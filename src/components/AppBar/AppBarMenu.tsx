@@ -2,7 +2,6 @@ import { Grid } from "@material-ui/core";
 import { Button, useMobile, useModal } from "@ohfinance/oh-ui";
 import { TokenBalanceButton } from "components/TokenBalanceButton";
 import { Web3AccountButton } from "components/Web3AccountButton";
-import { Web3NetworkButton } from "components/Web3NetworkButton";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { SettingsModal } from "components/SettingsModal";
 

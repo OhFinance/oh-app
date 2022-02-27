@@ -5,6 +5,7 @@ const contracts: { [contract: string]: Address } = {
     1: "0x5Cb02b71BC98DeFd595912109928207c8bB80B74",
     4: "0xb57aeb9c0c7e0fd39acdbf45fdab26341419a1fd",
     42: "0x7f4c2431b4db2ce9ee2f994064a8840ba614bcec",
+    1285: "0x86f3efdd4108f46c94f1bd23d57ad2cbe552edaf",
     43114: "0x4C211F45876d8EC7bAb54CAc0e32AAD15095358A",
   },
   governor: {

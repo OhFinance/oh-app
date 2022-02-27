@@ -2,6 +2,7 @@ export interface Address {
   readonly 1?: string; // mainnet
   readonly 4?: string; // rinkeby
   readonly 42?: string; // kovan
+  readonly 1285?: string; // moonriver
   readonly 43113?: string; // fuji testnet
   readonly 43114?: string; // avax
 }

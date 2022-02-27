@@ -5,7 +5,7 @@ import usdt from "assets/img/usdt.svg";
 import ohToken from "assets/img/oh-token.svg";
 
 // token prices supported on sidebar
-export const supportedTokenPrices = ["OH", "BTC", "ETH", "AVAX"];
+export const supportedTokenPrices = ["OH", "BTC", "ETH", "AVAX", "MOVR"];
 
 // token ids for coingecko price api
 export const supportedTokenIds = {
@@ -13,17 +13,10 @@ export const supportedTokenIds = {
   BTC: "bitcoin",
   ETH: "ethereum",
   AVAX: "avalanche-2",
+  MOVR: "moonriver",
 };
 
 const tokens: { [token: string]: Token } = {
-  dai: {
-    symbol: "DAI",
-    decimals: 6,
-    address: {
-      1: "0x0000000000000000000000000000000000000000",
-      4: "",
-    },
-  },
   ohToken: {
     symbol: "OH",
     decimals: 18,
@@ -40,8 +33,6 @@ const tokens: { [token: string]: Token } = {
     decimals: 18,
     address: {
       1: "0xCb4288eE0484B51CCb8d40893c4812df72CD5F70",
-      4: "",
-      42: "",
     },
     image: ohToken,
   },
@@ -59,6 +50,7 @@ const tokens: { [token: string]: Token } = {
       1: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
       4: "0x4DBCdF9B62e891a7cec5A2568C3F4FAF9E8Abe2b",
       42: "0xb7a4F3E9097C08dA09517b5aB877F7a917224ede", // compound usdc
+      1285: "0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
       43114: "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664", // usdc.e
     },
     image: usdc,
@@ -91,9 +83,9 @@ const tokens: { [token: string]: Token } = {
     symbol: "USDT",
     decimals: 6,
     address: {
-      1: "0x0000000000000000000000000000000000000000",
-      4: "",
+      1285: "0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
     },
+    image: usdt,
   },
 };
 

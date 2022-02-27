@@ -4,9 +4,12 @@ import comp from "assets/img/comp.svg";
 import crv from "assets/img/crv.svg";
 import benqi from "assets/img/benqi.png";
 import traderJoe from "assets/img/trader-joe.png";
+import mfam from "assets/img/mfam.png";
 import ohUsdc from "assets/img/oh-usdc.svg";
 import ohUsdce from "assets/img/oh-usdc-e.svg";
+import ohUsdcMoonriver from "assets/img/oh-usdc-moonriver.png";
 import ohUsdte from "assets/img/oh-usdt-e.svg";
+import ohUsdtMoonriver from "assets/img/oh-usdt-moonriver.png";
 import ohDaie from "assets/img/oh-dai-e.png";
 import tokens from "./tokens";
 
@@ -29,6 +32,36 @@ const banks: { [chainId: number]: Bank[] } = {
         { protocol: "Compound", image: comp },
         { protocol: "Curve", image: crv },
       ],
+    },
+  ],
+  1285: [
+    {
+      image: ohUsdcMoonriver,
+      name: "Oh! USDC",
+      symbol: "OH-USDC",
+      decimals: 6,
+      chainId: 1285,
+      address: {
+        1285: "0x4C211F45876d8EC7bAb54CAc0e32AAD15095358A",
+      },
+      description: "Moonriver Optimized Lending and Yield Farming",
+      alt: "oh-usdc",
+      underlying: tokens.usdc,
+      strategies: [{ protocol: "Moonwell", image: mfam }],
+    },
+    {
+      image: ohUsdtMoonriver,
+      name: "Oh! USDT",
+      symbol: "OH-USDT",
+      decimals: 6,
+      chainId: 1285,
+      address: {
+        1285: "0xdeA7Ff1D84B7E54587b434C1A585718857CF61d1",
+      },
+      description: "Moonriver Optimized Lending and Yield Farming",
+      alt: "oh-usdt",
+      underlying: tokens.usdt,
+      strategies: [{ protocol: "Moonwell", image: mfam }],
     },
   ],
   43114: [
