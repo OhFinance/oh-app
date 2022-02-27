@@ -29,24 +29,24 @@ export const DashboardTVLGraph = () => {
           borderColor: theme.palette.primary.main,
           pointBackgroundColor: theme.palette.primary.dark,
         },
-        {
-          label: "Ethereum",
-          data: isLoaded
-            ? history[1].filter((_, i) => i % 24 === 0).map((h) => h.tvl)
-            : [],
-          backgroundColor: theme.palette.secondary.dark,
-          borderColor: theme.palette.secondary.main,
-          pointBackgroundColor: theme.palette.secondary.dark,
-        },
-        {
-          label: "Avalanche",
-          data: isLoaded
-            ? history[43114].filter((_, i) => i % 24 === 0).map((h) => h.tvl)
-            : [],
-          backgroundColor: theme.palette.error.dark,
-          borderColor: theme.palette.error.main,
-          pointBackgroundColor: theme.palette.error.dark,
-        },
+        // {
+        //   label: "Ethereum",
+        //   data: isLoaded
+        //     ? history[1].filter((_, i) => i % 24 === 0).map((h) => h.tvl)
+        //     : [],
+        //   backgroundColor: theme.palette.secondary.dark,
+        //   borderColor: theme.palette.secondary.main,
+        //   pointBackgroundColor: theme.palette.secondary.dark,
+        // },
+        // {
+        //   label: "Avalanche",
+        //   data: isLoaded
+        //     ? history[43114].filter((_, i) => i % 24 === 0).map((h) => h.tvl)
+        //     : [],
+        //   backgroundColor: theme.palette.error.dark,
+        //   borderColor: theme.palette.error.main,
+        //   pointBackgroundColor: theme.palette.error.dark,
+        // },
       ],
     };
   }, [isLoaded, history, theme]);

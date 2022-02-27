@@ -39,7 +39,6 @@ export function TVLUpdater() {
         const allBanks = SupportedNetworks.map(
           (chainId) => banks[chainId]
         ).flat();
-        console.log("HI");
 
         const requests = await Promise.all([
           axios.get("https://api.oh.finance/tvl/history?addr=all&chain=-1"),
@@ -51,13 +50,13 @@ export function TVLUpdater() {
             )
           ),
         ]);
-        console.log(requests);
 
         const tvls = [];
         requests.forEach((req) => {
           tvls.push({
             chainId: req.data.chain,
             data: req.data.data,
+            address: req.data.addr,
           });
         });
 
