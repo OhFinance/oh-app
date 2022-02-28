@@ -5,6 +5,7 @@ import { Bank } from "config/constants/types";
 import { useAddress } from "hooks/useAddress";
 import { useBankContract } from "hooks/useContract";
 import { useTokenBalance } from "hooks/useTokenBalance";
+import { useWeb3 } from "hooks/useWeb3";
 import { FC, useCallback, useMemo, useState } from "react";
 import { useTransactionAdder } from "state/transactions/hooks";
 import { getDecimalAmount, getFullDisplayBalance } from "utils/formatBalances";
@@ -24,6 +25,7 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
   const [confirming, setConfirming] = useState<boolean>(false);
   const [txPending, setTxPending] = useState<boolean>(false);
   const [txHash, setTxHash] = useState<string>("");
+  const { chainId } = useWeb3();
   const addTransaction = useTransactionAdder();
 
   const [input, setInput] = useState("");
@@ -65,8 +67,13 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
   const handleWithdraw = useCallback(async () => {
     setTxPending(true);
 
+    let options: any = {};
+    if (chainId === 1285) {
+      options.gasLimit = 3000000;
+    }
+
     await bankContract
-      .withdraw(getDecimalAmount(input, bank.decimals).toString())
+      .withdraw(getDecimalAmount(input, bank.decimals).toString(), options)
       .then((response) => {
         setTxPending(false);
 
