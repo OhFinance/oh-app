@@ -37,7 +37,7 @@ const banks: { [chainId: number]: Bank[] } = {
   1285: [
     {
       image: ohUsdcMoonriver,
-      name: "Oh! USDC",
+      name: "Oh! Moonwell USDC",
       symbol: "OH-USDC",
       decimals: 6,
       chainId: 1285,
@@ -51,7 +51,7 @@ const banks: { [chainId: number]: Bank[] } = {
     },
     {
       image: ohUsdtMoonriver,
-      name: "Oh! USDT",
+      name: "Oh! Moonwell USDT",
       symbol: "OH-USDT",
       decimals: 6,
       chainId: 1285,

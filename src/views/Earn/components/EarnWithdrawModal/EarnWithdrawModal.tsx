@@ -69,7 +69,7 @@ export const EarnWithdrawModal: FC<EarnWithdrawModalProps> = ({
 
     let options: any = {};
     if (chainId === 1285) {
-      options.gasLimit = 3000000;
+      options.gasLimit = 5000000;
     }
 
     await bankContract
