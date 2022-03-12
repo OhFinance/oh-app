@@ -30,6 +30,7 @@ jobs:
           app_location: "/" # App source code path
           api_location: "api" # Api source code path - optional
           output_location: "_static" # Built app content directory - optional
+          app_build_command: "rm package-lock.json && npm install && npm run contracts:compile:abi && npm run build && npm run export"
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
