@@ -1,12 +1,15 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
-
+name: Static Build and Deploy
+ 
 on:
   push:
     branches: [ v2beta-cicd ]
-
+env:
+  EXPORT_PATH: "_static"
+  NODE_VERSION: "14.x"
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +18,7 @@ jobs:
     - name: Use Node.js 14
       uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version: ${{ env.NODE_VERSION }}
 
     - run: rm package-lock.json
     - run: npm install
@@ -23,3 +26,6 @@ jobs:
     - run: npm run build
     - run: npm run export
 
+    - name: Upload to Static Host Site
+      run: |
+        az storage blob upload-batch -d '$web' -s '${{ env.EXPORT_PATH }}' --connection-string '${{ secrets.AZ_STORAGE_CONNSTRING_V2 }}'
