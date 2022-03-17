@@ -20,9 +20,11 @@ jobs:
         with:
           submodules: true
           
-      - name: Remove Package-Lock
-        run: rm -f package-lock.json
         #Remove package-lock, throwing compile errors. Will be regenerated.
+      - name: Remove Package-Locks
+        run: rm -f package-lock.json
+      - name: Remove Yarn Lock
+        run: rm -f yarn.lock
         
       - name: Build And Deploy
         id: builddeploy
